@@ -125,7 +125,13 @@
             <widget xsi:type="properties-ext-widgets-reference:ExtReferenceDescription" name="sirius_default_rules_ereference" labelExpression="aql:input.emfEditServices(self).getText(eStructuralFeature)+':'" helpExpression="aql:input.emfEditServices(self).getDescription(eStructuralFeature)" referenceNameExpression="aql:eStructuralFeature.name"/>
           </ifs>
           <ifs name="sirius_default_rules_elist_if" predicateExpression="aql:eStructuralFeature.name.endsWith('varName')">
-            <widget xsi:type="properties:ListDescription" name="list " labelExpression="aql:input.emfEditServices(self).getDescription(eStructuralFeature)" helpExpression="aql:input.emfEditServices(self).getDescription(eStructuralFeature)" isEnabledExpression="aql:true" valueExpression="service:myService(eStructuralFeature)" displayExpression="aql:value"/>
+            <widget xsi:type="properties:ListDescription" name="list " labelExpression="aql:input.emfEditServices(self).getDescription(eStructuralFeature)" helpExpression="aql:input.emfEditServices(self).getDescription(eStructuralFeature)" isEnabledExpression="aql:true" valueExpression="service:getPropertyValueStringAsCollection(eStructuralFeature)" displayExpression="aql:value">
+              <actions labelExpression="Remove value">
+                <initialOperation>
+                  <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:self.removeValue(eStructuralFeature,selection)"/>
+                </initialOperation>
+              </actions>
+            </widget>
           </ifs>
         </controls>
       </groups>

@@ -41,13 +41,40 @@ public class Services {
 	
 	public EObject removeValue(EObject self, EStructuralFeature feature, Object value) {
 		
-		
+		System.out.println(value.getClass().getName());
 		Collection<String> selectedValues = (Collection<String>) value;
 		if(self.eGet(feature) != null || !self.eGet(feature).toString().isEmpty())
 		{
-			List<String> existing = Arrays.asList(self.eGet(feature).toString().split(","));
-			existing.removeAll(selectedValues);
-			self.eSet(feature, String.join(",", existing));
+			List<String> existing = new ArrayList<String>(Arrays.asList(self.eGet(feature).toString().split(",")));
+			
+			System.out.println (existing.size());
+			System.out.println (selectedValues.size());
+			
+			
+			System.out.println(existing.removeAll(selectedValues));
+			self.eSet(feature,String.join(",", existing));
+		}
+	
+		
+		return self;
+	}
+	
+	
+	public EObject addValue(EObject self, EStructuralFeature feature, String newValue) {
+		
+		System.out.println(newValue);
+		
+		if(self.eGet(feature) != null || !self.eGet(feature).toString().isEmpty())
+		{
+			List<String> existing = new ArrayList<String>(Arrays.asList(self.eGet(feature).toString().split(",")));
+			System.out.println (existing.size());
+			existing.add(newValue.trim());
+			System.out.println (existing.size());
+			//System.out.println (selectedValues.size());
+			
+			
+			//System.out.println(existing.removeAll(selectedValues));
+			self.eSet(feature,String.join(",", existing));
 		}
 	
 		

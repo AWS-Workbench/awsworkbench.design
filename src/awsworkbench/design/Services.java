@@ -64,7 +64,7 @@ public class Services {
 		
 		System.out.println(newValue);
 		
-		if(self.eGet(feature) != null || !self.eGet(feature).toString().isEmpty())
+		if(self.eGet(feature) != null && !self.eGet(feature).toString().isEmpty())
 		{
 			List<String> existing = new ArrayList<String>(Arrays.asList(self.eGet(feature).toString().split(",")));
 			System.out.println (existing.size());
@@ -76,6 +76,8 @@ public class Services {
 			//System.out.println(existing.removeAll(selectedValues));
 			self.eSet(feature,String.join(",", existing));
 		}
+		else
+			self.eSet(feature,newValue.trim());
 	
 		
 		return self;

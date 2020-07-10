@@ -5,12 +5,12 @@
       <metamodel href="http://www.amazon.com/awsworkbench#/"/>
       <defaultLayer name="Default">
         <containerMappings name="Stack" semanticCandidatesExpression="feature:stackbuilder_core" doubleClickDescription="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='AWS%20App%20Definition']/@defaultLayer/@toolSections.0/@ownedTools[name='StackDblClick']" domainClass="awsworkbench::StackBuilder_core">
-          <subNodeMappings name="stack_elements" semanticCandidatesExpression="feature:serviceresources" domainClass="awsworkbench::ServiceResources">
+          <subNodeMappings name="stack_elements" semanticCandidatesExpression="feature:serviceresources" doubleClickDescription="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='AWS%20App%20Definition']/@defaultLayer/@toolSections.0/@ownedTools[name='VPCDblClick']" domainClass="awsworkbench::ServiceResources">
             <style xsi:type="style:SquareDescription" labelSize="12" labelExpression="" labelPosition="node" resizeKind="NSEW">
               <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
               <labelFormat>bold</labelFormat>
               <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_red']"/>
+              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='yellow']"/>
             </style>
           </subNodeMappings>
           <style xsi:type="style:WorkspaceImageDescription" borderSizeComputationExpression="4" borderLineStyle="dash" labelSize="12" labelExpression="feature:varName" labelAlignment="LEFT">
@@ -26,6 +26,13 @@
               <firstModelOperations xsi:type="tool:Navigation" createIfNotExistent="true" diagramDescription="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='Stack%20Definition']"/>
             </initialOperation>
           </ownedTools>
+          <ownedTools xsi:type="tool:DoubleClickDescription" name="VPCDblClick" forceRefresh="true" mappings="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='AWS%20App%20Definition']/@defaultLayer/@containerMappings[name='Stack']/@subNodeMappings[name='stack_elements'] //@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='Stack%20Definition']/@defaultLayer/@nodeMappings[name='VPC']">
+            <element name="element"/>
+            <elementView name="elementView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool:Navigation" createIfNotExistent="true" diagramDescription="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='VPC%20Diagram']"/>
+            </initialOperation>
+          </ownedTools>
         </toolSections>
         <toolSections name="Palette">
           <ownedTools xsi:type="tool:ContainerCreationDescription" name="Stack_create" containerMappings="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='AWS%20App%20Definition']/@defaultLayer/@containerMappings[name='Stack']">
@@ -37,12 +44,20 @@
               </firstModelOperations>
             </initialOperation>
           </ownedTools>
+          <ownedTools xsi:type="tool_1:PopupMenu" name="Generate" precondition="aql:true">
+            <menuItemDescription xsi:type="tool_1:OperationAction" name="Code" precondition="aql:self.generatedClassName.contains('core.App')" elementsToSelect="var:self">
+              <view name="views"/>
+              <initialOperation>
+                <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:self.getPopupMenu()"/>
+              </initialOperation>
+            </menuItemDescription>
+          </ownedTools>
         </toolSections>
       </defaultLayer>
     </ownedRepresentations>
     <ownedRepresentations xsi:type="description_1:DiagramDescription" name="Stack Definition" label="Stacks" initialisation="true" domainClass="awsworkbench::StackBuilder_core" enablePopupBars="true">
       <defaultLayer name="Default">
-        <nodeMappings name="VPC" semanticCandidatesExpression="feature:serviceresources" domainClass="awsworkbench::VpcBuilder_ec2">
+        <nodeMappings name="VPC" semanticCandidatesExpression="feature:serviceresources" doubleClickDescription="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='AWS%20App%20Definition']/@defaultLayer/@toolSections.0/@ownedTools[name='VPCDblClick']" domainClass="awsworkbench::VpcBuilder_ec2">
           <style xsi:type="style:WorkspaceImageDescription" labelSize="12" labelExpression="feature:varName" labelAlignment="LEFT" sizeComputationExpression="-1" labelPosition="node" resizeKind="NSEW" workspacePath="/awsworkbench.design/icons/VPC.png">
             <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
             <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
@@ -61,6 +76,16 @@
             </initialOperation>
           </ownedTools>
         </toolSections>
+      </defaultLayer>
+    </ownedRepresentations>
+    <ownedRepresentations xsi:type="description_1:DiagramDescription" name="VPC Diagram" domainClass="awsworkbench::VpcBuilder_ec2" enablePopupBars="true">
+      <defaultLayer name="Default">
+        <nodeMappings name="Subnet" semanticCandidatesExpression="feature:subnetbuilder_ec2" domainClass="awsworkbench::SubnetBuilder_ec2">
+          <style xsi:type="style:WorkspaceImageDescription" labelSize="12" sizeComputationExpression="-1" labelPosition="node" resizeKind="NSEW" workspacePath="/awsworkbench.design/icons/StackBuilder.png">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+          </style>
+        </nodeMappings>
       </defaultLayer>
     </ownedRepresentations>
     <ownedJavaExtensions qualifiedClassName="awsworkbench.design.Services"/>
@@ -142,7 +167,36 @@
                     </buttons>
                     <page name="Default Page" labelExpression="Page" semanticCandidateExpression="var:self" groups="//@extensions.0/@categories.0/@groups.0/@controls.0/@ifs.6/@widget/@actions.1/@initialOperation/@firstModelOperations/@groups.0"/>
                     <groups name="Default Group" labelExpression="Group" semanticCandidateExpression="var:self">
-                      <controls xsi:type="properties:TextDescription" labelExpression="key">
+                      <controls xsi:type="properties:TextDescription" name="key" labelExpression="Value">
+                        <initialOperation>
+                          <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:self.addValue(eStructuralFeature,newValue)"/>
+                        </initialOperation>
+                      </controls>
+                    </groups>
+                  </firstModelOperations>
+                </initialOperation>
+              </actions>
+            </widget>
+          </ifs>
+          <ifs name="sirius_default_rules_emap_if" predicateExpression="aql:eStructuralFeature.name.endsWith('AsMap')">
+            <widget xsi:type="properties:ListDescription" name="map" labelExpression="aql:input.emfEditServices(self).getText(eStructuralFeature)" helpExpression="aql:input.emfEditServices(self).getDescription(eStructuralFeature)" isEnabledExpression="aql:true" valueExpression="service:getPropertyValueStringAsCollection(eStructuralFeature)" displayExpression="aql:value">
+              <actions labelExpression="Remove value">
+                <initialOperation>
+                  <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:self.removeValue(eStructuralFeature,selection)"/>
+                </initialOperation>
+              </actions>
+              <actions labelExpression="Add value">
+                <initialOperation>
+                  <firstModelOperations xsi:type="properties:DialogModelOperation" titleExpression="New Dialog">
+                    <buttons labelExpression="Cancel" closeDialogOnClick="true" rollbackChangesOnClose="true">
+                      <initialOperation/>
+                    </buttons>
+                    <buttons labelExpression="OK" default="true" closeDialogOnClick="true">
+                      <initialOperation/>
+                    </buttons>
+                    <page name="Default Page" labelExpression="Page" semanticCandidateExpression="var:self" groups="//@extensions.0/@categories.0/@groups.0/@controls.0/@ifs.7/@widget/@actions.1/@initialOperation/@firstModelOperations/@groups.0"/>
+                    <groups name="Default Group" labelExpression="Group" semanticCandidateExpression="var:self">
+                      <controls xsi:type="properties:TextDescription" name="key" labelExpression="Key:Value" helpExpression="Enter the key and value separated by a colon" isEnabledExpression="true">
                         <initialOperation>
                           <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:self.addValue(eStructuralFeature,newValue)"/>
                         </initialOperation>

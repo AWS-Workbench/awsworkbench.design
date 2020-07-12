@@ -90,14 +90,19 @@ public class Services {
 		
 		
 
-		System.out.println(self.toString());
+	//	System.out.println(self.toString());
+		
+	   com.amazon.awsworkbench.EObjectParser parser = new com.amazon.awsworkbench.EObjectParser();
+	   
+	   parser.parse(self);
+	   
 		
 		
-		Status status = new Status(IStatus.ERROR,Activator.PLUGIN_ID,"Something bad happend");
+		//Status status = new Status(IStatus.ERROR,Activator.PLUGIN_ID,"Something bad happend");
 		//WorkbenchPlugin.log("Something bad happend", status);
 				
 
-		StatusManager.getManager().handle(status,StatusManager.BLOCK);
+		//StatusManager.getManager().handle(status,StatusManager.BLOCK);
 		return null;
 	}
 

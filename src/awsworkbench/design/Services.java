@@ -12,6 +12,9 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl;
+import org.eclipse.sirius.business.api.session.Session;
+import org.eclipse.sirius.business.api.session.SessionManager;
+import org.eclipse.sirius.business.api.session.factory.SessionFactory;
 import org.eclipse.ui.internal.WorkbenchPlugin;
 import org.eclipse.ui.statushandlers.StatusAdapter;
 import org.eclipse.ui.statushandlers.StatusManager;
@@ -26,7 +29,12 @@ public class Services {
 	 * http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.sirius.doc%2Fdoc%2Findex.html&cp=24
 	 * for documentation on how to write service methods.
 	 */
+	
+	
 	public Collection<String> getPropertyValueStringAsCollection(EObject self, EStructuralFeature feature) {
+		
+		
+		
 
 		if (self.eGet(feature) == null || self.eGet(feature).toString().isEmpty()) {
 			return new ArrayList<String>();
@@ -38,11 +46,15 @@ public class Services {
 		for (String s : arr) {
 			arrL.add(s.trim());
 		}
+		
+		
 
 		return arrL;
 	}
 
 	public String getLabel(EObject self, EStructuralFeature feature) {
+		
+		
 
 		String label = new String();
 
@@ -111,9 +123,11 @@ public class Services {
 		return self;
 	}
 
-	public Collection<String> getPopupMenu(EObject self) {
+	public Collection<String> generateCode(EObject self) {
 
 		// System.out.println(self.toString());
+		
+		  
 
 		com.amazon.awsworkbench.EObjectParser parser = new com.amazon.awsworkbench.EObjectParser();
 

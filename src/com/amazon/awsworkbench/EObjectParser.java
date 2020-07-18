@@ -16,6 +16,8 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EContentsEList;
 import org.eclipse.ui.statushandlers.StatusManager;
+import org.jgrapht.traverse.TopologicalOrderIterator;
+
 import com.amazon.awsworkbench.data.ComponentObject;
 
 import awsworkbench.design.Activator;
@@ -40,7 +42,6 @@ public class EObjectParser {
 		generateImports();
 		
 		generateAppAndStackClass();
-
 	}
 
 	private void generateAppAndStackClass() {
@@ -75,11 +76,7 @@ public class EObjectParser {
 
 		ComponentObject cObject = new ComponentObject(obj);
 		componentMap.put(cObject.getVarName(), cObject);
-
-		System.out.println(obj.getClass().getName() + "\n---------\n");
-
 		EList<EObject> children = obj.eContents();
-
 		for (EObject e : children)
 			parse(e);
 
@@ -118,7 +115,7 @@ public class EObjectParser {
 
 	}
 
-	private void showError(String errorMessage) throws Exception {
+	public static void showError(String errorMessage) throws Exception {
 		Status status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, errorMessage);
 		StatusManager.getManager().handle(status, StatusManager.BLOCK);
 		throw new Exception(errorMessage);

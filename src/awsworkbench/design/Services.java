@@ -27,10 +27,8 @@ public class Services {
 	 * for documentation on how to write service methods.
 	 */
 	public Collection<String> getPropertyValueStringAsCollection(EObject self, EStructuralFeature feature) {
-		
-		
-		if(self.eGet(feature) == null || self.eGet(feature).toString().isEmpty())
-		{
+
+		if (self.eGet(feature) == null || self.eGet(feature).toString().isEmpty()) {
 			return new ArrayList<String>();
 		}
 
@@ -43,69 +41,91 @@ public class Services {
 
 		return arrL;
 	}
-	
-	
-	
-	
-	public EObject removeValue(EObject self, EStructuralFeature feature, Object value) {
-		
-		System.out.println(value.getClass().getName());
-		Collection<String> selectedValues = (Collection<String>) value;
-		if(self.eGet(feature) != null && !self.eGet(feature).toString().isEmpty())
-		{
-			List<String> existing = new ArrayList<String>(Arrays.asList(self.eGet(feature).toString().split(",")));
-			existing.removeAll(selectedValues);
-			self.eSet(feature,String.join(",", existing));
-		}
-	
-		
-		return self;
-	}
-	
-	
-	public EObject addValue(EObject self, EStructuralFeature feature, String newValue) {
-		
-		System.out.println(newValue);
-		if(feature.getName().endsWith("AsMap") && (newValue.indexOf(':') == -1 || newValue.indexOf(",") != -1)) {
-			
-			return self;
-		}
-		
-		if(self.eGet(feature) != null && !self.eGet(feature).toString().isEmpty())
-		{
-			List<String> existing = new ArrayList<String>(Arrays.asList(self.eGet(feature).toString().split(",")));
-			existing.add(newValue.trim());
-			self.eSet(feature,String.join(",", existing));
-		}
-		else
-			self.eSet(feature,newValue.trim());
-	
-		
-		return self;
-	}
-	
-	public Collection<String> getPopupMenu(EObject self) {
-		
-		
-		
+
+	public String getLabel(EObject self, EStructuralFeature feature) {
+
+		String label = new String();
+
+		String featureName = feature.getName();
 		
 
-	//	System.out.println(self.toString());
-		
-	   com.amazon.awsworkbench.EObjectParser parser = new com.amazon.awsworkbench.EObjectParser();
-	   
-	   try {
-		parser.generateCode(self);
-	} catch (Exception e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+		if (featureName.indexOf("With") != -1)
+			label = featureName.substring(0, featureName.indexOf("With"));
+		else if (featureName.indexOf('_') != -1)
+			label = featureName.substring(0, featureName.indexOf('_'));
+		else
+			label = featureName;
+
+		return label;
 	}
-	   
+	
+	public String getDescription(EObject self, EStructuralFeature feature) {
+
+		String label = new String();
+
+		String featureName = feature.getName();
 		
+
 		
+		if (featureName.indexOf('_') != -1) {
+			label = featureName.substring( featureName.indexOf('_')+1,featureName.lastIndexOf('_'));
+			label = label.replace("__", " , ");
+			label = label.replace('_', '.');
+			label = label.replace("java.lang.", "");
+			label = label.replace("java.util.List.", "List of ");
+			label = label.replace("java.util.Map.", "Map of ");
+		}
+		
+
+		return label;
+	}
+
+	public EObject removeValue(EObject self, EStructuralFeature feature, Object value) {
+
+		System.out.println(value.getClass().getName());
+		Collection<String> selectedValues = (Collection<String>) value;
+		if (self.eGet(feature) != null && !self.eGet(feature).toString().isEmpty()) {
+			List<String> existing = new ArrayList<String>(Arrays.asList(self.eGet(feature).toString().split(",")));
+			existing.removeAll(selectedValues);
+			self.eSet(feature, String.join(",", existing));
+		}
+
+		return self;
+	}
+
+	public EObject addValue(EObject self, EStructuralFeature feature, String newValue) {
+
+		System.out.println(newValue);
+		if (feature.getName().endsWith("AsMap") && (newValue.indexOf(':') == -1 || newValue.indexOf(",") != -1)) {
+
+			return self;
+		}
+
+		if (self.eGet(feature) != null && !self.eGet(feature).toString().isEmpty()) {
+			List<String> existing = new ArrayList<String>(Arrays.asList(self.eGet(feature).toString().split(",")));
+			existing.add(newValue.trim());
+			self.eSet(feature, String.join(",", existing));
+		} else
+			self.eSet(feature, newValue.trim());
+
+		return self;
+	}
+
+	public Collection<String> getPopupMenu(EObject self) {
+
+		// System.out.println(self.toString());
+
+		com.amazon.awsworkbench.EObjectParser parser = new com.amazon.awsworkbench.EObjectParser();
+
+		try {
+			parser.generateCode(self);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		//
-		//WorkbenchPlugin.log("Something bad happend", status);
-				
+		// WorkbenchPlugin.log("Something bad happend", status);
 
 		//
 		return null;

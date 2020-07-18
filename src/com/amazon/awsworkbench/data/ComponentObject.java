@@ -82,8 +82,12 @@ public class ComponentObject {
 
 						addMapDependency(featureName, value);
 					}
+					
+					ComponentAttribute cAttribute = new ComponentAttribute(esf , value);
+					System.out.println(cAttribute.toString());
 
-					otherAttributes.add(new ComponentAttribute(esf , value));;
+					otherAttributes.add(cAttribute);
+					
 
 				}
 

@@ -94,15 +94,20 @@ public class Services {
 		
 	   com.amazon.awsworkbench.EObjectParser parser = new com.amazon.awsworkbench.EObjectParser();
 	   
-	   parser.parse(self);
+	   try {
+		parser.generateCode(self);
+	} catch (Exception e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
 	   
 		
 		
-		//Status status = new Status(IStatus.ERROR,Activator.PLUGIN_ID,"Something bad happend");
+		//
 		//WorkbenchPlugin.log("Something bad happend", status);
 				
 
-		//StatusManager.getManager().handle(status,StatusManager.BLOCK);
+		//
 		return null;
 	}
 

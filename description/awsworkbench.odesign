@@ -63,6 +63,12 @@
             <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
           </style>
         </nodeMappings>
+        <nodeMappings name="Environment" semanticCandidatesExpression="feature:environmentbuilder_core" domainClass="awsworkbench::EnvironmentBuilder_core">
+          <style xsi:type="style:WorkspaceImageDescription" labelSize="12" labelExpression="feature:varName" labelAlignment="LEFT" sizeComputationExpression="-1" labelPosition="node" resizeKind="NSEW" workspacePath="/awsworkbench.design/icons/Environment.png">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+          </style>
+        </nodeMappings>
         <toolSections name="Stack Pallette">
           <ownedTools xsi:type="tool:NodeCreationDescription" name="VPC Create" forceRefresh="true" nodeMappings="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='Stack%20Definition']/@defaultLayer/@nodeMappings[name='VPC']">
             <variable name="container"/>
@@ -71,6 +77,17 @@
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::VpcBuilder_ec2" referenceName="serviceresources">
                   <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Default VPC"/>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="Environment" forceRefresh="true" nodeMappings="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='Stack%20Definition']/@defaultLayer/@nodeMappings[name='Environment']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::EnvironmentBuilder_core" referenceName="environmentbuilder_core">
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Environment Name"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -107,7 +124,7 @@
               </conditionalStyles>
             </widget>
           </ifs>
-          <ifs name="sirius_default_rules_multi_string_if" predicateExpression="aql:input.emfEditServices(self).needsTextWidget(eStructuralFeature) and eStructuralFeature.name.endsWith('additionalCode') and  not ( eStructuralFeature.name.endsWith('AsList') or eStructuralFeature.name.endsWith('AsMap') ) ">
+          <ifs name="sirius_default_rules_multi_string_if" predicateExpression="aql:input.emfEditServices(self).needsTextWidget(eStructuralFeature) and eStructuralFeature.name.endsWith('additionalCode') and  not ( eStructuralFeature.name.endsWith('AsList') or eStructuralFeature.name.endsWith('AsMap')  ) ">
             <widget xsi:type="properties:TextAreaDescription" name="sirius_default_rules_multi_string" labelExpression="aql:input.emfEditServices(self).getText(eStructuralFeature)+':'" helpExpression="aql:input.emfEditServices(self).getDescription(eStructuralFeature)" isEnabledExpression="aql:eStructuralFeature.changeable" valueExpression="aql:self.eGet(eStructuralFeature.name)">
               <initialOperation>
                 <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:input.emfEditServices(self).setValue(eStructuralFeature, newValue)"/>

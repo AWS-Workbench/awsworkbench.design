@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.javatuples.Pair;
 
 import com.amazon.awsworkbench.EObjectParser;
 import com.amazon.awsworkbench.data.ComponentAttribute.MapAttribute;
@@ -298,9 +299,8 @@ public class ComponentObject {
 			
 			else if (attribute.getType() == ComponentAttributeTypes.MAP) {
 
-				String[] listCode = buildMap(attribute);
-
-				code += listCode[1];
+				Pair<String, String> codePair = buildMap(attribute);
+				code = codePair.getValue1()  + code ;
 			}
 
 		}
@@ -310,9 +310,9 @@ public class ComponentObject {
 		return code;
 	}
 
-	private String[] buildMap(ComponentAttribute attribute) {
+	private Pair<String, String> buildMap(ComponentAttribute attribute) {
 		
-		String[] returnCode = new String[2];
+		
 		
 		String mapName = getVarName()+ UNDERSCORE + attribute.getName();
 		
@@ -322,12 +322,7 @@ public class ComponentObject {
 				mapAttribute.getValueClass()+GREATERTHAN + "();\n";
 		
 		
-		returnCode[0] = mapName;
-		returnCode[1]= declaration;
-		
-		
-		
-		return returnCode;
+		return new Pair<String, String>(mapName, declaration);
 		
 	}
 

@@ -65,8 +65,16 @@ public class EObjectParser {
 		generateImports();
 
 		printCode();
+		
 
-		generateAppAndStackClass();
+		generateApp(self);
+		
+		
+	}
+
+	private void generateApp(EObject self) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	private void printComponents() {

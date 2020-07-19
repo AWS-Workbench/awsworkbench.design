@@ -24,6 +24,8 @@ public class ComponentAttribute {
 	private String name;
 
 	private MapAttribute mapAttribute = new MapAttribute();
+	
+	private boolean canGenerate = true;
 
 	private Map<String, List<String>> attributeVals = new HashMap<String, List<String>>();
 
@@ -133,6 +135,56 @@ public class ComponentAttribute {
 		return attributeVals;
 	}
 
+	public boolean isCanGenerate() {
+		return canGenerate;
+	}
+	
+	public void removeDependency(String className, String varName) {
+		if(type == ComponentAttributeTypes.REFERENCE) {
+			
+			for(String s: attributeVals.keySet()) {
+				if(s.equals(className) && attributeVals.get(s).get(0).equals(varName)) {
+					canGenerate = false;
+					break;
+				}
+					
+			}
+		}
+		else if (type == ComponentAttributeTypes.LIST) {
+			
+			for(String s: attributeVals.keySet()) {
+				if(s.equals(className))
+				{
+					for(String s1: attributeVals.get(s) ) {
+						if(s1.equals(varName))
+						{
+							attributeVals.get(s).remove(s1);
+							if(attributeVals.get(s).size() == 0)
+								canGenerate = false;
+							break;
+						}
+					}
+				}
+					
+			}
+			
+		}else if(type == ComponentAttributeTypes.MAP)
+		{
+			if(mapAttribute.getKeyClass().equals(className))
+			{
+				mapAttribute.removeFromKey(varName);
+			}
+			if(mapAttribute.getValueClass().equals(className))
+			{
+				mapAttribute.removeFromValue(varName);
+			}
+			
+			if(mapAttribute.getValues().size() == 0)
+				canGenerate = false;
+		}
+		
+	}
+
 	class MapAttribute {
 
 		private String keyClass = new String();
@@ -154,6 +206,24 @@ public class ComponentAttribute {
 			valueClass = mapVals[1].replace('_', '.');
 			breakFeatureValueToMap(featureValue);
 
+		}
+
+		public void removeFromValue(String varName) {
+			// TODO Auto-generated method stub
+			List<String> tobeRemoved = new ArrayList<String>();
+			
+			for(String s: values.keySet()) {
+				if(values.get(s).equals(varName))
+					tobeRemoved.add(s);
+			}
+			for(String s: tobeRemoved)
+				values.remove(s);
+			
+		}
+
+		public void removeFromKey(String varName) {
+			// TODO Auto-generated method stub
+			values.remove(varName);
 		}
 
 		public MapAttribute() {
@@ -201,5 +271,7 @@ public class ComponentAttribute {
 		}
 
 	}
+
+	
 
 }

@@ -257,6 +257,14 @@ public class ComponentObject {
 		return resultString;
 
 	}
+	
+	public void removeDependency(String className, String varName) {
+		
+		for(ComponentAttribute cAttribute: otherAttributes) {
+			
+			cAttribute.removeDependency(className,varName);
+		}
+	}
 
 	public String generateCode(Map<String, ComponentObject> componentMap) {
 		String code = new String();
@@ -264,6 +272,9 @@ public class ComponentObject {
 		code += getGeneratedClassName() + SPACE + getVarName() + EQUALS + getBuilderClassName() + CREATE + NEWLINE;
 
 		for (ComponentAttribute attribute : otherAttributes) {
+			
+			if(!attribute.isCanGenerate())
+				continue;
 			if (!(attribute.getType() == ComponentAttributeTypes.LIST
 					|| attribute.getType() == ComponentAttributeTypes.MAP)) {
 				String value = getSingleValue(attribute.getAttributeValues());

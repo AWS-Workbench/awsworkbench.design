@@ -64,7 +64,7 @@ public class EObjectParser {
 
 		generateImports();
 
-		//printCode();
+		printCode();
 
 		generateAppAndStackClass();
 	}
@@ -110,11 +110,13 @@ public class EObjectParser {
 							analyser.addDependency(dObject.getVarName(), cObject.getVarName());
 						} else {
 							System.out.println("Mismatch : " + vars + " does not belong to class : " + key);
+							cObject.removeDependency(key, vars);
 
 						}
 
 					} else {
 						System.out.println("Variable not defined: " + vars + " for class : " + key);
+						cObject.removeDependency(key, vars);
 					}
 				}
 

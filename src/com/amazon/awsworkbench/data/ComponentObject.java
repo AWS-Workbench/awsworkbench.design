@@ -217,5 +217,18 @@ public class ComponentObject {
 	public Map<String, List<String>> getDependencies() {
 		return dependencies;
 	}
+	
+	@Override
+	public String toString() {
+		
+		String resultString = new String();
+		
+		resultString += getVarName();
+		resultString += " " + getGeneratedClassName()+ "\n";
+		
+		
+		return resultString;
+		
+	}
 
 }

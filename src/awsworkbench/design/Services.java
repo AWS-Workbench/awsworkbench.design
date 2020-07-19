@@ -125,7 +125,9 @@ public class Services {
 
 	public Collection<String> generateCode(EObject self) {
 
-		// System.out.println(self.toString());
+		
+		System.out.println("Hello");
+		System.out.println(self.toString());
 		
 		  
 

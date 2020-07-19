@@ -16,9 +16,9 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EContentsEList;
 import org.eclipse.ui.statushandlers.StatusManager;
-import org.jgrapht.traverse.TopologicalOrderIterator;
 
 import com.amazon.awsworkbench.data.ComponentObject;
+import com.amazon.awsworkbench.dependency.Analyser;
 
 import awsworkbench.design.Activator;
 
@@ -30,33 +30,82 @@ public class EObjectParser {
 
 	private Map<String, SortedSet<String>> uniqueValues = new HashMap<String, SortedSet<String>>();
 
+	private Map<String, List<String>> variables = new HashMap<String, List<String>>();
+
 	private Set<String> imports = new TreeSet<String>();
 	private StringBuilder codeOutput = new StringBuilder();
 
+	private Analyser analyser = new Analyser();
+
 	public void generateCode(EObject self) throws Exception {
+
+		System.out.println("Hello");
 
 		componentMap = new HashMap<String, ComponentObject>();
 		uniqueValues = new HashMap<String, SortedSet<String>>();
+		variables = new HashMap<String, List<String>>();
+		analyser = new Analyser();
+
 		codeOutput = new StringBuilder();
 		parse(self);
+
+		buildDependencyGraph();
+		analyser.checkCycles();
 		generateImports();
-		
+
 		generateAppAndStackClass();
+	}
+
+	private void buildDependencyGraph() throws Exception {
+
+		Map<String, ComponentObject> graphAdditions = new HashMap<String, ComponentObject>();
+
+		for (ComponentObject cObject : componentMap.values()) {
+			if (!graphAdditions.containsKey(cObject.getVarName())) {
+				graphAdditions.put(cObject.getVarName(), cObject);
+				analyser.addVariable(cObject.getVarName());
+			}
+		}
+
+		for (ComponentObject cObject : graphAdditions.values()) {
+			Map<String, List<String>> dependencies = cObject.getDependencies();
+
+			for (String key : dependencies.keySet()) {
+				List<String> varList = dependencies.get(key);
+
+				for (String vars : varList) {
+					if (graphAdditions.containsKey(vars)) {
+						ComponentObject dObject = graphAdditions.get(vars);
+						if (key.equals(dObject.getGeneratedClassName())) {
+							analyser.addDependency(dObject.getVarName(), cObject.getVarName());
+						} else {
+							System.out.println("Mismatch : " + vars + " does not belong to class : " + key);
+
+						}
+
+					} else {
+						System.out.println("Variable not defined: " + vars + " for class : " + key);
+					}
+				}
+
+			}
+		}
+
 	}
 
 	private void generateAppAndStackClass() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	private void printImports() {
-		for(String s: imports)
+		for (String s : imports)
 			System.out.print(s);
-		
+
 	}
 
 	private void generateImports() {
-		
+
 		imports.add("import java.util.*;\n");
 		for (ComponentObject cObject : componentMap.values()) {
 
@@ -67,7 +116,7 @@ public class EObjectParser {
 			imports.add("import " + cObject.getBuilderClassName() + ";\n");
 			imports.add("import " + starImport + ";\n");
 		}
-		
+
 	}
 
 	public void parse(EObject obj) throws Exception {
@@ -76,6 +125,12 @@ public class EObjectParser {
 
 		ComponentObject cObject = new ComponentObject(obj);
 		componentMap.put(cObject.getVarName(), cObject);
+		if (variables.containsKey(cObject.getGeneratedClassName()))
+			variables.get(cObject.getGeneratedClassName()).add(cObject.getVarName());
+		else {
+			variables.put(cObject.getGeneratedClassName(), new ArrayList<String>());
+			variables.get(cObject.getGeneratedClassName()).add(cObject.getVarName());
+		}
 		EList<EObject> children = obj.eContents();
 		for (EObject e : children)
 			parse(e);
@@ -99,12 +154,11 @@ public class EObjectParser {
 				if (uniqueValues.containsKey(keyName)) {
 					if (uniqueValues.get(keyName).contains(value))
 						showError("Duplicate value: " + value + " found for " + keyName);
-					else 
+					else
 						uniqueValues.get(keyName).add(value);
 
 				} else {
-					
-					
+
 					uniqueValues.put(keyName, new TreeSet<String>());
 					uniqueValues.get(keyName).add(value);
 

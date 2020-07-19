@@ -1,6 +1,9 @@
 package com.amazon.awsworkbench;
 
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +19,9 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EContentsEList;
 import org.eclipse.ui.statushandlers.StatusManager;
+import org.jgrapht.Graph;
+import org.jgrapht.graph.DefaultDirectedGraph;
+import org.jgrapht.graph.DefaultEdge;
 
 import com.amazon.awsworkbench.data.ComponentObject;
 import com.amazon.awsworkbench.dependency.Analyser;
@@ -38,6 +44,8 @@ public class EObjectParser {
 	private Analyser analyser = new Analyser();
 
 	public void generateCode(EObject self) throws Exception {
+		
+		
 
 		System.out.println("Hello");
 
@@ -45,15 +53,37 @@ public class EObjectParser {
 		uniqueValues = new HashMap<String, SortedSet<String>>();
 		variables = new HashMap<String, List<String>>();
 		analyser = new Analyser();
-
+		
 		codeOutput = new StringBuilder();
-		parse(self);
+		parse(self , new ArrayList<String>());
 
 		buildDependencyGraph();
 		analyser.checkCycles();
+		
+		printComponents();
+
 		generateImports();
 
+		//printCode();
+
 		generateAppAndStackClass();
+	}
+
+	private void printComponents() {
+		for (ComponentObject c : componentMap.values()) {
+
+			System.out.println(c);
+		}
+		
+	}
+
+	private void printCode() {
+
+		for (ComponentObject c : componentMap.values()) {
+
+			System.out.println(c.generateCode(componentMap));
+		}
+
 	}
 
 	private void buildDependencyGraph() throws Exception {
@@ -119,11 +149,11 @@ public class EObjectParser {
 
 	}
 
-	public void parse(EObject obj) throws Exception {
+	public void parse(EObject obj, List<String> parents) throws Exception {
 
 		checkMandatoryFields(obj);
 
-		ComponentObject cObject = new ComponentObject(obj);
+		ComponentObject cObject = new ComponentObject(obj,parents);
 		componentMap.put(cObject.getVarName(), cObject);
 		if (variables.containsKey(cObject.getGeneratedClassName()))
 			variables.get(cObject.getGeneratedClassName()).add(cObject.getVarName());
@@ -131,9 +161,13 @@ public class EObjectParser {
 			variables.put(cObject.getGeneratedClassName(), new ArrayList<String>());
 			variables.get(cObject.getGeneratedClassName()).add(cObject.getVarName());
 		}
+		
+		
+		parents.add(cObject.getVarName());
 		EList<EObject> children = obj.eContents();
 		for (EObject e : children)
-			parse(e);
+			parse(e,parents);
+		parents.remove(cObject.getVarName());
 
 	}
 

@@ -58,9 +58,9 @@ public class ComponentObject {
 	public static final String LESSTHAN = "<";
 
 	public static final String GREATERTHAN = ">";
-	
-	private List<String> dependentVars  = new ArrayList<String>();
-	
+
+	private List<String> dependentVars = new ArrayList<String>();
+
 	private boolean visited = false;
 
 	private List<ComponentAttribute> otherAttributes = new ArrayList<ComponentAttribute>();
@@ -72,7 +72,7 @@ public class ComponentObject {
 	public ComponentObject(EObject self, List<String> parents, String parentName) throws Exception {
 
 		parentObject = self;
-		if(parentName != null)
+		if (parentName != null)
 			dependentVars.add(parentName);
 		this.parents.addAll(parents);
 		System.out.println("\n\n");
@@ -120,11 +120,10 @@ public class ComponentObject {
 
 					ComponentAttribute cAttribute = new ComponentAttribute(esf, value);
 					System.out.println(cAttribute.toString());
-					
-					for(List<String> lists : dependencies.values()) {
+
+					for (List<String> lists : dependencies.values()) {
 						dependentVars.addAll(lists);
 					}
-					
 
 					otherAttributes.add(cAttribute);
 
@@ -280,15 +279,11 @@ public class ComponentObject {
 	}
 
 	public String generateCode(Map<String, ComponentObject> componentMap) {
-		
-		if(getGeneratedClassName().endsWith(".App")) {
-			
-			
-			
+
+		if (getGeneratedClassName().endsWith(".App")) {
+
 		}
-		
-		
-		
+
 		String code = new String();
 
 		code += getGeneratedClassName() + SPACE + getVarName() + EQUALS + getBuilderClassName() + CREATE + NEWLINE;
@@ -322,6 +317,8 @@ public class ComponentObject {
 
 				Pair<String, String> codePair = buildMap(attribute);
 				code = codePair.getValue1() + code;
+				
+				code += DOT + attribute.getName() + OPENBRACKET + codePair.getValue0() + CLOSEBRACKET + NEWLINE;
 			}
 
 		}
@@ -336,8 +333,26 @@ public class ComponentObject {
 
 		MapAttribute mapAttribute = attribute.getMapAttribute();
 		String declaration = "java.util.Map" + LESSTHAN + mapAttribute.getKeyClass() + COMMA
-				+ mapAttribute.getValueClass() + GREATERTHAN + SPACE + mapName + EQUALS + " new " + "java.util.Map"
+				+ mapAttribute.getValueClass() + GREATERTHAN + SPACE + mapName + EQUALS + " new " + "java.util.HashMap"
 				+ LESSTHAN + mapAttribute.getKeyClass() + COMMA + mapAttribute.getValueClass() + GREATERTHAN + "();\n";
+		
+		declaration += NEWLINE ;
+		String key = new String();
+		String value = new String();
+		for(String s: mapAttribute.getValues().keySet())
+		{
+			if(mapAttribute.getKeyClass().equals(STRING_CLASS))
+				 key = QUOT +s + QUOT;
+			else
+				key = s;
+			
+			value = mapAttribute.getValues().get(s);
+			
+			if(mapAttribute.getValueClass().equals(STRING_CLASS))
+				 value = QUOT +value + QUOT;
+			declaration += mapName+DOT+"put" +OPENBRACKET+key+COMMA+value+CLOSEBRACKET+";\n";
+		}
+		declaration += NEWLINE + NEWLINE;
 		return new Pair<String, String>(mapName, declaration);
 
 	}

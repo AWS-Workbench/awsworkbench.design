@@ -15,6 +15,11 @@ public class Analyser {
 
 	private Map<String, SortedSet<String>> graphElems = new HashMap<String, SortedSet<String>>();
 	private Map<String, ComponentObject> graphObjects = new HashMap<String, ComponentObject>();
+	private LinkedList<ComponentObject> queue;
+
+	public LinkedList<ComponentObject> getQueue() {
+		return queue;
+	}
 
 	public void addVariable(String varName, ComponentObject cObject) {
 		if (!graphElems.containsKey(varName)) {
@@ -57,7 +62,7 @@ public class Analyser {
 
 	public void topologicalSort() {
 
-		LinkedList<ComponentObject> queue = new LinkedList<ComponentObject>();
+		queue = new LinkedList<ComponentObject>();
 
 		for (ComponentObject c : graphObjects.values()) {
 

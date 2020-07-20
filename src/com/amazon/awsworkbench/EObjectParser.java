@@ -59,12 +59,15 @@ public class EObjectParser {
 		buildDependencyGraph();
 		analyser.checkCycles();
 
-		printComponents();
+		//printComponents();
 
-		generateImports();
+		//generateImports();
 
-		printCode();
+		
 		analyser.topologicalSort();
+		
+		
+		printCode();
 
 	//	generateApp();
 
@@ -86,7 +89,7 @@ public class EObjectParser {
 
 	private void printCode() {
 
-		for (ComponentObject c : componentMap.values()) {
+		for (ComponentObject c : analyser.getQueue()) {
 
 			System.out.println(c.generateCode(componentMap));
 		}

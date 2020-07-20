@@ -6,14 +6,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
-
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.javatuples.Pair;
+import org.w3c.dom.CDATASection;
 
 import com.amazon.awsworkbench.EObjectParser;
-
 
 public class ComponentAttribute {
 
@@ -24,10 +23,10 @@ public class ComponentAttribute {
 	private String name;
 
 	private MapAttribute mapAttribute = new MapAttribute();
-	
+
 	private boolean canGenerate = true;
 
-	private Map<String, List<String>> attributeVals = new HashMap<String, List<String>>();
+	private Pair<String, List<String>> dependencyList;
 
 	public ComponentAttribute(EStructuralFeature feature, String value) throws Exception {
 
@@ -58,19 +57,19 @@ public class ComponentAttribute {
 		extractAttributeClassAndValue(feature, value);
 
 	}
-	
+
 	@Override
 	public String toString() {
-		
+
 		String returnString = new String();
-		
+
 		returnString += name + "\n";
 		returnString += type + "\n";
-		returnString += attributeVals.toString() + "\n";
+		//returnString += dependencyList.toString() + "\n";
 		returnString += mapAttribute.toString() + "\n";
-		
+
 		return returnString;
-		
+
 	}
 
 	private void extractAttributeClassAndValue(EStructuralFeature feature, String featureValue) throws Exception {
@@ -87,21 +86,20 @@ public class ComponentAttribute {
 
 			List<String> values = new ArrayList<String>(Arrays.asList(featureValue.split(",")));
 
-			if (attributeVals.containsKey(className)) {
-				attributeVals.get(className).addAll(values);
+			if (dependencyList != null && dependencyList.getValue0().equals(className)) {
+				dependencyList.getValue1().addAll(values);
 			} else {
-				attributeVals.put(className, new ArrayList<String>());
-				attributeVals.get(className).addAll(values);
+				dependencyList = new Pair<String, List<String>>(className, new ArrayList<String>(values));
 			}
 
 		} else {
 			String className = featureName.substring(featureName.indexOf('_') + 1, featureName.lastIndexOf('_'))
 					.replace('_', '.');
-			if (attributeVals.containsKey(className)) {
-				attributeVals.get(className).add(featureValue);
+			if (dependencyList != null && dependencyList.getValue0().equals(className)) {
+				dependencyList.getValue1().add(featureValue);
 			} else {
-				attributeVals.put(className, new ArrayList<String>());
-				attributeVals.get(className).add(featureValue);
+				dependencyList = new Pair<String, List<String>>(className, new ArrayList<String>());
+				dependencyList.getValue1().add(featureValue);
 			}
 		}
 
@@ -131,65 +129,48 @@ public class ComponentAttribute {
 		return mapAttribute;
 	}
 
-	public Map<String, List<String>> getAttributeValues() {
-		return attributeVals;
+	public Pair<String, List<String>> getAttributeValues() {
+		return dependencyList;
 	}
 
 	public boolean isCanGenerate() {
 		return canGenerate;
 	}
-	
+
 	public void removeDependency(String className, String varName) {
-		if(type == ComponentAttributeTypes.REFERENCE) {
-			
-			for(String s: attributeVals.keySet()) {
-				if(s.equals(className) && attributeVals.get(s).get(0).equals(varName)) {
-					canGenerate = false;
-					break;
-				}
-					
+		if (type == ComponentAttributeTypes.REFERENCE) {
+
+			if (dependencyList.getValue0().equals(className) && dependencyList.getValue1().get(0).equals(varName)) {
+				canGenerate = false;
+
 			}
-		}
-		else if (type == ComponentAttributeTypes.LIST) {
-			
-			for(String s: attributeVals.keySet()) {
-				if(s.equals(className))
-				{
-					for(String s1: attributeVals.get(s) ) {
-						if(s1.equals(varName))
-						{
-							attributeVals.get(s).remove(s1);
-							if(attributeVals.get(s).size() == 0)
-								canGenerate = false;
-							break;
-						}
-					}
-				}
-					
+
+		} else if (type == ComponentAttributeTypes.LIST) {
+			if (dependencyList.getValue0().equals(className) && dependencyList.getValue1().contains(varName)) {
+
+				dependencyList.getValue1().remove(varName);
+				canGenerate = false;
+
 			}
-			
-		}else if(type == ComponentAttributeTypes.MAP)
-		{
-			if(mapAttribute.getKeyClass().equals(className))
-			{
+		} else if (type == ComponentAttributeTypes.MAP) {
+			if (mapAttribute.getKeyClass().equals(className)) {
 				mapAttribute.removeFromKey(varName);
 			}
-			if(mapAttribute.getValueClass().equals(className))
-			{
+			if (mapAttribute.getValueClass().equals(className)) {
 				mapAttribute.removeFromValue(varName);
 			}
-			
-			if(mapAttribute.getValues().size() == 0)
+
+			if (mapAttribute.getValues().size() == 0)
 				canGenerate = false;
 		}
-		
+
 	}
 
 	class MapAttribute {
 
 		private String keyClass = new String();
 
-		private String valueClass  = new String();
+		private String valueClass = new String();
 
 		private Map<String, String> values = new HashMap<String, String>();
 
@@ -211,14 +192,14 @@ public class ComponentAttribute {
 		public void removeFromValue(String varName) {
 			// TODO Auto-generated method stub
 			List<String> tobeRemoved = new ArrayList<String>();
-			
-			for(String s: values.keySet()) {
-				if(values.get(s).equals(varName))
+
+			for (String s : values.keySet()) {
+				if (values.get(s).equals(varName))
 					tobeRemoved.add(s);
 			}
-			for(String s: tobeRemoved)
+			for (String s : tobeRemoved)
 				values.remove(s);
-			
+
 		}
 
 		public void removeFromKey(String varName) {
@@ -229,25 +210,21 @@ public class ComponentAttribute {
 		public MapAttribute() {
 			// TODO Auto-generated constructor stub
 		}
-		
+
 		@Override
-		public String toString()
-		{
+		public String toString() {
 			String returnString = new String();
-			
-			returnString += keyClass +  "\t\t" + valueClass + "\n";
-			
-			for(String s : values.keySet()) {
-				
+
+			returnString += keyClass + "\t\t" + valueClass + "\n";
+
+			for (String s : values.keySet()) {
+
 				returnString += s + "\t\t" + values.get(s) + "\n";
 			}
-			
+
 			return returnString;
-			
-			
-		
+
 		}
-		
 
 		private void breakFeatureValueToMap(String featureValue) {
 
@@ -271,7 +248,5 @@ public class ComponentAttribute {
 		}
 
 	}
-
-	
 
 }

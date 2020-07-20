@@ -53,21 +53,27 @@ public class ComponentObject {
 	public static final String STRING_CLASS = "java.lang.String";
 
 	public static final String COMMA = " , ";
-	public  static final String UNDERSCORE = "_";
+	public static final String UNDERSCORE = "_";
+
+	public static final String LESSTHAN = "<";
+
+	public static final String GREATERTHAN = ">";
 	
-	public  static final String LESSTHAN = "<";
+	private List<String> dependentVars  = new ArrayList<String>();
 	
-	public  static final String GREATERTHAN = ">";
+	private boolean visited = false;
 
 	private List<ComponentAttribute> otherAttributes = new ArrayList<ComponentAttribute>();
 
 	private Map<String, List<String>> dependencies = new HashMap<String, List<String>>();
-	
+
 	private List<String> parents = new ArrayList<String>();
 
-	public ComponentObject(EObject self, List<String> parents) throws Exception {
+	public ComponentObject(EObject self, List<String> parents, String parentName) throws Exception {
 
 		parentObject = self;
+		if(parentName != null)
+			dependentVars.add(parentName);
 		this.parents.addAll(parents);
 		System.out.println("\n\n");
 		System.out.println(self.getClass().getName());
@@ -114,6 +120,11 @@ public class ComponentObject {
 
 					ComponentAttribute cAttribute = new ComponentAttribute(esf, value);
 					System.out.println(cAttribute.toString());
+					
+					for(List<String> lists : dependencies.values()) {
+						dependentVars.addAll(lists);
+					}
+					
 
 					otherAttributes.add(cAttribute);
 
@@ -258,23 +269,33 @@ public class ComponentObject {
 		return resultString;
 
 	}
-	
+
 	public void removeDependency(String className, String varName) {
-		
-		for(ComponentAttribute cAttribute: otherAttributes) {
-			
-			cAttribute.removeDependency(className,varName);
+
+		for (ComponentAttribute cAttribute : otherAttributes) {
+
+			cAttribute.removeDependency(className, varName);
+			dependentVars.remove(varName);
 		}
 	}
 
 	public String generateCode(Map<String, ComponentObject> componentMap) {
+		
+		if(getGeneratedClassName().endsWith(".App")) {
+			
+			
+			
+		}
+		
+		
+		
 		String code = new String();
 
 		code += getGeneratedClassName() + SPACE + getVarName() + EQUALS + getBuilderClassName() + CREATE + NEWLINE;
 
 		for (ComponentAttribute attribute : otherAttributes) {
-			
-			if(!attribute.isCanGenerate())
+
+			if (!attribute.isCanGenerate())
 				continue;
 			if (!(attribute.getType() == ComponentAttributeTypes.LIST
 					|| attribute.getType() == ComponentAttributeTypes.MAP)) {
@@ -296,11 +317,11 @@ public class ComponentObject {
 
 				code += DOT + attribute.getName() + OPENBRACKET + listCode + CLOSEBRACKET + NEWLINE;
 			}
-			
+
 			else if (attribute.getType() == ComponentAttributeTypes.MAP) {
 
 				Pair<String, String> codePair = buildMap(attribute);
-				code = codePair.getValue1()  + code ;
+				code = codePair.getValue1() + code;
 			}
 
 		}
@@ -311,62 +332,52 @@ public class ComponentObject {
 	}
 
 	private Pair<String, String> buildMap(ComponentAttribute attribute) {
-		
-		
-		
-		String mapName = getVarName()+ UNDERSCORE + attribute.getName();
-		
-		MapAttribute mapAttribute = attribute.getMapAttribute(); 
-		String declaration = "java.util.Map" + LESSTHAN + mapAttribute.getKeyClass() + COMMA + mapAttribute.getValueClass()+GREATERTHAN
-				+ SPACE + mapName + EQUALS + " new " + "java.util.Map" + LESSTHAN + mapAttribute.getKeyClass() + COMMA +
-				mapAttribute.getValueClass()+GREATERTHAN + "();\n";
-		
-		
+		String mapName = getVarName() + UNDERSCORE + attribute.getName();
+
+		MapAttribute mapAttribute = attribute.getMapAttribute();
+		String declaration = "java.util.Map" + LESSTHAN + mapAttribute.getKeyClass() + COMMA
+				+ mapAttribute.getValueClass() + GREATERTHAN + SPACE + mapName + EQUALS + " new " + "java.util.Map"
+				+ LESSTHAN + mapAttribute.getKeyClass() + COMMA + mapAttribute.getValueClass() + GREATERTHAN + "();\n";
 		return new Pair<String, String>(mapName, declaration);
-		
+
 	}
 
-	private String buildList(Map<String, List<String>> attributeValues) {
-		// TODO Auto-generated method stub
-		
-		
+	private String buildList(Pair<String, List<String>> pair) {
+
 		String listCode = "Arrays.asList( ";
+		boolean start = true;
+		for (String s1 : pair.getValue1()) {
 
-		for (String s : attributeValues.keySet()) {
+			if (!start)
+				listCode += COMMA;
 
-			List<String> list = attributeValues.get(s);
-			boolean start = true;
-			for (String s1 : list) {
-
-				if (!start)
-					listCode += COMMA;
-
-				start = false;
-				if (s.contains(STRING_CLASS)) {
-					listCode += QUOT + s1 + QUOT;
-				} else {
-					listCode += s1;
-
-				}
+			start = false;
+			if (pair.getValue0().contains(STRING_CLASS)) {
+				listCode += QUOT + s1 + QUOT;
+			} else {
+				listCode += s1;
 
 			}
 
 		}
-
 		listCode += " )";
-
 		return listCode;
 	}
 
-	private String getSingleValue(Map<String, List<String>> attributeValues) {
+	private String getSingleValue(Pair<String, List<String>> pair) {
+		return pair.getValue1().get(0);
+	}
 
-		for (String s : attributeValues.keySet()) {
-			List<String> list = attributeValues.get(s);
-			return list.get(0);
-		}
+	public List<String> getDependentVars() {
+		return dependentVars;
+	}
 
-		return null;
+	public boolean isVisited() {
+		return visited;
+	}
 
+	public void setVisited(boolean visited) {
+		this.visited = visited;
 	}
 
 }

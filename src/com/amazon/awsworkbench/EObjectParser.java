@@ -41,40 +41,39 @@ public class EObjectParser {
 	private Set<String> imports = new TreeSet<String>();
 	private StringBuilder codeOutput = new StringBuilder();
 
+	private ComponentObject appObject;
+
 	private Analyser analyser = new Analyser();
 
 	public void generateCode(EObject self) throws Exception {
-		
-		
 
-		System.out.println("Hello");
 
 		componentMap = new HashMap<String, ComponentObject>();
 		uniqueValues = new HashMap<String, SortedSet<String>>();
 		variables = new HashMap<String, List<String>>();
 		analyser = new Analyser();
-		
+
 		codeOutput = new StringBuilder();
-		parse(self , new ArrayList<String>());
+		parse(self, new ArrayList<String>(), true,null);
 
 		buildDependencyGraph();
 		analyser.checkCycles();
-		
+
 		printComponents();
 
 		generateImports();
 
 		printCode();
-		
+		analyser.topologicalSort();
 
-		generateApp(self);
-		
-		
+	//	generateApp();
+
 	}
 
-	private void generateApp(EObject self) {
-		// TODO Auto-generated method stub
+	private void generateApp() {
 		
+		String code = appObject.generateCode(componentMap);
+
 	}
 
 	private void printComponents() {
@@ -82,7 +81,7 @@ public class EObjectParser {
 
 			System.out.println(c);
 		}
-		
+
 	}
 
 	private void printCode() {
@@ -101,7 +100,7 @@ public class EObjectParser {
 		for (ComponentObject cObject : componentMap.values()) {
 			if (!graphAdditions.containsKey(cObject.getVarName())) {
 				graphAdditions.put(cObject.getVarName(), cObject);
-				analyser.addVariable(cObject.getVarName());
+				analyser.addVariable(cObject.getVarName(), cObject);
 			}
 		}
 
@@ -118,7 +117,7 @@ public class EObjectParser {
 							analyser.addDependency(dObject.getVarName(), cObject.getVarName());
 						} else {
 							System.out.println("Mismatch : " + vars + " does not belong to class : " + key);
-							cObject.removeDependency(key, vars);
+							//cObject.removeDependency(key, vars);
 
 						}
 
@@ -159,11 +158,15 @@ public class EObjectParser {
 
 	}
 
-	public void parse(EObject obj, List<String> parents) throws Exception {
+	public void parse(EObject obj, List<String> parents, boolean isApp, String parentVarname) throws Exception {
 
 		checkMandatoryFields(obj);
 
-		ComponentObject cObject = new ComponentObject(obj,parents);
+		ComponentObject cObject = new ComponentObject(obj, parents, parentVarname);
+		if (isApp) {
+			appObject = cObject;
+
+		}
 		componentMap.put(cObject.getVarName(), cObject);
 		if (variables.containsKey(cObject.getGeneratedClassName()))
 			variables.get(cObject.getGeneratedClassName()).add(cObject.getVarName());
@@ -171,12 +174,11 @@ public class EObjectParser {
 			variables.put(cObject.getGeneratedClassName(), new ArrayList<String>());
 			variables.get(cObject.getGeneratedClassName()).add(cObject.getVarName());
 		}
-		
-		
+
 		parents.add(cObject.getVarName());
 		EList<EObject> children = obj.eContents();
 		for (EObject e : children)
-			parse(e,parents);
+			parse(e, parents, false,cObject.getVarName());
 		parents.remove(cObject.getVarName());
 
 	}

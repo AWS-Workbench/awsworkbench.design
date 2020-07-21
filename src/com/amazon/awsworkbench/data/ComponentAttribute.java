@@ -65,7 +65,7 @@ public class ComponentAttribute {
 
 		returnString += name + "\n";
 		returnString += type + "\n";
-		//returnString += dependencyList.toString() + "\n";
+		// returnString += dependencyList.toString() + "\n";
 		returnString += mapAttribute.toString() + "\n";
 
 		return returnString;
@@ -133,35 +133,60 @@ public class ComponentAttribute {
 		return dependencyList;
 	}
 
-	public boolean isCanGenerate() {
+	public boolean isCanGenerate(Map<String, ComponentObject> componentMap) {
+
+		List<String> toBeRemoved = new ArrayList<String>();
+
+		if (type == ComponentAttributeTypes.REFERENCE || type == ComponentAttributeTypes.LIST) {
+
+			for (String s : dependencyList.getValue1()) {
+				if (componentMap.get(s) != null && !componentMap.get(s).isGenerated())
+					toBeRemoved.add(s);
+			}
+
+		}
+
+		if (type == ComponentAttributeTypes.MAP) {
+
+			for (String s : mapAttribute.getValues().keySet()) {
+
+				if (componentMap.get(s) != null && !componentMap.get(s).isGenerated())
+					toBeRemoved.add(s);
+
+			}
+			for (String s : mapAttribute.getValues().values()) {
+
+				if (componentMap.get(s) != null && !componentMap.get(s).isGenerated())
+					toBeRemoved.add(s);
+
+			}
+
+		}
+
+		for (String s : toBeRemoved)
+			removeDependency(null, s);
+
 		return canGenerate;
 	}
 
 	public void removeDependency(String className, String varName) {
-		if (type == ComponentAttributeTypes.REFERENCE) {
+		if (type == ComponentAttributeTypes.REFERENCE || type == ComponentAttributeTypes.LIST) {
 
-			if (dependencyList.getValue0().equals(className) && dependencyList.getValue1().get(0).equals(varName)) {
+			dependencyList.getValue1().remove(varName);
+			if (dependencyList.getValue1().size() <= 0)
 				canGenerate = false;
+			else
+				canGenerate = true;
 
-			}
-
-		} else if (type == ComponentAttributeTypes.LIST) {
-			if (dependencyList.getValue0().equals(className) && dependencyList.getValue1().contains(varName)) {
-
-				dependencyList.getValue1().remove(varName);
-				canGenerate = false;
-
-			}
 		} else if (type == ComponentAttributeTypes.MAP) {
-			if (mapAttribute.getKeyClass().equals(className)) {
-				mapAttribute.removeFromKey(varName);
-			}
-			if (mapAttribute.getValueClass().equals(className)) {
-				mapAttribute.removeFromValue(varName);
-			}
 
-			if (mapAttribute.getValues().size() == 0)
+			mapAttribute.removeFromKey(varName);
+			mapAttribute.removeFromValue(varName);
+
+			if (mapAttribute.getValues().size() <= 0)
 				canGenerate = false;
+			else
+				canGenerate = true;
 		}
 
 	}

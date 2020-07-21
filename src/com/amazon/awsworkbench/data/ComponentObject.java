@@ -27,6 +27,14 @@ public class ComponentObject {
 	private EObject parentObject;
 	private String generatedClassName;
 	private String additionalCode;
+	private List<String> dependentVars = new ArrayList<String>();
+	private boolean visited = false;
+
+	private List<ComponentAttribute> otherAttributes = new ArrayList<ComponentAttribute>();
+
+	private Map<String, List<String>> dependencies = new HashMap<String, List<String>>();
+
+	private List<String> parents = new ArrayList<String>();
 
 	public final String VARNAME = "varName";
 	public final String IDENTIFIER = "identifier";
@@ -59,15 +67,7 @@ public class ComponentObject {
 
 	public static final String GREATERTHAN = ">";
 
-	private List<String> dependentVars = new ArrayList<String>();
-
-	private boolean visited = false;
-
-	private List<ComponentAttribute> otherAttributes = new ArrayList<ComponentAttribute>();
-
-	private Map<String, List<String>> dependencies = new HashMap<String, List<String>>();
-
-	private List<String> parents = new ArrayList<String>();
+	
 
 	public ComponentObject(EObject self, List<String> parents, String parentName) throws Exception {
 
@@ -280,9 +280,7 @@ public class ComponentObject {
 
 	public String generateCode(Map<String, ComponentObject> componentMap) {
 
-		if (getGeneratedClassName().endsWith(".App")) {
-
-		}
+		
 
 		String code = new String();
 
@@ -290,7 +288,7 @@ public class ComponentObject {
 
 		for (ComponentAttribute attribute : otherAttributes) {
 
-			if (!attribute.isCanGenerate())
+			if (!attribute.isCanGenerate(componentMap))
 				continue;
 			if (!(attribute.getType() == ComponentAttributeTypes.LIST
 					|| attribute.getType() == ComponentAttributeTypes.MAP)) {
@@ -324,6 +322,11 @@ public class ComponentObject {
 		}
 
 		code += ".build();\n";
+		
+		this.generatedCode  = code;
+		this.isGenerated = true;
+		
+		
 
 		return code;
 	}

@@ -41,14 +41,20 @@ public class ComponentObject {
 	public final String VARNAME = "varName";
 	public final String IDENTIFIER = "identifier";
 	public final String GENERATED_CLASS_NAME = "generatedClassName";
-
 	public final String ADDITIONAL_CODE = "additionalCode";
+	public final String ASMAP = "AsMap";
+	public final String ASREFERENCE = "AsReference";
+	public final String ASLIST = "AsList";
 
 	public static final String SPACE = " ";
 
-	public static final String EQUALS = " = ";
+	public static final String EQUALS = "=";
 
 	public static final String CREATE = "create";
+	
+	public static final String BUILD = "build";
+	
+	public static final String BUILDER = "Builder";
 
 	public static final String DOT = ".";
 
@@ -58,16 +64,29 @@ public class ComponentObject {
 
 	public static final String QUOT = "\"";
 
-	public static final String NEWLINE = " \n";
+	public static final String NEWLINE = "\n";
 
 	public static final String STRING_CLASS = "java.lang.String";
+	
+	public static final String JAVALANG_PACKAGE = "java.lang";
 
-	public static final String COMMA = " , ";
+	public static final String COMMA = ",";
+	
 	public static final String UNDERSCORE = "_";
+	
+	public static final String DOUBLEUNDERSCORE = "__";
 
 	public static final String LESSTHAN = "<";
 
 	public static final String GREATERTHAN = ">";
+	
+	public static final String TILDE = "~";
+	
+	public static final String HYPHEN = "-";
+	
+	public static final String COLON = ":";
+	
+	public static final String SEMICOLON = ";";
 
 	public ComponentObject(EObject eCoreObject, List<String> parents, String parentName) throws Exception {
 
@@ -103,13 +122,13 @@ public class ComponentObject {
 
 					String value = eCoreObject.eGet(eStructuralFeature).toString().trim();
 
-					if (featureName.endsWith("AsReference")) {
+					if (featureName.endsWith(ASREFERENCE)) {
 
 						addReferenceDependency(featureName, value);
-					} else if (featureName.endsWith("AsList")) {
+					} else if (featureName.endsWith(ASLIST)) {
 
 						addListDependency(featureName, value);
-					} else if (featureName.endsWith("AsMap")) {
+					} else if (featureName.endsWith(ASMAP)) {
 
 						addMapDependency(featureName, value);
 					}
@@ -131,49 +150,90 @@ public class ComponentObject {
 
 	private void addReferenceDependency(String featureName, String featureValue) {
 
-		String className = featureName.substring(featureName.indexOf('_') + 1, featureName.lastIndexOf('_'))
-				.replace('_', '.');
+		String className = featureName
+				.substring(featureName.indexOf(UNDERSCORE) + 1, featureName.lastIndexOf(UNDERSCORE))
+				.replace(UNDERSCORE, DOT);
+
+		String tempFeatureValue = featureValue.trim();
+
+		if (isVariableExpression(tempFeatureValue)) // surrounded by ~
+		{
+			tempFeatureValue = featureValue.substring(1, featureValue.indexOf(DOT));
+
+		}
+		
+		if (isStaticExpression(tempFeatureValue)) // surrounded by -
+		{
+			return;
+
+		}
 
 		if (dependencyMap.containsKey(className)) {
-			dependencyMap.get(className).add(featureValue);
+			dependencyMap.get(className).add(tempFeatureValue);
 		} else {
 			dependencyMap.put(className, new ArrayList<String>());
-			dependencyMap.get(className).add(featureValue);
+			dependencyMap.get(className).add(tempFeatureValue);
 		}
 
 	}
 
+	private boolean isStaticExpression(String featureValue) {
+		return (featureValue.trim().startsWith(HYPHEN) && featureValue.trim().endsWith(HYPHEN));
+	}
+
+	private boolean isVariableExpression(String featureValue) {
+		
+		return (featureValue.trim().startsWith(TILDE) && featureValue.trim().endsWith(TILDE));
+	}
+
+	
+
 	private void addListDependency(String featureName, String featureValue) {
 
-		String className = featureName.substring(featureName.indexOf('_') + 1, featureName.lastIndexOf('_'))
-				.replace('_', '.');
-		if (className.startsWith("java.lang"))
+		String className = featureName.substring(featureName.indexOf(UNDERSCORE) + 1, featureName.lastIndexOf(UNDERSCORE))
+				.replace(UNDERSCORE, DOT);
+		if (className.startsWith(JAVALANG_PACKAGE))
 			return;
 
-		List<String> values = new ArrayList<String>(Arrays.asList(featureValue.split(",")));
+		List<String> rawValues = new ArrayList<String>(Arrays.asList(featureValue.split(COMMA)));
+		
+		List<String> variableValues  = new ArrayList<String>();
+		
+		for(String rawValue : rawValues ) {
+			if(isVariableExpression(rawValue)) {
+				variableValues.add(rawValue.trim().substring(1, rawValue.indexOf(DOT)));
+				continue;
+			}
+			else if(isStaticExpression(rawValue))
+				continue;
+			else
+				variableValues.add(rawValue.trim());
+			
+				
+		}
 
 		if (dependencyMap.containsKey(className)) {
-			dependencyMap.get(className).addAll(values);
+			dependencyMap.get(className).addAll(variableValues);
 		} else {
 			dependencyMap.put(className, new ArrayList<String>());
-			dependencyMap.get(className).addAll(values);
+			dependencyMap.get(className).addAll(variableValues);
 		}
 
 	}
 
 	private void addMapDependency(String featureName, String featureValue) throws Exception {
 
-		String[] mapVals = featureName.substring(featureName.indexOf('_') + 1, featureName.lastIndexOf('_'))
-				.split("__");
+		String[] mapVals = featureName.substring(featureName.indexOf(UNDERSCORE) + 1, featureName.lastIndexOf(UNDERSCORE))
+				.split(DOUBLEUNDERSCORE);
 
 		if (mapVals.length > 2)
 			EObjectParser.showError("Maps has more than 2 components");
 
-		String className1 = mapVals[0].replace('_', '.');
-		String className2 = mapVals[1].replace('_', '.');
+		String className1 = mapVals[0].replace(UNDERSCORE, DOT);
+		String className2 = mapVals[1].replace(UNDERSCORE, DOT);
 		Map<String, String> featureMap = breakFeatureValueToMap(featureValue);
 
-		if (!className1.startsWith("java.lang")) {
+		if (!className1.startsWith(JAVALANG_PACKAGE)) {
 
 			if (dependencyMap.containsKey(className1)) {
 				dependencyMap.get(className1).addAll(featureMap.keySet());
@@ -184,7 +244,7 @@ public class ComponentObject {
 
 		}
 
-		if (!className2.startsWith("java.lang")) {
+		if (!className2.startsWith(JAVALANG_PACKAGE)) {
 
 			if (dependencyMap.containsKey(className2)) {
 				dependencyMap.get(className2).addAll(featureMap.values());
@@ -201,8 +261,8 @@ public class ComponentObject {
 
 		HashMap<String, String> featureValues = new HashMap<String, String>();
 
-		for (String nameValuePair : featureValue.split(",")) {
-			String[] nameAndValue = nameValuePair.split(":");
+		for (String nameValuePair : featureValue.split(COMMA)) {
+			String[] nameAndValue = nameValuePair.split(COLON);
 			featureValues.put(nameAndValue[0], nameAndValue[1]);
 		}
 
@@ -236,7 +296,7 @@ public class ComponentObject {
 	}
 
 	public String getBuilderClassName() {
-		return generatedClassName + ".Builder";
+		return generatedClassName + DOT + BUILDER;
 	}
 
 	public String getAdditionalCode() {
@@ -257,8 +317,8 @@ public class ComponentObject {
 		String resultString = new String();
 
 		resultString += getVarName();
-		resultString += " " + getGeneratedClassName() + "\n";
-		resultString += " " + parents + "\n";
+		resultString += SPACE + getGeneratedClassName() + NEWLINE;
+		resultString += SPACE + parents + NEWLINE;
 
 		return resultString;
 
@@ -321,7 +381,7 @@ public class ComponentObject {
 
 		}
 
-		code += ".build();\n";
+		code += DOT + BUILD + OPENBRACKET + CLOSEBRACKET + SEMICOLON + NEWLINE;
 
 		this.generatedCode = code;
 		this.isGenerated = true;

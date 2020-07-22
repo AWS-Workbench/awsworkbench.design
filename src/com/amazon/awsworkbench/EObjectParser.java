@@ -32,42 +32,44 @@ public class EObjectParser {
 
 	private String[] mandatoryFields = { "varName", "identifier" };
 
-	private Map<String, ComponentObject> componentMap = new HashMap<String, ComponentObject>();
+	private Map<String, ComponentObject> componentObjectMap = new HashMap<String, ComponentObject>();
 
-	private Map<String, SortedSet<String>> uniqueValues = new HashMap<String, SortedSet<String>>();
+	private Map<String, SortedSet<String>> uniqueMandatoryFieldValues = new HashMap<String, SortedSet<String>>();
 
-	private Map<String, List<String>> variables = new HashMap<String, List<String>>();
+	private Map<String, List<String>> classNameToVariablesMap = new HashMap<String, List<String>>();
 
-	private Set<String> imports = new TreeSet<String>();
+	private Set<String> importStatements = new TreeSet<String>();
 	private StringBuilder codeOutput = new StringBuilder();
 
 	private ComponentObject appObject;
 
-	private Analyser analyser = new Analyser();
+	private Analyser graphAnalyser = new Analyser();
 
 	public void generateCode(EObject self) throws Exception {
 
 
-		componentMap = new HashMap<String, ComponentObject>();
-		uniqueValues = new HashMap<String, SortedSet<String>>();
-		variables = new HashMap<String, List<String>>();
-		analyser = new Analyser();
+		componentObjectMap = new HashMap<String, ComponentObject>();
+		uniqueMandatoryFieldValues = new HashMap<String, SortedSet<String>>();
+		classNameToVariablesMap = new HashMap<String, List<String>>();
+		graphAnalyser = new Analyser();
 
 		codeOutput = new StringBuilder();
 		parse(self, new ArrayList<String>(), true,null);
 
 		buildDependencyGraph();
-		analyser.checkCycles();
+		graphAnalyser.checkCycles();
 
 		//printComponents();
 
-		//generateImports();
+		generateImports();
 
 		
-		analyser.topologicalSort();
+		graphAnalyser.topologicalSort();
 		
 		
 		printCode();
+		
+		printImports();
 
 	//	generateApp();
 
@@ -75,12 +77,12 @@ public class EObjectParser {
 
 	private void generateApp() {
 		
-		String code = appObject.generateCode(componentMap);
+		String code = appObject.generateCode(componentObjectMap);
 
 	}
 
 	private void printComponents() {
-		for (ComponentObject c : componentMap.values()) {
+		for (ComponentObject c : componentObjectMap.values()) {
 
 			System.out.println(c);
 		}
@@ -89,9 +91,9 @@ public class EObjectParser {
 
 	private void printCode() {
 
-		for (ComponentObject c : analyser.getQueue()) {
+		for (ComponentObject c : graphAnalyser.getQueue()) {
 
-			System.out.println(c.generateCode(componentMap));
+			System.out.println(c.generateCode(componentObjectMap));
 		}
 
 	}
@@ -100,24 +102,24 @@ public class EObjectParser {
 
 		Map<String, ComponentObject> graphAdditions = new HashMap<String, ComponentObject>();
 
-		for (ComponentObject cObject : componentMap.values()) {
-			if (!graphAdditions.containsKey(cObject.getVarName())) {
-				graphAdditions.put(cObject.getVarName(), cObject);
-				analyser.addVariable(cObject.getVarName(), cObject);
+		for (ComponentObject dependentObject : componentObjectMap.values()) {
+			if (!graphAdditions.containsKey(dependentObject.getVarName())) {
+				graphAdditions.put(dependentObject.getVarName(), dependentObject);
+				graphAnalyser.addVariable(dependentObject.getVarName(), dependentObject);
 			}
 		}
 
-		for (ComponentObject cObject : graphAdditions.values()) {
-			Map<String, List<String>> dependencies = cObject.getDependencies();
+		for (ComponentObject dependentObject : graphAdditions.values()) {
+			Map<String, List<String>> dependencies = dependentObject.getDependencies();
 
 			for (String key : dependencies.keySet()) {
 				List<String> varList = dependencies.get(key);
 
 				for (String vars : varList) {
 					if (graphAdditions.containsKey(vars)) {
-						ComponentObject dObject = graphAdditions.get(vars);
-						if (key.equals(dObject.getGeneratedClassName())) {
-							analyser.addDependency(dObject.getVarName(), cObject.getVarName());
+						ComponentObject neededObject = graphAdditions.get(vars);
+						if (key.equals(neededObject.getGeneratedClassName())) {
+							graphAnalyser.addDependency(neededObject.getVarName(), dependentObject.getVarName());
 						} else {
 							System.out.println("Mismatch : " + vars + " does not belong to class : " + key);
 							//cObject.removeDependency(key, vars);
@@ -126,7 +128,7 @@ public class EObjectParser {
 
 					} else {
 						System.out.println("Variable not defined: " + vars + " for class : " + key);
-						cObject.removeDependency(key, vars);
+						dependentObject.removeDependency(key, vars);
 					}
 				}
 
@@ -141,48 +143,48 @@ public class EObjectParser {
 	}
 
 	private void printImports() {
-		for (String s : imports)
-			System.out.print(s);
+		for (String statement : importStatements)
+			System.out.print(statement);
 
 	}
 
 	private void generateImports() {
 
-		imports.add("import java.util.*;\n");
-		for (ComponentObject cObject : componentMap.values()) {
+		importStatements.add("import java.util.*;\n");
+		for (ComponentObject currentObject : componentObjectMap.values()) {
 
-			String starImport = cObject.getGeneratedClassName().substring(0,
-					cObject.getGeneratedClassName().lastIndexOf("."));
+			String starImport = currentObject.getGeneratedClassName().substring(0,
+					currentObject.getGeneratedClassName().lastIndexOf("."));
 			starImport = starImport + ".*";
-			imports.add("import " + cObject.getGeneratedClassName() + ";\n");
-			imports.add("import " + cObject.getBuilderClassName() + ";\n");
-			imports.add("import " + starImport + ";\n");
+			importStatements.add("import " + currentObject.getGeneratedClassName() + ";\n");
+			importStatements.add("import " + currentObject.getBuilderClassName() + ";\n");
+			importStatements.add("import " + starImport + ";\n");
 		}
 
 	}
 
-	public void parse(EObject obj, List<String> parents, boolean isApp, String parentVarname) throws Exception {
+	public void parse(EObject currentEcoreObject, List<String> parents, boolean isApp, String parentVarname) throws Exception {
 
-		checkMandatoryFields(obj);
+		checkMandatoryFields(currentEcoreObject);
 
-		ComponentObject cObject = new ComponentObject(obj, parents, parentVarname);
+		ComponentObject componentObject = new ComponentObject(currentEcoreObject, parents, parentVarname);
 		if (isApp) {
-			appObject = cObject;
+			appObject = componentObject;
 
 		}
-		componentMap.put(cObject.getVarName(), cObject);
-		if (variables.containsKey(cObject.getGeneratedClassName()))
-			variables.get(cObject.getGeneratedClassName()).add(cObject.getVarName());
+		componentObjectMap.put(componentObject.getVarName(), componentObject);
+		if (classNameToVariablesMap.containsKey(componentObject.getGeneratedClassName()))
+			classNameToVariablesMap.get(componentObject.getGeneratedClassName()).add(componentObject.getVarName());
 		else {
-			variables.put(cObject.getGeneratedClassName(), new ArrayList<String>());
-			variables.get(cObject.getGeneratedClassName()).add(cObject.getVarName());
+			classNameToVariablesMap.put(componentObject.getGeneratedClassName(), new ArrayList<String>());
+			classNameToVariablesMap.get(componentObject.getGeneratedClassName()).add(componentObject.getVarName());
 		}
 
-		parents.add(cObject.getVarName());
-		EList<EObject> children = obj.eContents();
+		parents.add(componentObject.getVarName());
+		EList<EObject> children = currentEcoreObject.eContents();
 		for (EObject e : children)
-			parse(e, parents, false,cObject.getVarName());
-		parents.remove(cObject.getVarName());
+			parse(e, parents, false,componentObject.getVarName());
+		parents.remove(componentObject.getVarName());
 
 	}
 
@@ -191,25 +193,25 @@ public class EObjectParser {
 		// TODO Auto-generated method stub
 		EList<EStructuralFeature> allEStructFeats = self.eClass().getEAllStructuralFeatures();
 
-		for (EStructuralFeature esf : allEStructFeats) {
-			if (isMandatory(esf)) {
+		for (EStructuralFeature eStructuralFeature : allEStructFeats) {
+			if (isMandatory(eStructuralFeature)) {
 
-				if ((self.eGet(esf) == null || self.eGet(esf).toString().trim().isEmpty()))
+				if ((self.eGet(eStructuralFeature) == null || self.eGet(eStructuralFeature).toString().trim().isEmpty()))
 					showError("Mandatory fields (Var Name or Identifier) are empty for some components");
 
-				String keyName = esf.getName();
-				String value = self.eGet(esf).toString().trim();
+				String keyName = eStructuralFeature.getName();
+				String value = self.eGet(eStructuralFeature).toString().trim();
 
-				if (uniqueValues.containsKey(keyName)) {
-					if (uniqueValues.get(keyName).contains(value))
+				if (uniqueMandatoryFieldValues.containsKey(keyName)) {
+					if (uniqueMandatoryFieldValues.get(keyName).contains(value))
 						showError("Duplicate value: " + value + " found for " + keyName);
 					else
-						uniqueValues.get(keyName).add(value);
+						uniqueMandatoryFieldValues.get(keyName).add(value);
 
 				} else {
 
-					uniqueValues.put(keyName, new TreeSet<String>());
-					uniqueValues.get(keyName).add(value);
+					uniqueMandatoryFieldValues.put(keyName, new TreeSet<String>());
+					uniqueMandatoryFieldValues.get(keyName).add(value);
 
 				}
 
@@ -225,8 +227,8 @@ public class EObjectParser {
 
 	}
 
-	private boolean isMandatory(EStructuralFeature esf) {
-		String fieldName = esf.getName().trim();
+	private boolean isMandatory(EStructuralFeature eStructuralFeature) {
+		String fieldName = eStructuralFeature.getName().trim();
 		for (String mandatoryField : mandatoryFields) {
 			if (fieldName.equals(mandatoryField))
 				return true;

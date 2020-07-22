@@ -20,19 +20,21 @@ import com.amazon.awsworkbench.EObjectParser;
 import com.amazon.awsworkbench.data.ComponentAttribute.MapAttribute;
 
 public class ComponentObject {
-	private String varName;
+	private String resourceVariableName;
 	private String identifier;
 	private boolean isGenerated = false;
 	private String generatedCode;
-	private EObject parentObject;
+	private EObject parentEcoreObject;
 	private String generatedClassName;
+
+	private String parentConstruct = null;
 	private String additionalCode;
-	private List<String> dependentVars = new ArrayList<String>();
+	private List<String> dependentVariables = new ArrayList<String>();
 	private boolean visited = false;
 
-	private List<ComponentAttribute> otherAttributes = new ArrayList<ComponentAttribute>();
+	private List<ComponentAttribute> nonCoreAttributes = new ArrayList<ComponentAttribute>();
 
-	private Map<String, List<String>> dependencies = new HashMap<String, List<String>>();
+	private Map<String, List<String>> dependencyMap = new HashMap<String, List<String>>();
 
 	private List<String> parents = new ArrayList<String>();
 
@@ -46,13 +48,13 @@ public class ComponentObject {
 
 	public static final String EQUALS = " = ";
 
-	public static final String CREATE = ".create()";
+	public static final String CREATE = "create";
 
 	public static final String DOT = ".";
 
-	public static final String OPENBRACKET = "( ";
+	public static final String OPENBRACKET = "(";
 
-	public static final String CLOSEBRACKET = " )";
+	public static final String CLOSEBRACKET = ")";
 
 	public static final String QUOT = "\"";
 
@@ -67,45 +69,39 @@ public class ComponentObject {
 
 	public static final String GREATERTHAN = ">";
 
-	
+	public ComponentObject(EObject eCoreObject, List<String> parents, String parentName) throws Exception {
 
-	public ComponentObject(EObject self, List<String> parents, String parentName) throws Exception {
-
-		parentObject = self;
-		if (parentName != null)
-			dependentVars.add(parentName);
+		parentEcoreObject = eCoreObject;
+		if (parentName != null) {
+			dependentVariables.add(parentName);
+			this.parentConstruct = parentName;
+		}
 		this.parents.addAll(parents);
-		System.out.println("\n\n");
-		System.out.println(self.getClass().getName());
 
-		EList<EStructuralFeature> allEStructFeats = self.eClass().getEAllStructuralFeatures();
+		EList<EStructuralFeature> allEStructuralFeatures = eCoreObject.eClass().getEAllStructuralFeatures();
 
-		for (EStructuralFeature esf : allEStructFeats) {
-			if (esf.getName().equals(VARNAME)) {
-				varName = self.eGet(esf).toString();
-			} else if (esf.getName().equals(IDENTIFIER)) {
-				identifier = self.eGet(esf).toString();
-			} else if (esf.getName().equals(GENERATED_CLASS_NAME)) {
-				generatedClassName = self.eGet(esf).toString();
-			} else if (esf.getName().equals(ADDITIONAL_CODE) && self.eGet(esf) != null
-					&& !self.eGet(esf).toString().trim().isEmpty()) {
-				additionalCode = self.eGet(esf).toString();
+		for (EStructuralFeature eStructuralFeature : allEStructuralFeatures) {
+			if (eStructuralFeature.getName().equals(VARNAME)) {
+				resourceVariableName = eCoreObject.eGet(eStructuralFeature).toString().trim().replace(' ', '_');
+			} else if (eStructuralFeature.getName().equals(IDENTIFIER)) {
+				identifier = eCoreObject.eGet(eStructuralFeature).toString().trim().replace(' ', '_');
+			} else if (eStructuralFeature.getName().equals(GENERATED_CLASS_NAME)) {
+				generatedClassName = eCoreObject.eGet(eStructuralFeature).toString();
+			} else if (eStructuralFeature.getName().equals(ADDITIONAL_CODE)
+					&& eCoreObject.eGet(eStructuralFeature) != null
+					&& !eCoreObject.eGet(eStructuralFeature).toString().trim().isEmpty()) {
+				additionalCode = eCoreObject.eGet(eStructuralFeature).toString();
 			} else {
 
-				if (!(esf instanceof EAttribute))
+				if (!(eStructuralFeature instanceof EAttribute))
 					continue;
 
-				System.out.println(esf.getName());
-				System.out.println("Isenum: " + (esf.getEType().getInstanceClassName()));
-				System.out.println();
+				String featureName = eStructuralFeature.getName();
 
-				String featureName = esf.getName();
+				if (eCoreObject.eGet(eStructuralFeature) != null
+						&& !eCoreObject.eGet(eStructuralFeature).toString().trim().isEmpty()) {
 
-				if (self.eGet(esf) != null && !self.eGet(esf).toString().trim().isEmpty()) {
-//					System.out.println(esf.getName() + " " + esf.toString());
-//					System.out.println(self.eGet(esf).toString().trim());
-
-					String value = self.eGet(esf).toString().trim();
+					String value = eCoreObject.eGet(eStructuralFeature).toString().trim();
 
 					if (featureName.endsWith("AsReference")) {
 
@@ -118,14 +114,13 @@ public class ComponentObject {
 						addMapDependency(featureName, value);
 					}
 
-					ComponentAttribute cAttribute = new ComponentAttribute(esf, value);
-					System.out.println(cAttribute.toString());
+					ComponentAttribute componentAttribute = new ComponentAttribute(eStructuralFeature, value);
 
-					for (List<String> lists : dependencies.values()) {
-						dependentVars.addAll(lists);
+					for (List<String> lists : dependencyMap.values()) {
+						dependentVariables.addAll(lists);
 					}
 
-					otherAttributes.add(cAttribute);
+					nonCoreAttributes.add(componentAttribute);
 
 				}
 
@@ -139,11 +134,11 @@ public class ComponentObject {
 		String className = featureName.substring(featureName.indexOf('_') + 1, featureName.lastIndexOf('_'))
 				.replace('_', '.');
 
-		if (dependencies.containsKey(className)) {
-			dependencies.get(className).add(featureValue);
+		if (dependencyMap.containsKey(className)) {
+			dependencyMap.get(className).add(featureValue);
 		} else {
-			dependencies.put(className, new ArrayList<String>());
-			dependencies.get(className).add(featureValue);
+			dependencyMap.put(className, new ArrayList<String>());
+			dependencyMap.get(className).add(featureValue);
 		}
 
 	}
@@ -157,11 +152,11 @@ public class ComponentObject {
 
 		List<String> values = new ArrayList<String>(Arrays.asList(featureValue.split(",")));
 
-		if (dependencies.containsKey(className)) {
-			dependencies.get(className).addAll(values);
+		if (dependencyMap.containsKey(className)) {
+			dependencyMap.get(className).addAll(values);
 		} else {
-			dependencies.put(className, new ArrayList<String>());
-			dependencies.get(className).addAll(values);
+			dependencyMap.put(className, new ArrayList<String>());
+			dependencyMap.get(className).addAll(values);
 		}
 
 	}
@@ -180,22 +175,22 @@ public class ComponentObject {
 
 		if (!className1.startsWith("java.lang")) {
 
-			if (dependencies.containsKey(className1)) {
-				dependencies.get(className1).addAll(featureMap.keySet());
+			if (dependencyMap.containsKey(className1)) {
+				dependencyMap.get(className1).addAll(featureMap.keySet());
 			} else {
-				dependencies.put(className1, new ArrayList<String>());
-				dependencies.get(className1).addAll(featureMap.keySet());
+				dependencyMap.put(className1, new ArrayList<String>());
+				dependencyMap.get(className1).addAll(featureMap.keySet());
 			}
 
 		}
 
 		if (!className2.startsWith("java.lang")) {
 
-			if (dependencies.containsKey(className2)) {
-				dependencies.get(className2).addAll(featureMap.values());
+			if (dependencyMap.containsKey(className2)) {
+				dependencyMap.get(className2).addAll(featureMap.values());
 			} else {
-				dependencies.put(className2, new ArrayList<String>());
-				dependencies.get(className2).addAll(featureMap.values());
+				dependencyMap.put(className2, new ArrayList<String>());
+				dependencyMap.get(className2).addAll(featureMap.values());
 			}
 
 		}
@@ -206,21 +201,21 @@ public class ComponentObject {
 
 		HashMap<String, String> featureValues = new HashMap<String, String>();
 
-		for (String s : featureValue.split(",")) {
-			String[] s1 = s.split(":");
-			featureValues.put(s1[0], s1[1]);
+		for (String nameValuePair : featureValue.split(",")) {
+			String[] nameAndValue = nameValuePair.split(":");
+			featureValues.put(nameAndValue[0], nameAndValue[1]);
 		}
 
 		return featureValues;
 	}
 
 	public String getVarName() {
-		// TODO Auto-generated method stub
-		return varName;
+
+		return resourceVariableName;
 	}
 
 	public String getIdentifier() {
-		// TODO Auto-generated method stub
+
 		return identifier;
 	}
 
@@ -233,7 +228,7 @@ public class ComponentObject {
 	}
 
 	public EObject getParentObject() {
-		return parentObject;
+		return parentEcoreObject;
 	}
 
 	public String getGeneratedClassName() {
@@ -249,11 +244,11 @@ public class ComponentObject {
 	}
 
 	public List<ComponentAttribute> getOtherAttributes() {
-		return otherAttributes;
+		return nonCoreAttributes;
 	}
 
 	public Map<String, List<String>> getDependencies() {
-		return dependencies;
+		return dependencyMap;
 	}
 
 	@Override
@@ -271,24 +266,29 @@ public class ComponentObject {
 
 	public void removeDependency(String className, String varName) {
 
-		for (ComponentAttribute cAttribute : otherAttributes) {
+		for (ComponentAttribute componentAttribute : nonCoreAttributes) {
 
-			cAttribute.removeDependency(className, varName);
-			dependentVars.remove(varName);
+			componentAttribute.removeDependency(className, varName);
+			dependentVariables.remove(varName);
 		}
 	}
 
 	public String generateCode(Map<String, ComponentObject> componentMap) {
 
-		
-
 		String code = new String();
 
-		code += getGeneratedClassName() + SPACE + getVarName() + EQUALS + getBuilderClassName() + CREATE + NEWLINE;
+		if (parentConstruct != null) {
 
-		for (ComponentAttribute attribute : otherAttributes) {
+			code += getGeneratedClassName() + SPACE + getVarName() + EQUALS + getBuilderClassName() + DOT + CREATE
+					+ OPENBRACKET + parentConstruct + COMMA + QUOT + getIdentifier() + QUOT + CLOSEBRACKET + NEWLINE;
 
-			if (!attribute.isCanGenerate(componentMap))
+		} else {
+			code += getGeneratedClassName() + SPACE + getVarName() + EQUALS + getBuilderClassName() + DOT + CREATE
+					+ OPENBRACKET + CLOSEBRACKET + NEWLINE;
+		}
+		for (ComponentAttribute attribute : nonCoreAttributes) {
+
+			if (!attribute.canGenerate(componentMap))
 				continue;
 			if (!(attribute.getType() == ComponentAttributeTypes.LIST
 					|| attribute.getType() == ComponentAttributeTypes.MAP)) {
@@ -315,18 +315,16 @@ public class ComponentObject {
 
 				Pair<String, String> codePair = buildMap(attribute);
 				code = codePair.getValue1() + code;
-				
+
 				code += DOT + attribute.getName() + OPENBRACKET + codePair.getValue0() + CLOSEBRACKET + NEWLINE;
 			}
 
 		}
 
 		code += ".build();\n";
-		
-		this.generatedCode  = code;
+
+		this.generatedCode = code;
 		this.isGenerated = true;
-		
-		
 
 		return code;
 	}
@@ -338,22 +336,21 @@ public class ComponentObject {
 		String declaration = "java.util.Map" + LESSTHAN + mapAttribute.getKeyClass() + COMMA
 				+ mapAttribute.getValueClass() + GREATERTHAN + SPACE + mapName + EQUALS + " new " + "java.util.HashMap"
 				+ LESSTHAN + mapAttribute.getKeyClass() + COMMA + mapAttribute.getValueClass() + GREATERTHAN + "();\n";
-		
-		declaration += NEWLINE ;
+
+		declaration += NEWLINE;
 		String key = new String();
 		String value = new String();
-		for(String s: mapAttribute.getValues().keySet())
-		{
-			if(mapAttribute.getKeyClass().equals(STRING_CLASS))
-				 key = QUOT +s + QUOT;
+		for (String s : mapAttribute.getValues().keySet()) {
+			if (mapAttribute.getKeyClass().equals(STRING_CLASS))
+				key = QUOT + s + QUOT;
 			else
 				key = s;
-			
+
 			value = mapAttribute.getValues().get(s);
-			
-			if(mapAttribute.getValueClass().equals(STRING_CLASS))
-				 value = QUOT +value + QUOT;
-			declaration += mapName+DOT+"put" +OPENBRACKET+key+COMMA+value+CLOSEBRACKET+";\n";
+
+			if (mapAttribute.getValueClass().equals(STRING_CLASS))
+				value = QUOT + value + QUOT;
+			declaration += mapName + DOT + "put" + OPENBRACKET + key + COMMA + value + CLOSEBRACKET + ";\n";
 		}
 		declaration += NEWLINE + NEWLINE;
 		return new Pair<String, String>(mapName, declaration);
@@ -387,7 +384,7 @@ public class ComponentObject {
 	}
 
 	public List<String> getDependentVars() {
-		return dependentVars;
+		return dependentVariables;
 	}
 
 	public boolean isVisited() {

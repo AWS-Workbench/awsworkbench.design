@@ -16,15 +16,13 @@ import com.amazon.awsworkbench.EObjectParser;
 
 public class ComponentAttribute {
 
-	private ComponentAttributeTypes type;
+	private ComponentAttributeTypes componentType;
 
-	private String value;
-
-	private String name;
+	private String componentName;
 
 	private MapAttribute mapAttribute = new MapAttribute();
 
-	private boolean canGenerate = true;
+	private boolean readyToGenerate = true;
 
 	private Pair<String, List<String>> dependencyList;
 
@@ -35,23 +33,23 @@ public class ComponentAttribute {
 
 		if (feature.getEType() instanceof EEnum)
 
-			type = ComponentAttributeTypes.ENUM;
+			componentType = ComponentAttributeTypes.ENUM;
 		else if (feature.getEType() instanceof EDataType) {
 
 			String instanceClassName = feature.getEType().getInstanceClassName();
 
 			if (featureName.endsWith("AsReference"))
-				type = ComponentAttributeTypes.REFERENCE;
+				componentType = ComponentAttributeTypes.REFERENCE;
 			else if (featureName.endsWith("AsList"))
-				type = ComponentAttributeTypes.LIST;
+				componentType = ComponentAttributeTypes.LIST;
 			else if (featureName.endsWith("AsMap"))
-				type = ComponentAttributeTypes.MAP;
+				componentType = ComponentAttributeTypes.MAP;
 			else if (instanceClassName.contains("Boolean"))
-				type = ComponentAttributeTypes.BOOLEAN;
+				componentType = ComponentAttributeTypes.BOOLEAN;
 			else if (instanceClassName.contains("int"))
-				type = ComponentAttributeTypes.INTEGER;
+				componentType = ComponentAttributeTypes.INTEGER;
 			else if (instanceClassName.contains("String"))
-				type = ComponentAttributeTypes.STRING;
+				componentType = ComponentAttributeTypes.STRING;
 
 		}
 		extractAttributeClassAndValue(feature, value);
@@ -63,8 +61,8 @@ public class ComponentAttribute {
 
 		String returnString = new String();
 
-		returnString += name + "\n";
-		returnString += type + "\n";
+		returnString += componentName + "\n";
+		returnString += componentType + "\n";
 		// returnString += dependencyList.toString() + "\n";
 		returnString += mapAttribute.toString() + "\n";
 
@@ -76,11 +74,11 @@ public class ComponentAttribute {
 
 		String featureName = feature.getName();
 
-		if (type == ComponentAttributeTypes.MAP) {
+		if (componentType == ComponentAttributeTypes.MAP) {
 
 			mapAttribute = new MapAttribute(feature, featureName, featureValue);
 
-		} else if (type == ComponentAttributeTypes.LIST) {
+		} else if (componentType == ComponentAttributeTypes.LIST) {
 			String className = featureName.substring(featureName.indexOf('_') + 1, featureName.lastIndexOf('_'))
 					.replace('_', '.');
 
@@ -109,20 +107,20 @@ public class ComponentAttribute {
 		String featureName = feature.getName();
 
 		if (featureName.indexOf("With") != -1)
-			name = featureName.substring(0, featureName.indexOf("With"));
+			componentName = featureName.substring(0, featureName.indexOf("With"));
 		else if (featureName.indexOf('_') != -1)
-			name = featureName.substring(0, featureName.indexOf('_'));
+			componentName = featureName.substring(0, featureName.indexOf('_'));
 		else
-			name = featureName;
+			componentName = featureName;
 
 	}
 
 	public ComponentAttributeTypes getType() {
-		return type;
+		return componentType;
 	}
 
 	public String getName() {
-		return name;
+		return componentName;
 	}
 
 	public MapAttribute getMapAttribute() {
@@ -133,11 +131,11 @@ public class ComponentAttribute {
 		return dependencyList;
 	}
 
-	public boolean isCanGenerate(Map<String, ComponentObject> componentMap) {
+	public boolean canGenerate(Map<String, ComponentObject> componentMap) {
 
 		List<String> toBeRemoved = new ArrayList<String>();
 
-		if (type == ComponentAttributeTypes.REFERENCE || type == ComponentAttributeTypes.LIST) {
+		if (componentType == ComponentAttributeTypes.REFERENCE || componentType == ComponentAttributeTypes.LIST) {
 
 			for (String s : dependencyList.getValue1()) {
 				if (componentMap.get(s) != null && !componentMap.get(s).isGenerated())
@@ -146,7 +144,7 @@ public class ComponentAttribute {
 
 		}
 
-		if (type == ComponentAttributeTypes.MAP) {
+		if (componentType == ComponentAttributeTypes.MAP) {
 
 			for (String s : mapAttribute.getValues().keySet()) {
 
@@ -166,27 +164,27 @@ public class ComponentAttribute {
 		for (String s : toBeRemoved)
 			removeDependency(null, s);
 
-		return canGenerate;
+		return readyToGenerate;
 	}
 
 	public void removeDependency(String className, String varName) {
-		if (type == ComponentAttributeTypes.REFERENCE || type == ComponentAttributeTypes.LIST) {
+		if (componentType == ComponentAttributeTypes.REFERENCE || componentType == ComponentAttributeTypes.LIST) {
 
 			dependencyList.getValue1().remove(varName);
 			if (dependencyList.getValue1().size() <= 0)
-				canGenerate = false;
+				readyToGenerate = false;
 			else
-				canGenerate = true;
+				readyToGenerate = true;
 
-		} else if (type == ComponentAttributeTypes.MAP) {
+		} else if (componentType == ComponentAttributeTypes.MAP) {
 
 			mapAttribute.removeFromKey(varName);
 			mapAttribute.removeFromValue(varName);
 
 			if (mapAttribute.getValues().size() <= 0)
-				canGenerate = false;
+				readyToGenerate = false;
 			else
-				canGenerate = true;
+				readyToGenerate = true;
 		}
 
 	}
@@ -200,7 +198,7 @@ public class ComponentAttribute {
 		private Map<String, String> values = new HashMap<String, String>();
 
 		public MapAttribute(EStructuralFeature feature, String featureName, String featureValue) throws Exception {
-			// TODO Auto-generated constructor stub
+			
 
 			String[] mapVals = featureName.substring(featureName.indexOf('_') + 1, featureName.lastIndexOf('_'))
 					.split("__");
@@ -215,7 +213,7 @@ public class ComponentAttribute {
 		}
 
 		public void removeFromValue(String varName) {
-			// TODO Auto-generated method stub
+			
 			List<String> tobeRemoved = new ArrayList<String>();
 
 			for (String s : values.keySet()) {
@@ -228,12 +226,12 @@ public class ComponentAttribute {
 		}
 
 		public void removeFromKey(String varName) {
-			// TODO Auto-generated method stub
+		
 			values.remove(varName);
 		}
 
 		public MapAttribute() {
-			// TODO Auto-generated constructor stub
+			
 		}
 
 		@Override

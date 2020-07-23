@@ -52,6 +52,7 @@ public class ComponentAttribute {
 				componentType = ComponentAttributeTypes.STRING;
 
 		}
+		
 		extractAttributeClassAndValue(feature, value);
 
 	}
@@ -63,8 +64,10 @@ public class ComponentAttribute {
 
 		returnString += componentName + "\n";
 		returnString += componentType + "\n";
-		// returnString += dependencyList.toString() + "\n";
-		returnString += mapAttribute.toString() + "\n";
+		if (dependencyList != null)
+			returnString += dependencyList.toString() + "\n";
+		if (mapAttribute != null)
+			returnString += mapAttribute.toString() + "\n";
 
 		return returnString;
 
@@ -84,20 +87,42 @@ public class ComponentAttribute {
 
 			List<String> values = new ArrayList<String>(Arrays.asList(featureValue.split(",")));
 
+			List<String> variableValues = new ArrayList<String>();
+
+			for (String value : values) {
+
+				String tempFeatureValue = value;
+
+				if (value.startsWith("-") || value.startsWith("~")) {
+					tempFeatureValue = featureValue.trim().substring(1, featureValue.length() - 1);
+					
+				}
+				variableValues.add(tempFeatureValue);
+
+			}
+
 			if (dependencyList != null && dependencyList.getValue0().equals(className)) {
-				dependencyList.getValue1().addAll(values);
+				dependencyList.getValue1().addAll(variableValues);
 			} else {
-				dependencyList = new Pair<String, List<String>>(className, new ArrayList<String>(values));
+				dependencyList = new Pair<String, List<String>>(className, new ArrayList<String>(variableValues));
 			}
 
 		} else {
 			String className = featureName.substring(featureName.indexOf('_') + 1, featureName.lastIndexOf('_'))
 					.replace('_', '.');
+
+			String tempFeatureValue = featureValue;
+
+			if (featureValue.startsWith("-") || featureValue.startsWith("~")) {
+				tempFeatureValue = featureValue.trim().substring(1, featureValue.length() - 1);
+				
+			}
+
 			if (dependencyList != null && dependencyList.getValue0().equals(className)) {
-				dependencyList.getValue1().add(featureValue);
+				dependencyList.getValue1().add(tempFeatureValue);
 			} else {
 				dependencyList = new Pair<String, List<String>>(className, new ArrayList<String>());
-				dependencyList.getValue1().add(featureValue);
+				dependencyList.getValue1().add(tempFeatureValue);
 			}
 		}
 
@@ -137,25 +162,37 @@ public class ComponentAttribute {
 
 		if (componentType == ComponentAttributeTypes.REFERENCE || componentType == ComponentAttributeTypes.LIST) {
 
-			for (String s : dependencyList.getValue1()) {
-				if (componentMap.get(s) != null && !componentMap.get(s).isGenerated())
-					toBeRemoved.add(s);
+			for (String variableExpression : dependencyList.getValue1()) {
+				String variable = variableExpression;
+				if (variableExpression.contains("."))
+					variable = variableExpression.substring(0, variableExpression.indexOf("."));
+				if (componentMap.get(variable) != null && !componentMap.get(variable).isGenerated())
+					toBeRemoved.add(variableExpression);
 			}
 
 		}
 
 		if (componentType == ComponentAttributeTypes.MAP) {
 
-			for (String s : mapAttribute.getValues().keySet()) {
+			for (String variableExpression : mapAttribute.getValues().keySet()) {
+				String variable = variableExpression;
+				if (variableExpression.contains("."))
+					variable = variableExpression.substring(0, variableExpression.indexOf("."));
+				
 
-				if (componentMap.get(s) != null && !componentMap.get(s).isGenerated())
-					toBeRemoved.add(s);
+				if (componentMap.get(variable) != null && !componentMap.get(variable).isGenerated())
+					toBeRemoved.add(variableExpression);
 
 			}
-			for (String s : mapAttribute.getValues().values()) {
+			for (String variableExpression : mapAttribute.getValues().values()) {
+				
+				String variable = variableExpression;
+				if (variableExpression.contains("."))
+					variable = variableExpression.substring(0, variableExpression.indexOf("."));
+				
 
-				if (componentMap.get(s) != null && !componentMap.get(s).isGenerated())
-					toBeRemoved.add(s);
+				if (componentMap.get(variable) != null && !componentMap.get(variable).isGenerated())
+					toBeRemoved.add(variableExpression);
 
 			}
 
@@ -170,7 +207,16 @@ public class ComponentAttribute {
 	public void removeDependency(String className, String varName) {
 		if (componentType == ComponentAttributeTypes.REFERENCE || componentType == ComponentAttributeTypes.LIST) {
 
-			dependencyList.getValue1().remove(varName);
+			List<String> valuesToBeRemoved = new ArrayList<String>();
+
+			for (String varValue : dependencyList.getValue1()) {
+				if (varValue.startsWith(varName + ".") || varValue.equals(varName)) {
+					valuesToBeRemoved.add(varValue);
+				}
+			}
+			for (String varValue : valuesToBeRemoved) {
+				dependencyList.getValue1().remove(varValue);
+			}
 			if (dependencyList.getValue1().size() <= 0)
 				readyToGenerate = false;
 			else
@@ -198,7 +244,6 @@ public class ComponentAttribute {
 		private Map<String, String> values = new HashMap<String, String>();
 
 		public MapAttribute(EStructuralFeature feature, String featureName, String featureValue) throws Exception {
-			
 
 			String[] mapVals = featureName.substring(featureName.indexOf('_') + 1, featureName.lastIndexOf('_'))
 					.split("__");
@@ -213,11 +258,11 @@ public class ComponentAttribute {
 		}
 
 		public void removeFromValue(String varName) {
-			
+
 			List<String> tobeRemoved = new ArrayList<String>();
 
 			for (String s : values.keySet()) {
-				if (values.get(s).equals(varName))
+				if (values.get(s).startsWith(varName + ".") || values.get(s).equals(varName))
 					tobeRemoved.add(s);
 			}
 			for (String s : tobeRemoved)
@@ -226,12 +271,22 @@ public class ComponentAttribute {
 		}
 
 		public void removeFromKey(String varName) {
-		
-			values.remove(varName);
+
+			List<String> valuesToBeRemoved = new ArrayList<String>();
+
+			for (String varValue : values.keySet()) {
+				if (varValue.startsWith(varName + ".") || varValue.equals(varName)) {
+					valuesToBeRemoved.add(varValue);
+				}
+			}
+			for (String varValue : valuesToBeRemoved) {
+				values.remove(varValue);
+			}
+
 		}
 
 		public MapAttribute() {
-			
+
 		}
 
 		@Override
@@ -253,7 +308,20 @@ public class ComponentAttribute {
 
 			for (String s : featureValue.split(",")) {
 				String[] s1 = s.split(":");
-				values.put(s1[0], s1[1]);
+
+				String tempKey = s1[0].trim();
+
+				if (tempKey.startsWith("-") || tempKey.startsWith("~")) {
+					tempKey = tempKey.trim().substring(1, tempKey.length() - 1);
+				}
+
+				String tempvalue = s1[1].trim();
+
+				if (tempvalue.startsWith("-") || tempvalue.startsWith("~")) {
+					tempvalue = tempvalue.trim().substring(1, tempvalue.length() - 1);
+				}
+
+				values.put(tempKey, tempvalue);
 			}
 
 		}

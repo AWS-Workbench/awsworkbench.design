@@ -69,7 +69,7 @@ public class EObjectParser {
 		
 		printCode();
 		
-		printImports();
+	//	printImports();
 
 	//	generateApp();
 

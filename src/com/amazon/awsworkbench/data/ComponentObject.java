@@ -51,9 +51,9 @@ public class ComponentObject {
 	public static final String EQUALS = "=";
 
 	public static final String CREATE = "create";
-	
+
 	public static final String BUILD = "build";
-	
+
 	public static final String BUILDER = "Builder";
 
 	public static final String DOT = ".";
@@ -67,25 +67,25 @@ public class ComponentObject {
 	public static final String NEWLINE = "\n";
 
 	public static final String STRING_CLASS = "java.lang.String";
-	
+
 	public static final String JAVALANG_PACKAGE = "java.lang";
 
 	public static final String COMMA = ",";
-	
+
 	public static final String UNDERSCORE = "_";
-	
+
 	public static final String DOUBLEUNDERSCORE = "__";
 
 	public static final String LESSTHAN = "<";
 
 	public static final String GREATERTHAN = ">";
-	
+
 	public static final String TILDE = "~";
-	
+
 	public static final String HYPHEN = "-";
-	
+
 	public static final String COLON = ":";
-	
+
 	public static final String SEMICOLON = ";";
 
 	public ComponentObject(EObject eCoreObject, List<String> parents, String parentName) throws Exception {
@@ -161,7 +161,7 @@ public class ComponentObject {
 			tempFeatureValue = featureValue.substring(1, featureValue.indexOf(DOT));
 
 		}
-		
+
 		if (isStaticExpression(tempFeatureValue)) // surrounded by -
 		{
 			return;
@@ -182,34 +182,31 @@ public class ComponentObject {
 	}
 
 	private boolean isVariableExpression(String featureValue) {
-		
+
 		return (featureValue.trim().startsWith(TILDE) && featureValue.trim().endsWith(TILDE));
 	}
 
-	
-
 	private void addListDependency(String featureName, String featureValue) {
 
-		String className = featureName.substring(featureName.indexOf(UNDERSCORE) + 1, featureName.lastIndexOf(UNDERSCORE))
+		String className = featureName
+				.substring(featureName.indexOf(UNDERSCORE) + 1, featureName.lastIndexOf(UNDERSCORE))
 				.replace(UNDERSCORE, DOT);
 		if (className.startsWith(JAVALANG_PACKAGE))
 			return;
 
 		List<String> rawValues = new ArrayList<String>(Arrays.asList(featureValue.split(COMMA)));
-		
-		List<String> variableValues  = new ArrayList<String>();
-		
-		for(String rawValue : rawValues ) {
-			if(isVariableExpression(rawValue)) {
+
+		List<String> variableValues = new ArrayList<String>();
+
+		for (String rawValue : rawValues) {
+			if (isVariableExpression(rawValue)) {
 				variableValues.add(rawValue.trim().substring(1, rawValue.indexOf(DOT)));
 				continue;
-			}
-			else if(isStaticExpression(rawValue))
+			} else if (isStaticExpression(rawValue))
 				continue;
 			else
 				variableValues.add(rawValue.trim());
-			
-				
+
 		}
 
 		if (dependencyMap.containsKey(className)) {
@@ -223,7 +220,8 @@ public class ComponentObject {
 
 	private void addMapDependency(String featureName, String featureValue) throws Exception {
 
-		String[] mapVals = featureName.substring(featureName.indexOf(UNDERSCORE) + 1, featureName.lastIndexOf(UNDERSCORE))
+		String[] mapVals = featureName
+				.substring(featureName.indexOf(UNDERSCORE) + 1, featureName.lastIndexOf(UNDERSCORE))
 				.split(DOUBLEUNDERSCORE);
 
 		if (mapVals.length > 2)
@@ -235,22 +233,48 @@ public class ComponentObject {
 
 		if (!className1.startsWith(JAVALANG_PACKAGE)) {
 
+			List<String> variableValues = new ArrayList<String>();
+
+			for (String rawValue : featureMap.keySet()) {
+				if (isVariableExpression(rawValue)) {
+					variableValues.add(rawValue.trim().substring(1, rawValue.indexOf(DOT)));
+					continue;
+				} else if (isStaticExpression(rawValue))
+					continue;
+				else
+					variableValues.add(rawValue.trim());
+
+			}
+
 			if (dependencyMap.containsKey(className1)) {
-				dependencyMap.get(className1).addAll(featureMap.keySet());
+				dependencyMap.get(className1).addAll(variableValues);
 			} else {
 				dependencyMap.put(className1, new ArrayList<String>());
-				dependencyMap.get(className1).addAll(featureMap.keySet());
+				dependencyMap.get(className1).addAll(variableValues);
 			}
 
 		}
 
 		if (!className2.startsWith(JAVALANG_PACKAGE)) {
 
+			List<String> variableValues = new ArrayList<String>();
+
+			for (String rawValue : featureMap.values()) {
+				if (isVariableExpression(rawValue)) {
+					variableValues.add(rawValue.trim().substring(1, rawValue.indexOf(DOT)));
+					continue;
+				} else if (isStaticExpression(rawValue))
+					continue;
+				else
+					variableValues.add(rawValue.trim());
+
+			}
+
 			if (dependencyMap.containsKey(className2)) {
-				dependencyMap.get(className2).addAll(featureMap.values());
+				dependencyMap.get(className2).addAll(variableValues);
 			} else {
 				dependencyMap.put(className2, new ArrayList<String>());
-				dependencyMap.get(className2).addAll(featureMap.values());
+				dependencyMap.get(className2).addAll(variableValues);
 			}
 
 		}
@@ -325,12 +349,15 @@ public class ComponentObject {
 	}
 
 	public void removeDependency(String className, String varName) {
+		
+		
 
 		for (ComponentAttribute componentAttribute : nonCoreAttributes) {
 
 			componentAttribute.removeDependency(className, varName);
-			dependentVariables.remove(varName);
+			
 		}
+		dependentVariables.remove(varName);
 	}
 
 	public String generateCode(Map<String, ComponentObject> componentMap) {
@@ -357,8 +384,7 @@ public class ComponentObject {
 						|| attribute.getType() == ComponentAttributeTypes.INTEGER) {
 					code += DOT + attribute.getName() + OPENBRACKET + value + CLOSEBRACKET + NEWLINE;
 
-				} else if (attribute.getType() == ComponentAttributeTypes.REFERENCE
-						&& componentMap.containsKey(value)) {
+				} else if (attribute.getType() == ComponentAttributeTypes.REFERENCE) {
 					code += DOT + attribute.getName() + OPENBRACKET + value + CLOSEBRACKET + NEWLINE;
 				} else if (attribute.getType() == ComponentAttributeTypes.STRING) {
 					code += DOT + attribute.getName() + OPENBRACKET + QUOT + value + QUOT + CLOSEBRACKET + NEWLINE;
@@ -440,6 +466,7 @@ public class ComponentObject {
 	}
 
 	private String getSingleValue(Pair<String, List<String>> pair) {
+		
 		return pair.getValue1().get(0);
 	}
 

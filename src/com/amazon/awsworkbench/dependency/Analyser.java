@@ -83,7 +83,7 @@ public class Analyser {
 
 			ComponentObject c1 = graphObjects.get(dependent);
 			if (c1 == null) {
-				System.out.println("null:" + dependent);
+				//System.out.println("null:" + dependent);
 				continue;
 			}
 			if (!c1.isVisited()) {

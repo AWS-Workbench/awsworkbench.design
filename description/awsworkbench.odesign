@@ -48,7 +48,22 @@
             <menuItemDescription xsi:type="tool_1:OperationAction" name="Code" precondition="aql:self.generatedClassName.contains('core.App')" elementsToSelect="var:self">
               <view name="views"/>
               <initialOperation>
-                <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:self.generateCode()"/>
+                <firstModelOperations xsi:type="properties:DialogModelOperation" titleExpression="Create CDK Class">
+                  <buttons labelExpression="Cancel" closeDialogOnClick="true" rollbackChangesOnClose="true">
+                    <initialOperation/>
+                  </buttons>
+                  <buttons labelExpression="OK" default="true" closeDialogOnClick="true">
+                    <initialOperation/>
+                  </buttons>
+                  <page name="Default Page" labelExpression="Page" semanticCandidateExpression="var:self" groups="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='AWS%20App%20Definition']/@defaultLayer/@toolSections.1/@ownedTools[name='Generate']/@menuItemDescription.0/@initialOperation/@firstModelOperations/@groups.0"/>
+                  <groups name="Default Group" labelExpression="Group" semanticCandidateExpression="var:self">
+                    <controls xsi:type="properties:TextDescription" name="className" labelExpression="Class Name: " valueExpression="aql:self.varName">
+                      <initialOperation>
+                        <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:self.generateCode(newValue)"/>
+                      </initialOperation>
+                    </controls>
+                  </groups>
+                </firstModelOperations>
               </initialOperation>
             </menuItemDescription>
           </ownedTools>
@@ -184,7 +199,7 @@
                     </buttons>
                     <page name="Default Page" labelExpression="Page" semanticCandidateExpression="var:self" groups="//@extensions.0/@categories.0/@groups.0/@controls.0/@ifs.6/@widget/@actions.1/@initialOperation/@firstModelOperations/@groups.0"/>
                     <groups name="Default Group" labelExpression="Group" semanticCandidateExpression="var:self">
-                      <controls xsi:type="properties:TextDescription" name="key" labelExpression="Value">
+                      <controls xsi:type="properties:TextDescription" name="key" labelExpression="Value" helpExpression="aql:self.varName">
                         <initialOperation>
                           <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:self.addValue(eStructuralFeature,newValue)"/>
                         </initialOperation>

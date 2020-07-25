@@ -1,5 +1,6 @@
 package com.amazon.awsworkbench;
 
+import java.beans.Statement;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
@@ -18,13 +19,19 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EContentsEList;
+import org.eclipse.jdt.core.ToolFactory;
+import org.eclipse.jdt.core.formatter.CodeFormatter;
+import org.eclipse.jdt.core.formatter.IndentManipulation;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.Document;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.text.edits.MalformedTreeException;
+import org.eclipse.text.edits.TextEdit;
 import org.eclipse.ui.statushandlers.StatusManager;
-import org.jgrapht.Graph;
-import org.jgrapht.graph.DefaultDirectedGraph;
-import org.jgrapht.graph.DefaultEdge;
 
 import com.amazon.awsworkbench.data.ComponentObject;
 import com.amazon.awsworkbench.dependency.Analyser;
+import com.google.googlejavaformat.java.Formatter;
 
 import awsworkbench.design.Activator;
 
@@ -45,8 +52,13 @@ public class EObjectParser {
 
 	private Analyser graphAnalyser = new Analyser();
 
-	public void generateCode(EObject self) throws Exception {
+	private String className = new String("SampleCDK");
 
+	public void generateCode(EObject self, String clName) throws Exception {
+
+		if (clName != null)
+			className = clName;
+		// System.out.println((new Formatter()).formatSource("import java.util.*"));
 
 		componentObjectMap = new HashMap<String, ComponentObject>();
 		uniqueMandatoryFieldValues = new HashMap<String, SortedSet<String>>();
@@ -54,29 +66,75 @@ public class EObjectParser {
 		graphAnalyser = new Analyser();
 
 		codeOutput = new StringBuilder();
-		parse(self, new ArrayList<String>(), true,null);
+		parse(self, new ArrayList<String>(), true, null);
 
 		buildDependencyGraph();
 		graphAnalyser.checkCycles();
 
-		//printComponents();
+		// printComponents();
 
 		generateImports();
 
-		
 		graphAnalyser.topologicalSort();
-		
-		
-		printCode();
-		
-	//	printImports();
 
-	//	generateApp();
+		
+
+		String imports = getImports();
+		
+		//System.out.println(imports);
+		
+		String generatedCode = getGeneratedCode();
+		
+		String assembledCode = assembleCode( imports, generatedCode, className);
+		
+		//System.out.println(assembledCode);
+		
+		String formattedCode = getFormatterCode(assembledCode);
+		
+		System.out.println(formattedCode);
+
+		// generateApp();
 
 	}
 
-	private void generateApp() {
+	private String getFormatterCode(String code)  {
 		
+		CodeFormatter codeFormatter = ToolFactory.createCodeFormatter(null);
+		 
+		TextEdit textEdit = codeFormatter.format(CodeFormatter.K_COMPILATION_UNIT, code, 0, code.length(), 0, null);
+		IDocument doc = new Document(code);
+		try {
+			textEdit.apply(doc);
+			return doc.get();
+		
+		} catch (MalformedTreeException e) {
+			e.printStackTrace();
+		} catch (BadLocationException e) {
+			e.printStackTrace();
+		}
+		return null;
+		
+	}
+
+	private String assembleCode(String imports, String generatedCode, String className) {
+		StringBuilder assembledCodeBuilder = new StringBuilder();
+		
+		assembledCodeBuilder.append(imports + "\n");
+		
+		assembledCodeBuilder.append("public class " + className + "{\n ");
+		
+		assembledCodeBuilder.append("public static void main(String args[]) {\n ");
+		
+		assembledCodeBuilder.append(generatedCode + "\n");
+		
+		assembledCodeBuilder.append(appObject.getVarName() + ".synth();\n } \n } \n" );
+		
+		
+		return assembledCodeBuilder.toString();
+	}
+
+	private void generateApp() {
+
 		String code = appObject.generateCode(componentObjectMap);
 
 	}
@@ -84,17 +142,23 @@ public class EObjectParser {
 	private void printComponents() {
 		for (ComponentObject c : componentObjectMap.values()) {
 
-			System.out.println(c);
+			//System.out.println(c);
 		}
 
 	}
 
-	private void printCode() {
+	private String getGeneratedCode() {
+		
+		StringBuilder generatedCodeBuilder = new StringBuilder();
 
 		for (ComponentObject c : graphAnalyser.getQueue()) {
+			String generatedCode = c.generateCode(componentObjectMap);
 
-			System.out.println(c.generateCode(componentObjectMap));
+			//System.out.println(generatedCode);
+			generatedCodeBuilder.append(generatedCode + "\n");
 		}
+		
+		return generatedCodeBuilder.toString();
 
 	}
 
@@ -122,7 +186,7 @@ public class EObjectParser {
 							graphAnalyser.addDependency(neededObject.getVarName(), dependentObject.getVarName());
 						} else {
 							System.out.println("Mismatch : " + vars + " does not belong to class : " + key);
-							//cObject.removeDependency(key, vars);
+							// cObject.removeDependency(key, vars);
 
 						}
 
@@ -142,9 +206,16 @@ public class EObjectParser {
 
 	}
 
-	private void printImports() {
-		for (String statement : importStatements)
-			System.out.print(statement);
+	private String getImports() {
+
+		StringBuilder importsBuilder = new StringBuilder();
+
+		for (String statement : importStatements) {
+			//System.out.print(statement);
+			importsBuilder.append(statement + "\n");
+		}
+		
+		return importsBuilder.toString();
 
 	}
 
@@ -156,14 +227,17 @@ public class EObjectParser {
 			String starImport = currentObject.getGeneratedClassName().substring(0,
 					currentObject.getGeneratedClassName().lastIndexOf("."));
 			starImport = starImport + ".*";
-			importStatements.add("import " + currentObject.getGeneratedClassName() + ";\n");
-			importStatements.add("import " + currentObject.getBuilderClassName() + ";\n");
+			// importStatements.add("import " + currentObject.getGeneratedClassName() +
+			// ";\n");
+			// importStatements.add("import " + currentObject.getBuilderClassName() +
+			// ";\n");
 			importStatements.add("import " + starImport + ";\n");
 		}
 
 	}
 
-	public void parse(EObject currentEcoreObject, List<String> parents, boolean isApp, String parentVarname) throws Exception {
+	public void parse(EObject currentEcoreObject, List<String> parents, boolean isApp, String parentVarname)
+			throws Exception {
 
 		checkMandatoryFields(currentEcoreObject);
 
@@ -183,7 +257,7 @@ public class EObjectParser {
 		parents.add(componentObject.getVarName());
 		EList<EObject> children = currentEcoreObject.eContents();
 		for (EObject e : children)
-			parse(e, parents, false,componentObject.getVarName());
+			parse(e, parents, false, componentObject.getVarName());
 		parents.remove(componentObject.getVarName());
 
 	}
@@ -196,7 +270,8 @@ public class EObjectParser {
 		for (EStructuralFeature eStructuralFeature : allEStructFeats) {
 			if (isMandatory(eStructuralFeature)) {
 
-				if ((self.eGet(eStructuralFeature) == null || self.eGet(eStructuralFeature).toString().trim().isEmpty()))
+				if ((self.eGet(eStructuralFeature) == null
+						|| self.eGet(eStructuralFeature).toString().trim().isEmpty()))
 					showError("Mandatory fields (Var Name or Identifier) are empty for some components");
 
 				String keyName = eStructuralFeature.getName();

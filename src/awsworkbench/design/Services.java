@@ -123,18 +123,18 @@ public class Services {
 		return self;
 	}
 
-	public Collection<String> generateCode(EObject self) {
+	public Collection<String> generateCode(EObject self, String className) {
 
 		
-		System.out.println("Hello");
-		System.out.println(self.toString());
+		System.out.println("Generating Code for:" + className);
+		//System.out.println(self.toString());
 		
 		  
 
 		com.amazon.awsworkbench.EObjectParser parser = new com.amazon.awsworkbench.EObjectParser();
 
 		try {
-			parser.generateCode(self);
+			parser.generateCode(self, className);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

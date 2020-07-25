@@ -17,5 +17,4 @@ Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Vendor: %providerName
 Automatic-Module-Name: awsworkbench.design
-Bundle-ClassPath: .,
- lib/google-java-format-1.8-all-deps.jar
+Bundle-ClassPath: .

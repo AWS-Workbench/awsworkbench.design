@@ -349,13 +349,11 @@ public class ComponentObject {
 	}
 
 	public void removeDependency(String className, String varName) {
-		
-		
 
 		for (ComponentAttribute componentAttribute : nonCoreAttributes) {
 
 			componentAttribute.removeDependency(className, varName);
-			
+
 		}
 		dependentVariables.remove(varName);
 	}
@@ -364,15 +362,27 @@ public class ComponentObject {
 
 		String code = new String();
 
-		if (parentConstruct != null) {
+		if (!getGeneratedClassName().endsWith(".Environment")) {
 
-			code += getGeneratedClassName() + SPACE + getVarName() + EQUALS + getBuilderClassName() + DOT + CREATE
-					+ OPENBRACKET + parentConstruct + COMMA + QUOT + getIdentifier() + QUOT + CLOSEBRACKET + NEWLINE;
+			if (parentConstruct != null && !getBuilderClassName().endsWith("DefaultStackSynthesizer.Builder"))  {
 
+				code += getGeneratedClassName() + SPACE + getVarName() + EQUALS + getBuilderClassName() + DOT + CREATE
+						+ OPENBRACKET + parentConstruct + COMMA + QUOT + getIdentifier() + QUOT + CLOSEBRACKET
+						+ NEWLINE;
+
+			} else {
+				
+				// App.Builder  &&  DefaultStackSynthesizer.Builder do not accept arguments in create method
+				code += getGeneratedClassName() + SPACE + getVarName() + EQUALS + getBuilderClassName() + DOT + CREATE
+						+ OPENBRACKET + CLOSEBRACKET + NEWLINE;
+			}
 		} else {
-			code += getGeneratedClassName() + SPACE + getVarName() + EQUALS + getBuilderClassName() + DOT + CREATE
-					+ OPENBRACKET + CLOSEBRACKET + NEWLINE;
+			
+			// Hack for Environment class as it does not have a create method
+			code += getGeneratedClassName() + SPACE + getVarName() + EQUALS +  getGeneratedClassName()
+					+ ".Builder()" + NEWLINE; 
 		}
+
 		for (ComponentAttribute attribute : nonCoreAttributes) {
 
 			if (!attribute.canGenerate(componentMap))
@@ -466,7 +476,7 @@ public class ComponentObject {
 	}
 
 	private String getSingleValue(Pair<String, List<String>> pair) {
-		
+
 		return pair.getValue1().get(0);
 	}
 

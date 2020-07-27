@@ -48,7 +48,7 @@ public class Analyser {
 
 	private boolean detectCycle(String s, ArrayList<String> cycleTrace) {
 		// TODO Auto-generated method stub
-		System.out.println(s + " " + graphElems.get(s));
+		// System.out.println(s + " " + graphElems.get(s));
 		cycleTrace.add(s);
 		for (String s1 : graphElems.get(s)) {
 			if (cycleTrace.contains(s1))
@@ -74,6 +74,8 @@ public class Analyser {
 		for (ComponentObject c : queue)
 			System.out.println(c.getVarName());
 
+		System.out.println("\n\n\n");
+
 	}
 
 	private void topologicalSortUtil(ComponentObject c, LinkedList<ComponentObject> queue) {
@@ -83,7 +85,7 @@ public class Analyser {
 
 			ComponentObject c1 = graphObjects.get(dependent);
 			if (c1 == null) {
-				//System.out.println("null:" + dependent);
+				// System.out.println("null:" + dependent);
 				continue;
 			}
 			if (!c1.isVisited()) {

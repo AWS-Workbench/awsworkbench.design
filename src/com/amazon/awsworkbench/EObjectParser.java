@@ -31,7 +31,7 @@ import org.eclipse.ui.statushandlers.StatusManager;
 
 import com.amazon.awsworkbench.data.ComponentObject;
 import com.amazon.awsworkbench.dependency.Analyser;
-import com.google.googlejavaformat.java.Formatter;
+
 
 import awsworkbench.design.Activator;
 
@@ -69,6 +69,8 @@ public class EObjectParser {
 		parse(self, new ArrayList<String>(), true, null);
 
 		buildDependencyGraph();
+		
+		System.out.println("\n\n\n");
 		graphAnalyser.checkCycles();
 
 		// printComponents();
@@ -154,7 +156,7 @@ public class EObjectParser {
 		for (ComponentObject c : graphAnalyser.getQueue()) {
 			String generatedCode = c.generateCode(componentObjectMap);
 
-			//System.out.println(generatedCode);
+			
 			generatedCodeBuilder.append(generatedCode + "\n");
 		}
 		
@@ -221,7 +223,7 @@ public class EObjectParser {
 
 	private void generateImports() {
 
-		importStatements.add("import java.util.*;\n");
+		importStatements.add("import java.util.*;");
 		for (ComponentObject currentObject : componentObjectMap.values()) {
 
 			String starImport = currentObject.getGeneratedClassName().substring(0,
@@ -231,7 +233,7 @@ public class EObjectParser {
 			// ";\n");
 			// importStatements.add("import " + currentObject.getBuilderClassName() +
 			// ";\n");
-			importStatements.add("import " + starImport + ";\n");
+			importStatements.add("import " + starImport + ";");
 		}
 
 	}

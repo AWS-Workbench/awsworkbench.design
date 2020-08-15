@@ -19,6 +19,8 @@ import org.eclipse.ui.internal.WorkbenchPlugin;
 import org.eclipse.ui.statushandlers.StatusAdapter;
 import org.eclipse.ui.statushandlers.StatusManager;
 
+import com.amazon.aws.workbench.model.awsworkbench.ServiceResources;
+
 /**
  * The services class used by VSM.
  */
@@ -146,5 +148,17 @@ public class Services {
 		//
 		return null;
 	}
-
+	
+	public Collection<ServiceResources> getDependsOn(ServiceResources s)
+	{
+		
+		return s.getDependsON();
+	}
+	
+	public void addDependsOn(ServiceResources source, ServiceResources target) {
+		source.getDependsON().add(target);
+	}
+	
+	
+	
 }

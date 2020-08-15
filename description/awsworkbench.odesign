@@ -84,6 +84,14 @@
             <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
           </style>
         </nodeMappings>
+        <edgeMappings name="dependsOnRelation" label="Depends On" sourceMapping="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='Stack%20Definition']/@defaultLayer/@nodeMappings[name='VPC']" targetMapping="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='Stack%20Definition']/@defaultLayer/@nodeMappings[name='VPC']" targetFinderExpression="service:getDependsOn()">
+          <style sizeComputationExpression="2">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+            <centerLabelStyleDescription labelSize="12">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
         <toolSections name="Stack Pallette">
           <ownedTools xsi:type="tool:NodeCreationDescription" name="VPC Create" forceRefresh="true" nodeMappings="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='Stack%20Definition']/@defaultLayer/@nodeMappings[name='VPC']">
             <variable name="container"/>
@@ -104,6 +112,17 @@
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::EnvironmentBuilder_core" referenceName="environmentbuilder_core">
                   <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Environment Name"/>
                 </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:EdgeCreationDescription" name="depends_create" edgeMappings="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='Stack%20Definition']/@defaultLayer/@edgeMappings[name='dependsOnRelation']">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:source">
+                <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:self.addDependsOn(target)"/>
               </firstModelOperations>
             </initialOperation>
           </ownedTools>
@@ -179,7 +198,7 @@
             <widget xsi:type="properties:ListDescription" name="sirius_default_rules_eattribute_many" labelExpression="aql:self.getLabel(eStructuralFeature)" helpExpression="aql:input.emfEditServices(self).getDescription(eStructuralFeature)" isEnabledExpression="aql:eStructuralFeature.changeable" valueExpression="aql:self.eGet(eStructuralFeature.name)" displayExpression="var:value"/>
           </ifs>
           <ifs name="sirius_default_rules_ereference_if" predicateExpression="aql:eStructuralFeature.oclIsKindOf(ecore::EReference)">
-            <widget xsi:type="properties-ext-widgets-reference:ExtReferenceDescription" name="sirius_default_rules_ereference" labelExpression="aql:self.getLabel(eStructuralFeature)" helpExpression="aql:input.emfEditServices(self).getDescription(eStructuralFeature)" referenceNameExpression="aql:eStructuralFeature.name"/>
+            <widget xsi:type="properties-ext-widgets-reference:ExtReferenceDescription" name="sirius_default_rules_ereference" labelExpression="aql:self.getLabel(eStructuralFeature)" helpExpression="aql:input.emfEditServices(self).getDescription(eStructuralFeature)" isEnabledExpression="aql:true" referenceNameExpression="aql:eStructuralFeature.name"/>
           </ifs>
           <ifs name="sirius_default_rules_elist_if" predicateExpression="aql:eStructuralFeature.name.endsWith('AsList')">
             <widget xsi:type="properties:ListDescription" name="list " labelExpression="aql:self.getLabel(eStructuralFeature)" helpExpression="aql:self.getDescription(eStructuralFeature)" isEnabledExpression="aql:true" valueExpression="service:getPropertyValueStringAsCollection(eStructuralFeature)" displayExpression="aql:value">

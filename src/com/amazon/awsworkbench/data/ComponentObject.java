@@ -26,6 +26,8 @@ public class ComponentObject {
 	private String generatedCode;
 	private EObject parentEcoreObject;
 	private String generatedClassName;
+	private String packageName;
+	private String projectName;
 
 	private String parentConstruct = null;
 	private String additionalCode;
@@ -39,6 +41,8 @@ public class ComponentObject {
 	private List<String> parents = new ArrayList<String>();
 
 	public final String VARNAME = "varName";
+	public final String PROJECTNAME = "projectName";
+	public final String PACKAGENAME = "packageName";
 	public final String IDENTIFIER = "identifier";
 	public final String GENERATED_CLASS_NAME = "generatedClassName";
 	public final String ADDITIONAL_CODE = "additionalCode";
@@ -110,6 +114,12 @@ public class ComponentObject {
 					&& eCoreObject.eGet(eStructuralFeature) != null
 					&& !eCoreObject.eGet(eStructuralFeature).toString().trim().isEmpty()) {
 				additionalCode = eCoreObject.eGet(eStructuralFeature).toString();
+			} else if (eStructuralFeature.getName().equals(PROJECTNAME) && eCoreObject.eGet(eStructuralFeature) != null
+					&& !eCoreObject.eGet(eStructuralFeature).toString().trim().isEmpty()) {
+				projectName = eCoreObject.eGet(eStructuralFeature).toString();
+			} else if (eStructuralFeature.getName().equals(PACKAGENAME) && eCoreObject.eGet(eStructuralFeature) != null
+					&& !eCoreObject.eGet(eStructuralFeature).toString().trim().isEmpty()) {
+				packageName = eCoreObject.eGet(eStructuralFeature).toString();
 			} else {
 
 				if (!(eStructuralFeature instanceof EAttribute))
@@ -364,23 +374,24 @@ public class ComponentObject {
 
 		if (!getGeneratedClassName().endsWith(".Environment")) {
 
-			if (parentConstruct != null && !getBuilderClassName().endsWith("DefaultStackSynthesizer.Builder"))  {
+			if (parentConstruct != null && !getBuilderClassName().endsWith("DefaultStackSynthesizer.Builder")) {
 
 				code += getGeneratedClassName() + SPACE + getVarName() + EQUALS + getBuilderClassName() + DOT + CREATE
 						+ OPENBRACKET + parentConstruct + COMMA + QUOT + getIdentifier() + QUOT + CLOSEBRACKET
 						+ NEWLINE;
 
 			} else {
-				
-				// App.Builder  &&  DefaultStackSynthesizer.Builder do not accept arguments in create method
+
+				// App.Builder && DefaultStackSynthesizer.Builder do not accept arguments in
+				// create method
 				code += getGeneratedClassName() + SPACE + getVarName() + EQUALS + getBuilderClassName() + DOT + CREATE
 						+ OPENBRACKET + CLOSEBRACKET + NEWLINE;
 			}
 		} else {
-			
+
 			// Hack for Environment class as it does not have a create method
-			code += getGeneratedClassName() + SPACE + getVarName() + EQUALS +  getGeneratedClassName()
-					+ ".Builder()" + NEWLINE; 
+			code += getGeneratedClassName() + SPACE + getVarName() + EQUALS + getGeneratedClassName() + ".Builder()"
+					+ NEWLINE;
 		}
 
 		for (ComponentAttribute attribute : nonCoreAttributes) {

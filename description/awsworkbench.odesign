@@ -72,7 +72,7 @@
     </ownedRepresentations>
     <ownedRepresentations xsi:type="description_1:DiagramDescription" name="Stack Definition" label="Stacks" initialisation="true" domainClass="awsworkbench::StackBuilder_core" enablePopupBars="true">
       <defaultLayer name="Default">
-        <nodeMappings name="VPC" semanticCandidatesExpression="feature:serviceresources" doubleClickDescription="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='AWS%20App%20Definition']/@defaultLayer/@toolSections.0/@ownedTools[name='VPCDblClick']" domainClass="awsworkbench::VpcBuilder_ec2">
+        <nodeMappings name="VPC" label="VPC" semanticCandidatesExpression="feature:serviceresources" doubleClickDescription="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='AWS%20App%20Definition']/@defaultLayer/@toolSections.0/@ownedTools[name='VPCDblClick']" domainClass="awsworkbench::VpcBuilder_ec2">
           <style xsi:type="style:WorkspaceImageDescription" labelSize="12" labelExpression="feature:varName" labelAlignment="LEFT" sizeComputationExpression="-1" labelPosition="node" resizeKind="NSEW" workspacePath="/awsworkbench.design/icons/VPC.png">
             <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
             <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
@@ -197,8 +197,8 @@
           <ifs name="sirius_default_rules_eattribute_many_if" predicateExpression="aql:eStructuralFeature.oclIsKindOf(ecore::EAttribute) and eStructuralFeature.many">
             <widget xsi:type="properties:ListDescription" name="sirius_default_rules_eattribute_many" labelExpression="aql:self.getLabel(eStructuralFeature)" helpExpression="aql:input.emfEditServices(self).getDescription(eStructuralFeature)" isEnabledExpression="aql:eStructuralFeature.changeable" valueExpression="aql:self.eGet(eStructuralFeature.name)" displayExpression="var:value"/>
           </ifs>
-          <ifs name="sirius_default_rules_ereference_if" predicateExpression="aql:eStructuralFeature.oclIsKindOf(ecore::EReference)">
-            <widget xsi:type="properties-ext-widgets-reference:ExtReferenceDescription" name="sirius_default_rules_ereference" labelExpression="aql:self.getLabel(eStructuralFeature)" helpExpression="aql:input.emfEditServices(self).getDescription(eStructuralFeature)" isEnabledExpression="aql:true" referenceNameExpression="aql:eStructuralFeature.name"/>
+          <ifs name="sirius_default_rules_ereference_if" predicateExpression="aql:eStructuralFeature.oclIsKindOf(ecore::EReference) and eStructuralFeature.name.equals('DontKnowWhat')">
+            <widget xsi:type="properties-ext-widgets-reference:ExtReferenceDescription" name="sirius_default_rules_ereference" labelExpression="aql:self.getLabel(eStructuralFeature)" helpExpression="aql:input.emfEditServices(self).getDescription(eStructuralFeature)" isEnabledExpression="aql:true" referenceNameExpression="aql:eStructuralFeature.name" referenceOwnerExpression="var:self"/>
           </ifs>
           <ifs name="sirius_default_rules_elist_if" predicateExpression="aql:eStructuralFeature.name.endsWith('AsList')">
             <widget xsi:type="properties:ListDescription" name="list " labelExpression="aql:self.getLabel(eStructuralFeature)" helpExpression="aql:self.getDescription(eStructuralFeature)" isEnabledExpression="aql:true" valueExpression="service:getPropertyValueStringAsCollection(eStructuralFeature)" displayExpression="aql:value">
@@ -254,6 +254,15 @@
                       </controls>
                     </groups>
                   </firstModelOperations>
+                </initialOperation>
+              </actions>
+            </widget>
+          </ifs>
+          <ifs name="sirius_depends_on_list" predicateExpression="aql:eStructuralFeature.name.equals('dependsON')">
+            <widget xsi:type="properties:ListDescription" name="depends_on_list" labelExpression="aql:self.getLabel(eStructuralFeature)" isEnabledExpression="true" valueExpression="service:self.getDependsOnAsStringCollection()" displayExpression="aql:value">
+              <actions labelExpression="Remove value">
+                <initialOperation>
+                  <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:self.removeValue(eStructuralFeature,selection)"/>
                 </initialOperation>
               </actions>
             </widget>

@@ -12,26 +12,49 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import org.eclipse.core.resources.ICommand;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EContentsEList;
+import org.eclipse.jdt.core.IAccessRule;
+import org.eclipse.jdt.core.IClasspathAttribute;
+import org.eclipse.jdt.core.IClasspathEntry;
+import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.IPackageFragment;
+import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.ToolFactory;
 import org.eclipse.jdt.core.formatter.CodeFormatter;
 import org.eclipse.jdt.core.formatter.IndentManipulation;
+import org.eclipse.jdt.internal.core.ClasspathAttribute;
+import org.eclipse.jdt.internal.core.ClasspathEntry;
+import org.eclipse.jdt.launching.JavaRuntime;
+import org.eclipse.jdt.launching.environments.IExecutionEnvironment;
+import org.eclipse.jdt.launching.environments.IExecutionEnvironmentsManager;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
+
 import org.eclipse.text.edits.MalformedTreeException;
 import org.eclipse.text.edits.TextEdit;
 import org.eclipse.ui.statushandlers.StatusManager;
 
+import com.amazon.aws.workbench.model.awsworkbench.AppBuilder_core;
 import com.amazon.awsworkbench.data.ComponentObject;
 import com.amazon.awsworkbench.dependency.Analyser;
-
 
 import awsworkbench.design.Activator;
 
@@ -54,11 +77,17 @@ public class EObjectParser {
 
 	private String className = new String("SampleCDK");
 
-	public void generateCode(EObject self, String clName) throws Exception {
+	private AppBuilder_core rootObject;
 
-		if (clName != null)
-			className = clName;
-		// System.out.println((new Formatter()).formatSource("import java.util.*"));
+	public void generateCode(AppBuilder_core self, String className) throws Exception {
+
+		if (className != null)
+			this.className = className;
+
+		if (self != null)
+			rootObject = self;
+		else
+			return;
 
 		componentObjectMap = new HashMap<String, ComponentObject>();
 		uniqueMandatoryFieldValues = new HashMap<String, SortedSet<String>>();
@@ -69,69 +98,146 @@ public class EObjectParser {
 		parse(self, new ArrayList<String>(), true, null);
 
 		buildDependencyGraph();
-		
+
 		System.out.println("\n\n\n");
 		graphAnalyser.checkCycles();
-
-		// printComponents();
 
 		generateImports();
 
 		graphAnalyser.topologicalSort();
 
-		
-
 		String imports = getImports();
-		
-		//System.out.println(imports);
-		
+
 		String generatedCode = getGeneratedCode();
-		
-		String assembledCode = assembleCode( imports, generatedCode, className);
-		
-		//System.out.println(assembledCode);
-		
+
+		String assembledCode = assembleCode(imports, generatedCode, className);
+
 		String formattedCode = getFormatterCode(assembledCode);
-		
+
 		System.out.println(formattedCode);
 
-		// generateApp();
+		generateProject(formattedCode);
 
 	}
 
-	private String getFormatterCode(String code)  {
+	private void generateProject(String formattedCode) throws Exception {
+		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(rootObject.getProjectName());
+
+		boolean newProject = false;
+		IFolder srcMainJava;
+		IFolder srcMain ;
+		IFolder src;
+
+		IProgressMonitor monitor = new NullProgressMonitor();
+		if (!project.exists()) {
+
+			newProject = true;
+			project.create(monitor);
+
+		}
+
 		
+		project.open(monitor);
+
+		IJavaProject javaProject = JavaCore.create(project);
+		List<IClasspathEntry> entries = new ArrayList<IClasspathEntry>();
+
+		if (newProject) {
+
+			// Let's add JavaSE-1.8 to our classpath
+
+			IExecutionEnvironmentsManager executionEnvironmentsManager = JavaRuntime.getExecutionEnvironmentsManager();
+			IExecutionEnvironment[] executionEnvironments = executionEnvironmentsManager.getExecutionEnvironments();
+			for (IExecutionEnvironment iExecutionEnvironment : executionEnvironments) {
+				// We will look for JavaSE-1.8 as the JRE container to add to our classpath
+				if ("JavaSE-1.8".equals(iExecutionEnvironment.getId())) {
+					entries.add(JavaCore.newContainerEntry(JavaRuntime.newJREContainerPath(iExecutionEnvironment)));
+					break;
+				}
+			}
+
+			IProjectDescription description = project.getDescription();
+			description.setNatureIds(new String[] { JavaCore.NATURE_ID, "org.eclipse.m2e.core.maven2Nature" });
+
+			ArrayList<ICommand> builders = new ArrayList<ICommand>();
+
+			final ICommand java = description.newCommand();
+			java.setBuilderName(JavaCore.BUILDER_ID);
+			builders.add(java);
+
+			final ICommand mvn_schema = description.newCommand();
+			mvn_schema.setBuilderName("org.eclipse.m2e.core.maven2Builder");
+			builders.add(mvn_schema);
+
+			description.setBuildSpec(builders.toArray(new ICommand[builders.size()]));
+
+			project.setDescription(description, monitor);
+
+			// src
+			 src = project.getFolder("src");
+			src.create(true, true, monitor);
+
+			// src/main
+			 srcMain = src.getFolder("main");
+			srcMain.create(true, true, monitor);
+
+			// src/main/java
+			srcMainJava = srcMain.getFolder("java");
+			srcMainJava.create(true, true, monitor);
+
+			final IClasspathEntry srcClasspathEntry = JavaCore.newSourceEntry(srcMainJava.getFullPath());
+			entries.add(0, srcClasspathEntry);
+			
+			javaProject.setRawClasspath(entries.toArray(new IClasspathEntry[entries.size()]), monitor);
+		}
+		src = project.getFolder("src");
+		srcMain = src.getFolder("main");
+		srcMainJava = srcMain.getFolder("java");
+
+		IPackageFragment pack = javaProject.getPackageFragmentRoot(srcMainJava)
+				.createPackageFragment(rootObject.getPackageName(), false, null);
+
+		ICompilationUnit cu = pack.createCompilationUnit(className + ".java", formattedCode, true, null);
+		
+		URL pomFile = Platform.getBundle("awsworkbench.design").getEntry("resources/pom.xml");
+		
+		System.out.println(pomFile.getContent());
+		
+
+	}
+
+	private String getFormatterCode(String code) {
+
 		CodeFormatter codeFormatter = ToolFactory.createCodeFormatter(null);
-		 
+
 		TextEdit textEdit = codeFormatter.format(CodeFormatter.K_COMPILATION_UNIT, code, 0, code.length(), 0, null);
 		IDocument doc = new Document(code);
 		try {
 			textEdit.apply(doc);
 			return doc.get();
-		
+
 		} catch (MalformedTreeException e) {
 			e.printStackTrace();
 		} catch (BadLocationException e) {
 			e.printStackTrace();
 		}
 		return null;
-		
+
 	}
 
 	private String assembleCode(String imports, String generatedCode, String className) {
 		StringBuilder assembledCodeBuilder = new StringBuilder();
-		
+
 		assembledCodeBuilder.append(imports + "\n");
-		
+
 		assembledCodeBuilder.append("public class " + className + "{\n ");
-		
+
 		assembledCodeBuilder.append("public static void main(String args[]) {\n ");
-		
+
 		assembledCodeBuilder.append(generatedCode + "\n");
-		
-		assembledCodeBuilder.append(appObject.getVarName() + ".synth();\n } \n } \n" );
-		
-		
+
+		assembledCodeBuilder.append(appObject.getVarName() + ".synth();\n } \n } \n");
+
 		return assembledCodeBuilder.toString();
 	}
 
@@ -144,22 +250,21 @@ public class EObjectParser {
 	private void printComponents() {
 		for (ComponentObject c : componentObjectMap.values()) {
 
-			//System.out.println(c);
+			// System.out.println(c);
 		}
 
 	}
 
 	private String getGeneratedCode() {
-		
+
 		StringBuilder generatedCodeBuilder = new StringBuilder();
 
 		for (ComponentObject c : graphAnalyser.getQueue()) {
 			String generatedCode = c.generateCode(componentObjectMap);
 
-			
 			generatedCodeBuilder.append(generatedCode + "\n");
 		}
-		
+
 		return generatedCodeBuilder.toString();
 
 	}
@@ -212,11 +317,13 @@ public class EObjectParser {
 
 		StringBuilder importsBuilder = new StringBuilder();
 
+		importsBuilder.append("package " + rootObject.getPackageName() + ";\n\n");
+
 		for (String statement : importStatements) {
-			//System.out.print(statement);
+			// System.out.print(statement);
 			importsBuilder.append(statement + "\n");
 		}
-		
+
 		return importsBuilder.toString();
 
 	}
@@ -229,10 +336,6 @@ public class EObjectParser {
 			String starImport = currentObject.getGeneratedClassName().substring(0,
 					currentObject.getGeneratedClassName().lastIndexOf("."));
 			starImport = starImport + ".*";
-			// importStatements.add("import " + currentObject.getGeneratedClassName() +
-			// ";\n");
-			// importStatements.add("import " + currentObject.getBuilderClassName() +
-			// ";\n");
 			importStatements.add("import " + starImport + ";");
 		}
 

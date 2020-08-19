@@ -199,9 +199,7 @@ public class EObjectParser {
 
 		ICompilationUnit cu = pack.createCompilationUnit(className + ".java", formattedCode, true, null);
 		
-		URL pomFile = Platform.getBundle("awsworkbench.design").getEntry("resources/pom.xml");
-		
-		System.out.println(pomFile.getContent());
+	
 		
 
 	}

@@ -112,15 +112,59 @@ public class Services {
 
 	public EObject removeValue(EObject self, EStructuralFeature feature, Object value) {
 
-		System.out.println(value.getClass().getName());
+		System.out.println(value.getClass().getName() + " " + feature.getName());
 		Collection<String> selectedValues = (Collection<String>) value;
-		if (self.eGet(feature) != null && !self.eGet(feature).toString().isEmpty()) {
-			List<String> existing = new ArrayList<String>(Arrays.asList(self.eGet(feature).toString().split(",")));
-			existing.removeAll(selectedValues);
-			self.eSet(feature, String.join(",", existing));
+		
+		List<String> varNames = new ArrayList<String>();
+		for(String s : selectedValues) {
+			varNames.add(s.split(" ")[1]);
+		}
+		
+
+		if (feature.getName().equalsIgnoreCase("dependsON")) {
+			
+			if(self instanceof ServiceResources) {
+				
+				ServiceResources s = (ServiceResources)self;
+				EList<ServiceResources> dependsOnList = s.getDependsON();
+				List<ServiceResources> removeList = new ArrayList<ServiceResources>();
+				for(ServiceResources dependsElem: dependsOnList) {
+					
+					String dependsVarName =  getVarName(dependsElem);
+					
+					if(varNames.contains(dependsVarName))
+						removeList.add(dependsElem);	
+				}
+				dependsOnList.removeAll(removeList);
+				s.eSet(feature, dependsOnList);
+				return s;
+				
+			
+			}
+
+		} else {
+
+			if (self.eGet(feature) != null && !self.eGet(feature).toString().isEmpty()) {
+				List<String> existing = new ArrayList<String>(Arrays.asList(self.eGet(feature).toString().split(",")));
+				existing.removeAll(selectedValues);
+				self.eSet(feature, String.join(",", existing));
+			}
 		}
 
 		return self;
+	}
+
+	private String getVarName(ServiceResources dependsElem) {
+		EList<EStructuralFeature> allEStructuralFeatures = dependsElem.eClass().getEAllStructuralFeatures();
+		for (EStructuralFeature eStructuralFeature : allEStructuralFeatures) {
+
+			if (eStructuralFeature.getName().equals(VARNAME)) {
+				return dependsElem.eGet(eStructuralFeature).toString().trim().replace(' ', '_');
+
+			} 
+		}
+		return null;
+		
 	}
 
 	public EObject addValue(EObject self, EStructuralFeature feature, String newValue) {

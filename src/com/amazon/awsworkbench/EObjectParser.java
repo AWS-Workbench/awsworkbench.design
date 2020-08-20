@@ -230,6 +230,12 @@ public class EObjectParser {
 			pack = javaProject.getPackageFragmentRoot(srcMainJava).createPackageFragment(rootObject.getPackageName(),
 					false, null);
 			
+			ICompilationUnit cuHelper = pack.createCompilationUnit(className + "Helper.java", formatterHelperCode,
+					false, null);
+			
+			IFile cdkJsonFile = project.getFile("cdk.json");
+			cdkJsonFile.create(new ByteArrayInputStream(ProjectUtils.cdkJson.getBytes()), false, monitor);
+			
 		}
 		src = project.getFolder("src");
 		srcMain = src.getFolder("main");
@@ -238,13 +244,15 @@ public class EObjectParser {
 		pack = javaProject.getPackageFragmentRoot(srcMainJava).getPackageFragment(rootObject.getPackageName());
 
 		ICompilationUnit cu = pack.createCompilationUnit(className + ".java", formattedSourceCode, true, null);
-		ICompilationUnit cuHelper = pack.createCompilationUnit(className + "Helper.java", formatterHelperCode,
-				false, null);
+		
 
 		String pomContents = ProjectUtils.generatePOM(rootObject.getPackageName(), rootObject.getProjectName(),
 				rootObject.getPackageName() + "." + className,
 				constructRepos.toArray(new String[constructRepos.size()]),
 				cdkRepos.toArray(new String[cdkRepos.size()]), "1.55.0");
+		
+	
+		
 
 		IFile pomFile = project.getFile("pom.xml");
 		pomFile.create(new ByteArrayInputStream(pomContents.getBytes()), true, monitor);

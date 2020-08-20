@@ -37,6 +37,14 @@ public class ProjectUtils {
 
 	public static String[] constructRepos = { "core" };
 	public static String[] cdkRepos = { "ecs-patterns" };
+	
+	public static final String cdkJson = "{\n" + 
+			"  \"app\": \"mvn -e -q compile exec:java\",\n" + 
+			"  \"context\": {\n" + 
+			"    \"@aws-cdk/core:enableStackNameDuplicates\": \"true\",\n" + 
+			"    \"aws-cdk:enableDiffNoFail\": \"true\"\n" + 
+			"  }\n" + 
+			"}";
 
 	public static String generatePOM(String groupID, String artifactID, String mainClass,
 			String[] projectConstructRepos, String[] projectCdkRepos, String version) {

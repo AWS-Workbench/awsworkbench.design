@@ -86,10 +86,13 @@ public class EObjectParser {
 
 	private AppBuilder_core rootObject;
 
-	public void generateCode(AppBuilder_core self, String className) throws Exception {
+	public void generateCode(AppBuilder_core self) throws Exception {
+		
+		if(self.getMainClassName() == null || self.getMainClassName().trim().length() == 0 )
+			showError("Main Class Name not defined!!");
 
 		if (className != null)
-			this.className = className;
+			this.className = self.getMainClassName();
 
 		if (self != null)
 			rootObject = self;
@@ -226,8 +229,7 @@ public class EObjectParser {
 
 			pack = javaProject.getPackageFragmentRoot(srcMainJava).createPackageFragment(rootObject.getPackageName(),
 					false, null);
-			ICompilationUnit cuHelper = pack.createCompilationUnit(className + "Helper.java", formatterHelperCode,
-					false, null);
+			
 		}
 		src = project.getFolder("src");
 		srcMain = src.getFolder("main");
@@ -236,6 +238,8 @@ public class EObjectParser {
 		pack = javaProject.getPackageFragmentRoot(srcMainJava).getPackageFragment(rootObject.getPackageName());
 
 		ICompilationUnit cu = pack.createCompilationUnit(className + ".java", formattedSourceCode, true, null);
+		ICompilationUnit cuHelper = pack.createCompilationUnit(className + "Helper.java", formatterHelperCode,
+				false, null);
 
 		String pomContents = ProjectUtils.generatePOM(rootObject.getPackageName(), rootObject.getProjectName(),
 				rootObject.getPackageName() + "." + className,
@@ -291,6 +295,8 @@ public class EObjectParser {
 		StringBuilder helperCode = new StringBuilder();
 
 		helperCode.append(imports + "\n");
+		
+		helperCode.append("// Changes made to this class will not be overwritten when " + className + " is regenerated :-) \n");
 
 		helperCode.append("public class " + className + "Helper" + "{\n ");
 

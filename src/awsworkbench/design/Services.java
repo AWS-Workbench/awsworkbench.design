@@ -181,12 +181,12 @@ public class Services {
 		return self;
 	}
 
-	public Collection<String> generateCode(AppBuilder_core self, String className) {
+	public Collection<String> generateCode(AppBuilder_core self) {
 
 		EObjectParser parser = new EObjectParser();
 
 		try {
-			parser.generateCode(self, className);
+			parser.generateCode(self);
 		} catch (Exception e) {
 			
 			e.printStackTrace();

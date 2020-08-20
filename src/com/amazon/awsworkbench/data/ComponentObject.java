@@ -28,6 +28,7 @@ public class ComponentObject {
 	private String generatedClassName;
 	private String packageName;
 	private String projectName;
+	private String mainClassName;
 
 	private String parentConstruct = null;
 	private String additionalCode;
@@ -41,6 +42,7 @@ public class ComponentObject {
 	private List<String> parents = new ArrayList<String>();
 
 	public final String VARNAME = "varName";
+	public final String MAINCLASSNAME = "mainClassName";
 	public final String PROJECTNAME = "projectName";
 	public final String PACKAGENAME = "packageName";
 	public final String IDENTIFIER = "identifier";
@@ -120,7 +122,11 @@ public class ComponentObject {
 			} else if (eStructuralFeature.getName().equals(PACKAGENAME) && eCoreObject.eGet(eStructuralFeature) != null
 					&& !eCoreObject.eGet(eStructuralFeature).toString().trim().isEmpty()) {
 				packageName = eCoreObject.eGet(eStructuralFeature).toString();
-			} else {
+			}else if (eStructuralFeature.getName().equals(MAINCLASSNAME) && eCoreObject.eGet(eStructuralFeature) != null
+					&& !eCoreObject.eGet(eStructuralFeature).toString().trim().isEmpty()) {
+				mainClassName = eCoreObject.eGet(eStructuralFeature).toString();
+			}  
+			else {
 
 				if (!(eStructuralFeature instanceof EAttribute))
 					continue;

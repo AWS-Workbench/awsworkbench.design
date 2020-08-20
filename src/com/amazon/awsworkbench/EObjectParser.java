@@ -1,6 +1,7 @@
 package com.amazon.awsworkbench;
 
 import java.beans.Statement;
+import java.io.ByteArrayInputStream;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
@@ -55,6 +56,7 @@ import org.eclipse.ui.statushandlers.StatusManager;
 import com.amazon.aws.workbench.model.awsworkbench.AppBuilder_core;
 import com.amazon.awsworkbench.data.ComponentObject;
 import com.amazon.awsworkbench.dependency.Analyser;
+import com.amazon.awsworkbench.util.ProjectUtils;
 
 import awsworkbench.design.Activator;
 
@@ -69,6 +71,11 @@ public class EObjectParser {
 	private Map<String, List<String>> classNameToVariablesMap = new HashMap<String, List<String>>();
 
 	private Set<String> importStatements = new TreeSet<String>();
+
+	private Set<String> cdkRepos = new TreeSet<String>();
+
+	private Set<String> constructRepos = new TreeSet<String>();
+
 	private StringBuilder codeOutput = new StringBuilder();
 
 	private ComponentObject appObject;
@@ -102,31 +109,53 @@ public class EObjectParser {
 		System.out.println("\n\n\n");
 		graphAnalyser.checkCycles();
 
-		generateImports();
+		generateImportsAndPOMrepos();
 
 		graphAnalyser.topologicalSort();
 
 		String imports = getImports();
 
+		String variables = getResourcesVariables();
+
 		String generatedCode = getGeneratedCode();
 
 		String assembledCode = assembleCode(imports, generatedCode, className);
 
-		String formattedCode = getFormatterCode(assembledCode);
+		String helperCode = generateHelperClass(imports, className);
 
-		System.out.println(formattedCode);
+		String formattedSourceCode = getFormatterCode(assembledCode);
 
-		generateProject(formattedCode);
+		String formattedHelperCode = getFormatterCode(helperCode);
+
+		System.out.println(formattedSourceCode);
+
+		System.out.println(formattedHelperCode);
+
+		generateProject(formattedSourceCode, formattedHelperCode);
 
 	}
 
-	private void generateProject(String formattedCode) throws Exception {
+	private String getResourcesVariables() {
+
+		StringBuilder resourceVars = new StringBuilder();
+		for (ComponentObject c : graphAnalyser.getQueue()) {
+
+			resourceVars.append("public static " + c.getGeneratedClassName() + " " + c.getVarName() + ";\n");
+		}
+
+		resourceVars.append("\n\n");
+		return resourceVars.toString();
+	}
+
+	private void generateProject(String formattedSourceCode, String formatterHelperCode) throws Exception {
 		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(rootObject.getProjectName());
 
 		boolean newProject = false;
 		IFolder srcMainJava;
-		IFolder srcMain ;
+		IFolder srcMain;
+		IFolder srcTest;
 		IFolder src;
+		IPackageFragment pack;
 
 		IProgressMonitor monitor = new NullProgressMonitor();
 		if (!project.exists()) {
@@ -136,7 +165,6 @@ public class EObjectParser {
 
 		}
 
-		
 		project.open(monitor);
 
 		IJavaProject javaProject = JavaCore.create(project);
@@ -174,33 +202,48 @@ public class EObjectParser {
 			project.setDescription(description, monitor);
 
 			// src
-			 src = project.getFolder("src");
+			src = project.getFolder("src");
 			src.create(true, true, monitor);
 
 			// src/main
-			 srcMain = src.getFolder("main");
+			srcMain = src.getFolder("main");
 			srcMain.create(true, true, monitor);
+
+			srcTest = src.getFolder("test");
+			srcTest.create(true, true, monitor);
 
 			// src/main/java
 			srcMainJava = srcMain.getFolder("java");
 			srcMainJava.create(true, true, monitor);
 
+			srcTest.getFolder("java").create(true, true, monitor);
+			project.getFolder("target").create(true, true, monitor);
+
 			final IClasspathEntry srcClasspathEntry = JavaCore.newSourceEntry(srcMainJava.getFullPath());
 			entries.add(0, srcClasspathEntry);
-			
+
 			javaProject.setRawClasspath(entries.toArray(new IClasspathEntry[entries.size()]), monitor);
+
+			pack = javaProject.getPackageFragmentRoot(srcMainJava).createPackageFragment(rootObject.getPackageName(),
+					false, null);
+			ICompilationUnit cuHelper = pack.createCompilationUnit(className + "Helper.java", formatterHelperCode,
+					false, null);
 		}
 		src = project.getFolder("src");
 		srcMain = src.getFolder("main");
 		srcMainJava = srcMain.getFolder("java");
 
-		IPackageFragment pack = javaProject.getPackageFragmentRoot(srcMainJava)
-				.createPackageFragment(rootObject.getPackageName(), false, null);
+		pack = javaProject.getPackageFragmentRoot(srcMainJava).getPackageFragment(rootObject.getPackageName());
 
-		ICompilationUnit cu = pack.createCompilationUnit(className + ".java", formattedCode, true, null);
-		
-	
-		
+		ICompilationUnit cu = pack.createCompilationUnit(className + ".java", formattedSourceCode, true, null);
+
+		String pomContents = ProjectUtils.generatePOM(rootObject.getPackageName(), rootObject.getProjectName(),
+				rootObject.getPackageName() + "." + className,
+				constructRepos.toArray(new String[constructRepos.size()]),
+				cdkRepos.toArray(new String[cdkRepos.size()]), "1.55.0");
+
+		IFile pomFile = project.getFile("pom.xml");
+		pomFile.create(new ByteArrayInputStream(pomContents.getBytes()), true, monitor);
 
 	}
 
@@ -230,13 +273,33 @@ public class EObjectParser {
 
 		assembledCodeBuilder.append("public class " + className + "{\n ");
 
+		assembledCodeBuilder.append(getResourcesVariables());
+
 		assembledCodeBuilder.append("public static void main(String args[]) {\n ");
 
 		assembledCodeBuilder.append(generatedCode + "\n");
 
+		assembledCodeBuilder.append(className + "Helper.setup();\n");
+
 		assembledCodeBuilder.append(appObject.getVarName() + ".synth();\n } \n } \n");
 
 		return assembledCodeBuilder.toString();
+	}
+
+	private String generateHelperClass(String imports, String className) {
+
+		StringBuilder helperCode = new StringBuilder();
+
+		helperCode.append(imports + "\n");
+
+		helperCode.append("public class " + className + "Helper" + "{\n ");
+
+		helperCode.append("public static " + className + " " + className.toLowerCase() + ";\n");
+
+		helperCode.append(" public static void setup(){\n}\n }\n");
+
+		return helperCode.toString();
+
 	}
 
 	private void generateApp() {
@@ -326,16 +389,37 @@ public class EObjectParser {
 
 	}
 
-	private void generateImports() {
+	private void generateImportsAndPOMrepos() {
 
 		importStatements.add("import java.util.*;");
 		for (ComponentObject currentObject : componentObjectMap.values()) {
 
-			String starImport = currentObject.getGeneratedClassName().substring(0,
-					currentObject.getGeneratedClassName().lastIndexOf("."));
+			String genClassName = currentObject.getGeneratedClassName();
+
+			String starImport = genClassName.substring(0, genClassName.lastIndexOf("."));
 			starImport = starImport + ".*";
 			importStatements.add("import " + starImport + ";");
+
+			String constructSearch = "awsconstructs.services.";
+			String cdkSearch = "awscdk.services.";
+
+			if (genClassName.indexOf(constructSearch) != -1) {
+
+				int startIndex = genClassName.indexOf(constructSearch) + constructSearch.length();
+
+				constructRepos.add(genClassName.substring(startIndex, genClassName.indexOf('.', startIndex)));
+
+			} else if (genClassName.indexOf(cdkSearch) != -1) {
+				int startIndex = genClassName.indexOf(cdkSearch) + cdkSearch.length();
+
+				cdkRepos.add(genClassName.substring(startIndex, genClassName.indexOf('.', startIndex)));
+
+			}
+
 		}
+
+		System.out.println(constructRepos);
+		System.out.println(cdkRepos);
 
 	}
 

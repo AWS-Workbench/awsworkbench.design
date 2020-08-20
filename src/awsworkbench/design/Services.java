@@ -3,24 +3,18 @@ package awsworkbench.design;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
+
 import java.util.List;
 
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl;
-import org.eclipse.sirius.business.api.session.Session;
-import org.eclipse.sirius.business.api.session.SessionManager;
-import org.eclipse.sirius.business.api.session.factory.SessionFactory;
-import org.eclipse.ui.internal.WorkbenchPlugin;
-import org.eclipse.ui.statushandlers.StatusAdapter;
-import org.eclipse.ui.statushandlers.StatusManager;
+
 
 import com.amazon.aws.workbench.model.awsworkbench.AppBuilder_core;
 import com.amazon.aws.workbench.model.awsworkbench.ServiceResources;
+import com.amazon.awsworkbench.EObjectParser;
 
 /**
  * The services class used by VSM.
@@ -110,20 +104,22 @@ public class Services {
 		return label;
 	}
 
+	@SuppressWarnings("unchecked")
 	public EObject removeValue(EObject self, EStructuralFeature feature, Object value) {
 
 		System.out.println(value.getClass().getName() + " " + feature.getName());
 		Collection<String> selectedValues = (Collection<String>) value;
 		
-		List<String> varNames = new ArrayList<String>();
-		for(String s : selectedValues) {
-			varNames.add(s.split(" ")[1]);
-		}
+		
 		
 
 		if (feature.getName().equalsIgnoreCase("dependsON")) {
 			
 			if(self instanceof ServiceResources) {
+				List<String> varNames = new ArrayList<String>();
+				for(String s : selectedValues) {
+					varNames.add(s.split(" ")[1]);
+				}
 				
 				ServiceResources s = (ServiceResources)self;
 				EList<ServiceResources> dependsOnList = s.getDependsON();
@@ -187,19 +183,16 @@ public class Services {
 
 	public Collection<String> generateCode(AppBuilder_core self, String className) {
 
-		com.amazon.awsworkbench.EObjectParser parser = new com.amazon.awsworkbench.EObjectParser();
+		EObjectParser parser = new EObjectParser();
 
 		try {
 			parser.generateCode(self, className);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 
-		//
-		// WorkbenchPlugin.log("Something bad happend", status);
-
-		//
+		
 		return null;
 	}
 
@@ -212,8 +205,5 @@ public class Services {
 		source.getDependsON().add(target);
 	}
 
-	public String hello(EObject self) {
-		return "Hello";
-	}
-
+	
 }

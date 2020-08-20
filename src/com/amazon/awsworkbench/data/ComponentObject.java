@@ -376,22 +376,20 @@ public class ComponentObject {
 
 			if (parentConstruct != null && !getBuilderClassName().endsWith("DefaultStackSynthesizer.Builder")) {
 
-				code += getGeneratedClassName() + SPACE + getVarName() + EQUALS + getBuilderClassName() + DOT + CREATE
-						+ OPENBRACKET + parentConstruct + COMMA + QUOT + getIdentifier() + QUOT + CLOSEBRACKET
-						+ NEWLINE;
+				code += getVarName() + EQUALS + getBuilderClassName() + DOT + CREATE + OPENBRACKET + parentConstruct
+						+ COMMA + QUOT + getIdentifier() + QUOT + CLOSEBRACKET + NEWLINE;
 
 			} else {
 
 				// App.Builder && DefaultStackSynthesizer.Builder do not accept arguments in
 				// create method
-				code += getGeneratedClassName() + SPACE + getVarName() + EQUALS + getBuilderClassName() + DOT + CREATE
-						+ OPENBRACKET + CLOSEBRACKET + NEWLINE;
+				code += getVarName() + EQUALS + getBuilderClassName() + DOT + CREATE + OPENBRACKET + CLOSEBRACKET
+						+ NEWLINE;
 			}
 		} else {
 
 			// Hack for Environment class as it does not have a create method
-			code += getGeneratedClassName() + SPACE + getVarName() + EQUALS + getGeneratedClassName() + ".Builder()"
-					+ NEWLINE;
+			code += getVarName() + EQUALS + OPENBRACKET + " new " + getGeneratedClassName() + ".Builder()" + CLOSEBRACKET + NEWLINE;
 		}
 
 		for (ComponentAttribute attribute : nonCoreAttributes) {

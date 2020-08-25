@@ -29,6 +29,37 @@ public class Services {
 
 	public final String VARNAME = "varName";
 	public final String GENERATED_CLASS_NAME = "generatedClassName";
+	
+	public String getLabel (EObject self) {
+		
+		String generatedClassName = new String();
+		
+		EList<EStructuralFeature> allEStructuralFeatures = self.eClass().getEAllStructuralFeatures();
+		for (EStructuralFeature eStructuralFeature : allEStructuralFeatures) {
+
+			if (eStructuralFeature.getName().equals(GENERATED_CLASS_NAME)) {
+				
+				generatedClassName = self.eGet(eStructuralFeature).toString();
+				generatedClassName =  generatedClassName.substring(generatedClassName.lastIndexOf('.') + 1,generatedClassName.length());
+				
+
+			} 
+		}
+		
+		for (EStructuralFeature eStructuralFeature : allEStructuralFeatures) {
+
+			if (eStructuralFeature.getName().equals(VARNAME)) {
+				
+				return generatedClassName + " "+  self.eGet(eStructuralFeature).toString();
+				
+
+			} 
+		}
+		
+		return null;
+		
+		
+	}
 
 	public Collection<String> getPropertyValueStringAsCollection(EObject self, EStructuralFeature feature) {
 

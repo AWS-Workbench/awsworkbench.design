@@ -5,15 +5,40 @@
       <metamodel href="http://www.amazon.com/awsworkbench#/"/>
       <defaultLayer name="Default">
         <nodeMappings name="Environment" semanticCandidatesExpression="feature:environmentbuilder_core" domainClass="awsworkbench::EnvironmentBuilder_core">
-          <style xsi:type="style:WorkspaceImageDescription" labelSize="12" labelExpression="aql:self.getLabel()" labelAlignment="LEFT" sizeComputationExpression="-1" labelPosition="node" resizeKind="NSEW" workspacePath="/awsworkbench.design/icons/environment.gif">
+          <style xsi:type="style:WorkspaceImageDescription" labelSize="12" showIcon="false" labelExpression="aql:self.getLabel()" labelAlignment="LEFT" sizeComputationExpression="-1" resizeKind="NSEW" workspacePath="/awsworkbench.design/icons/size50/environment.gif">
             <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelFormat>bold</labelFormat>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+          </style>
+        </nodeMappings>
+        <nodeMappings name="DefaultStackSynthesizer" label="Default Stack Synthesizer" semanticCandidatesExpression="feature:defaultstacksynthesizerbuilder_core" domainClass="awsworkbench::DefaultStackSynthesizerBuilder_core">
+          <style xsi:type="style:WorkspaceImageDescription" labelSize="12" showIcon="false" labelExpression="aql:self.getLabel()" labelAlignment="LEFT" sizeComputationExpression="-1" resizeKind="NSEW" workspacePath="/awsworkbench.design/icons/size50/defaultsynthesizer.gif">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelFormat>bold</labelFormat>
             <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
           </style>
         </nodeMappings>
         <containerMappings name="Stack" semanticCandidatesExpression="feature:stackbuilder_core" doubleClickDescription="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='AWS%20App%20Definition']/@defaultLayer/@toolSections.0/@ownedTools[name='StackDblClick']" domainClass="awsworkbench::StackBuilder_core">
-          <subContainerMappings name="Blocks" semanticCandidatesExpression="feature:stackblocks" domainClass="Block"/>
-          <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" labelExpression="aql:self.getLabel()" roundedCorner="true" backgroundStyle="Liquid">
+          <subContainerMappings name="Blocks" semanticCandidatesExpression="feature:stackblocks" doubleClickDescription="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='AWS%20App%20Definition']/@defaultLayer/@toolSections.0/@ownedTools[name='BlockDblClick']" domainClass="Block">
+            <subContainerMappings name="Subblock" label="Sub Block" semanticCandidatesExpression="feature:subblocks" domainClass="awsworkbench::Block">
+              <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="feature:label">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <labelFormat>bold</labelFormat>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+                <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_gray']"/>
+              </style>
+            </subContainerMappings>
+            <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" labelExpression="feature:label">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+              <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_gray']"/>
+            </style>
+          </subContainerMappings>
+          <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="aql:self.getLabel()" roundedCorner="true" backgroundStyle="Liquid">
             <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelFormat>bold</labelFormat>
             <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
             <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='green']"/>
             <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_purple']"/>
@@ -27,7 +52,7 @@
               <firstModelOperations xsi:type="tool:Navigation" createIfNotExistent="true" diagramDescription="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='Stack%20Definition']"/>
             </initialOperation>
           </ownedTools>
-          <ownedTools xsi:type="tool:DoubleClickDescription" name="BlockDblClick" forceRefresh="true" mappings="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='Stack%20Definition']/@defaultLayer/@containerMappings[name='Block']">
+          <ownedTools xsi:type="tool:DoubleClickDescription" name="BlockDblClick" forceRefresh="true" mappings="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='Stack%20Definition']/@defaultLayer/@containerMappings[name='Block'] //@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='AWS%20App%20Definition']/@defaultLayer/@containerMappings[name='Stack']/@subContainerMappings[name='Blocks']">
             <element name="element"/>
             <elementView name="elementView"/>
             <initialOperation>
@@ -60,6 +85,39 @@
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::EnvironmentBuilder_core" referenceName="environmentbuilder_core">
                   <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Environment Name"/>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="defaulsynthesizer" label="Default Stack Synthesizer" nodeMappings="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='AWS%20App%20Definition']/@defaultLayer/@nodeMappings[name='DefaultStackSynthesizer']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::DefaultStackSynthesizerBuilder_core" referenceName="defaultstacksynthesizerbuilder_core">
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ContainerCreationDescription" name="StackBlock" label="Stack Block" containerMappings="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='AWS%20App%20Definition']/@defaultLayer/@containerMappings[name='Stack']/@subContainerMappings[name='Blocks']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::Block" referenceName="stackblocks">
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="label" valueExpression="Unnamed"/>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ContainerCreationDescription" name="SubBlock" label="Sub Block" containerMappings="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='AWS%20App%20Definition']/@defaultLayer/@containerMappings[name='Stack']/@subContainerMappings[name='Blocks']/@subContainerMappings[name='Subblock'] //@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='Block']/@defaultLayer/@containerMappings[name='Subblock'] //@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='Stack%20Definition']/@defaultLayer/@containerMappings[name='Block']/@subContainerMappings[name='Subblock']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::Block" referenceName="subblocks">
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="label" valueExpression="Unnamed"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -1170,6 +1228,15 @@
               <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
             </style>
           </subNodeMappings>
+          <subContainerMappings name="Subblock" label="Sub Block" semanticCandidatesExpression="feature:subblocks" domainClass="awsworkbench::Block">
+            <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="feature:label">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelFormat>bold</labelFormat>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+              <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_gray']"/>
+            </style>
+          </subContainerMappings>
           <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" labelExpression="feature:label">
             <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
             <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
@@ -1195,6 +1262,17 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::Block" referenceName="stackblocks" variableName="self.va">
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="label" valueExpression="Unnamed"/>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ContainerCreationDescription" name="SubBlock" label="Sub Block" containerMappings="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='AWS%20App%20Definition']/@defaultLayer/@containerMappings[name='Stack']/@subContainerMappings[name='Blocks']/@subContainerMappings[name='Subblock'] //@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='Block']/@defaultLayer/@containerMappings[name='Subblock'] //@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='Stack%20Definition']/@defaultLayer/@containerMappings[name='Block']/@subContainerMappings[name='Subblock']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::Block" referenceName="subblocks">
                   <subModelOperations xsi:type="tool_1:SetValue" featureName="label" valueExpression="Unnamed"/>
                 </subModelOperations>
               </firstModelOperations>
@@ -1242,13 +1320,6 @@
         </nodeMappings>
         <nodeMappings name="ApiGatewayToSqs" semanticCandidatesExpression="feature:blockresources" domainClass="awsworkbench::ApiGatewayToSqsBuilder_apigatewaysqs">
           <style xsi:type="style:WorkspaceImageDescription" borderSizeComputationExpression="2" labelSize="10" showIcon="false" labelExpression="aql:self.getLabel()" labelAlignment="LEFT" sizeComputationExpression="-1" resizeKind="NSEW" roundedCorner="true" workspacePath="/awsworkbench.design/icons/size50/constructs.gif">
-            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-            <labelFormat>bold</labelFormat>
-            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-          </style>
-        </nodeMappings>
-        <nodeMappings name="App" semanticCandidatesExpression="feature:blockresources" domainClass="awsworkbench::AppBuilder_core">
-          <style xsi:type="style:WorkspaceImageDescription" borderSizeComputationExpression="2" labelSize="10" showIcon="false" labelExpression="aql:self.getLabel()" labelAlignment="LEFT" sizeComputationExpression="-1" resizeKind="NSEW" roundedCorner="true" workspacePath="/awsworkbench.design/icons/size50/core.gif">
             <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
             <labelFormat>bold</labelFormat>
             <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
@@ -1592,13 +1663,6 @@
         </nodeMappings>
         <nodeMappings name="DeadLetterQueue" semanticCandidatesExpression="feature:blockresources" domainClass="awsworkbench::DeadLetterQueueBuilder_sqs">
           <style xsi:type="style:WorkspaceImageDescription" borderSizeComputationExpression="2" labelSize="10" showIcon="false" labelExpression="aql:self.getLabel()" labelAlignment="LEFT" sizeComputationExpression="-1" resizeKind="NSEW" roundedCorner="true" workspacePath="/awsworkbench.design/icons/size50/sqs.gif">
-            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-            <labelFormat>bold</labelFormat>
-            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-          </style>
-        </nodeMappings>
-        <nodeMappings name="DefaultStackSynthesizer" semanticCandidatesExpression="feature:blockresources" domainClass="awsworkbench::DefaultStackSynthesizerBuilder_core">
-          <style xsi:type="style:WorkspaceImageDescription" borderSizeComputationExpression="2" labelSize="10" showIcon="false" labelExpression="aql:self.getLabel()" labelAlignment="LEFT" sizeComputationExpression="-1" resizeKind="NSEW" roundedCorner="true" workspacePath="/awsworkbench.design/icons/size50/core.gif">
             <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
             <labelFormat>bold</labelFormat>
             <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
@@ -2325,13 +2389,6 @@
             <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
           </style>
         </nodeMappings>
-        <nodeMappings name="Stack" semanticCandidatesExpression="feature:blockresources" domainClass="awsworkbench::StackBuilder_core">
-          <style xsi:type="style:WorkspaceImageDescription" borderSizeComputationExpression="2" labelSize="10" showIcon="false" labelExpression="aql:self.getLabel()" labelAlignment="LEFT" sizeComputationExpression="-1" resizeKind="NSEW" roundedCorner="true" workspacePath="/awsworkbench.design/icons/size50/core.gif">
-            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-            <labelFormat>bold</labelFormat>
-            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-          </style>
-        </nodeMappings>
         <nodeMappings name="StageOptions" semanticCandidatesExpression="feature:blockresources" domainClass="awsworkbench::StageOptionsBuilder_apigateway">
           <style xsi:type="style:WorkspaceImageDescription" borderSizeComputationExpression="2" labelSize="10" showIcon="false" labelExpression="aql:self.getLabel()" labelAlignment="LEFT" sizeComputationExpression="-1" resizeKind="NSEW" roundedCorner="true" workspacePath="/awsworkbench.design/icons/size50/apigateway.gif">
             <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
@@ -2487,6 +2544,15 @@
             </centerLabelStyleDescription>
           </style>
         </edgeMappings>
+        <containerMappings name="Subblock" label="Sub Block" semanticCandidatesExpression="feature:subblocks" domainClass="awsworkbench::Block">
+          <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="feature:label">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelFormat>bold</labelFormat>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+            <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_gray']"/>
+          </style>
+        </containerMappings>
         <toolSections name="Services and Resources">
           <ownedTools xsi:type="tool:NodeCreationDescription" name="AddCapacityOptions" forceRefresh="true" nodeMappings="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='Block']/@defaultLayer/@nodeMappings[name='AddCapacityOptions']">
             <variable name="container"/>
@@ -2549,17 +2615,6 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::ApiGatewayToSqsBuilder_apigatewaysqs" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
-                </subModelOperations>
-              </firstModelOperations>
-            </initialOperation>
-          </ownedTools>
-          <ownedTools xsi:type="tool:NodeCreationDescription" name="App" forceRefresh="true" nodeMappings="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='Block']/@defaultLayer/@nodeMappings[name='App']">
-            <variable name="container"/>
-            <viewVariable name="containerView"/>
-            <initialOperation>
-              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
-                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::AppBuilder_core" referenceName="blockresources">
                   <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
                 </subModelOperations>
               </firstModelOperations>
@@ -3104,17 +3159,6 @@
               </firstModelOperations>
             </initialOperation>
           </ownedTools>
-          <ownedTools xsi:type="tool:NodeCreationDescription" name="DefaultStackSynthesizer" forceRefresh="true" nodeMappings="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='Block']/@defaultLayer/@nodeMappings[name='DefaultStackSynthesizer']">
-            <variable name="container"/>
-            <viewVariable name="containerView"/>
-            <initialOperation>
-              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
-                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::DefaultStackSynthesizerBuilder_core" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
-                </subModelOperations>
-              </firstModelOperations>
-            </initialOperation>
-          </ownedTools>
           <ownedTools xsi:type="tool:NodeCreationDescription" name="DnsValidatedCertificate" forceRefresh="true" nodeMappings="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='Block']/@defaultLayer/@nodeMappings[name='DnsValidatedCertificate']">
             <variable name="container"/>
             <viewVariable name="containerView"/>
@@ -3209,17 +3253,6 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::EndpointConfigurationBuilder_apigateway" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
-                </subModelOperations>
-              </firstModelOperations>
-            </initialOperation>
-          </ownedTools>
-          <ownedTools xsi:type="tool:NodeCreationDescription" name="Environment" forceRefresh="true" nodeMappings="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='Block']/@defaultLayer/@nodeMappings[name='Environment']">
-            <variable name="container"/>
-            <viewVariable name="containerView"/>
-            <initialOperation>
-              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
-                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::EnvironmentBuilder_core" referenceName="blockresources">
                   <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
                 </subModelOperations>
               </firstModelOperations>
@@ -4248,17 +4281,6 @@
               </firstModelOperations>
             </initialOperation>
           </ownedTools>
-          <ownedTools xsi:type="tool:NodeCreationDescription" name="Stack" forceRefresh="true" nodeMappings="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='Block']/@defaultLayer/@nodeMappings[name='Stack']">
-            <variable name="container"/>
-            <viewVariable name="containerView"/>
-            <initialOperation>
-              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
-                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::StackBuilder_core" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
-                </subModelOperations>
-              </firstModelOperations>
-            </initialOperation>
-          </ownedTools>
           <ownedTools xsi:type="tool:NodeCreationDescription" name="StageOptions" forceRefresh="true" nodeMappings="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='Block']/@defaultLayer/@nodeMappings[name='StageOptions']">
             <variable name="container"/>
             <viewVariable name="containerView"/>
@@ -4500,6 +4522,17 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:source">
                 <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:self.addDependsOn(target)"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ContainerCreationDescription" name="SubBlock" label="Sub Block" containerMappings="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='AWS%20App%20Definition']/@defaultLayer/@containerMappings[name='Stack']/@subContainerMappings[name='Blocks']/@subContainerMappings[name='Subblock'] //@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='Block']/@defaultLayer/@containerMappings[name='Subblock'] //@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='Stack%20Definition']/@defaultLayer/@containerMappings[name='Block']/@subContainerMappings[name='Subblock']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::Block" referenceName="subblocks">
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="label" valueExpression="Unnamed"/>
+                </subModelOperations>
               </firstModelOperations>
             </initialOperation>
           </ownedTools>

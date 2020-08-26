@@ -50,13 +50,15 @@ public class Services {
 
 			if (eStructuralFeature.getName().equals(VARNAME)) {
 				
+				System.out.println("Label called for " + self);
+				
 				return    self.eGet(eStructuralFeature).toString() + "\n(" + generatedClassName + ")\n";
 				
 
 			} 
 		}
 		
-		return null;
+		return "no name";
 		
 		
 	}

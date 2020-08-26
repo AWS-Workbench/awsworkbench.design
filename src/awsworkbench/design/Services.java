@@ -50,7 +50,7 @@ public class Services {
 
 			if (eStructuralFeature.getName().equals(VARNAME)) {
 				
-				return generatedClassName + " "+  self.eGet(eStructuralFeature).toString();
+				return    self.eGet(eStructuralFeature).toString() + "\n(" + generatedClassName + ")\n";
 				
 
 			} 
@@ -229,11 +229,16 @@ public class Services {
 
 	public Collection<ServiceResources> getDependsOn(ServiceResources s) {
 
+		System.out.println("Called getDependsOn");
+		System.out.println(s.getDependsON());
 		return s.getDependsON();
 	}
 
 	public void addDependsOn(ServiceResources source, ServiceResources target) {
+		
 		source.getDependsON().add(target);
+		System.out.println(source.toString() + " " + target.toString());
+		
 	}
 
 	

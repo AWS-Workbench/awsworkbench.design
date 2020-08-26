@@ -20,8 +20,8 @@
         </nodeMappings>
         <containerMappings name="Stack" semanticCandidatesExpression="feature:stackbuilder_core" doubleClickDescription="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='AWS%20App%20Definition']/@defaultLayer/@toolSections.0/@ownedTools[name='StackDblClick']" domainClass="awsworkbench::StackBuilder_core">
           <subContainerMappings name="Blocks" semanticCandidatesExpression="feature:stackblocks" doubleClickDescription="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='AWS%20App%20Definition']/@defaultLayer/@toolSections.0/@ownedTools[name='BlockDblClick']" domainClass="Block">
-            <subContainerMappings name="Subblock" label="Sub Block" semanticCandidatesExpression="feature:subblocks" domainClass="awsworkbench::Block">
-              <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="feature:label">
+            <subContainerMappings name="Subblock" label="Sub Block" semanticCandidatesExpression="feature:subblocks" doubleClickDescription="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='AWS%20App%20Definition']/@defaultLayer/@toolSections.0/@ownedTools[name='BlockDblClick']" domainClass="awsworkbench::Block">
+              <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" labelExpression="feature:label" iconPath="/awsworkbench.design/icons/size16/block.gif">
                 <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
                 <labelFormat>bold</labelFormat>
                 <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
@@ -29,19 +29,20 @@
                 <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_gray']"/>
               </style>
             </subContainerMappings>
-            <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" labelExpression="feature:label">
+            <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" labelExpression="feature:label" iconPath="/awsworkbench.design/icons/size16/block.gif">
               <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelFormat>bold</labelFormat>
               <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
               <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
               <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_gray']"/>
             </style>
           </subContainerMappings>
-          <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="aql:self.getLabel()" roundedCorner="true" backgroundStyle="Liquid">
+          <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" labelExpression="aql:self.getLabel()" iconPath="/awsworkbench.design/icons/size16/stack.gif" roundedCorner="true">
             <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
             <labelFormat>bold</labelFormat>
             <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-            <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='green']"/>
-            <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_purple']"/>
+            <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_blue']"/>
+            <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
           </style>
         </containerMappings>
         <toolSections name="Interactions">
@@ -52,7 +53,7 @@
               <firstModelOperations xsi:type="tool:Navigation" createIfNotExistent="true" diagramDescription="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='Stack%20Definition']"/>
             </initialOperation>
           </ownedTools>
-          <ownedTools xsi:type="tool:DoubleClickDescription" name="BlockDblClick" forceRefresh="true" mappings="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='Stack%20Definition']/@defaultLayer/@containerMappings[name='Block'] //@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='AWS%20App%20Definition']/@defaultLayer/@containerMappings[name='Stack']/@subContainerMappings[name='Blocks']">
+          <ownedTools xsi:type="tool:DoubleClickDescription" name="BlockDblClick" forceRefresh="true" mappings="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='Stack%20Definition']/@defaultLayer/@containerMappings[name='Block'] //@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='AWS%20App%20Definition']/@defaultLayer/@containerMappings[name='Stack']/@subContainerMappings[name='Blocks'] //@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='AWS%20App%20Definition']/@defaultLayer/@containerMappings[name='Stack']/@subContainerMappings[name='Blocks']/@subContainerMappings[name='Subblock'] //@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='Block']/@defaultLayer/@containerMappings[name='Subblock'] //@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='Stack%20Definition']/@defaultLayer/@containerMappings[name='Block']/@subContainerMappings[name='Subblock']">
             <element name="element"/>
             <elementView name="elementView"/>
             <initialOperation>
@@ -61,7 +62,7 @@
           </ownedTools>
         </toolSections>
         <toolSections name="Palette">
-          <ownedTools xsi:type="tool:ContainerCreationDescription" name="Stack_create" containerMappings="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='AWS%20App%20Definition']/@defaultLayer/@containerMappings[name='Stack']">
+          <ownedTools xsi:type="tool:ContainerCreationDescription" name="Stack_create" label="Stack" containerMappings="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='AWS%20App%20Definition']/@defaultLayer/@containerMappings[name='Stack']">
             <variable name="container"/>
             <viewVariable name="containerView"/>
             <initialOperation>
@@ -1228,8 +1229,8 @@
               <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
             </style>
           </subNodeMappings>
-          <subContainerMappings name="Subblock" label="Sub Block" semanticCandidatesExpression="feature:subblocks" domainClass="awsworkbench::Block">
-            <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="feature:label">
+          <subContainerMappings name="Subblock" label="Sub Block" semanticCandidatesExpression="feature:subblocks" doubleClickDescription="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='AWS%20App%20Definition']/@defaultLayer/@toolSections.0/@ownedTools[name='BlockDblClick']" domainClass="awsworkbench::Block">
+            <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" labelExpression="feature:label" iconPath="/awsworkbench.design/icons/size16/block.gif">
               <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
               <labelFormat>bold</labelFormat>
               <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
@@ -1239,6 +1240,7 @@
           </subContainerMappings>
           <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" labelExpression="feature:label">
             <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelFormat>bold</labelFormat>
             <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
             <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
             <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_gray']"/>
@@ -1256,7 +1258,7 @@
               </firstModelOperations>
             </initialOperation>
           </ownedTools>
-          <ownedTools xsi:type="tool:ContainerCreationDescription" name="Block" containerMappings="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='Stack%20Definition']/@defaultLayer/@containerMappings[name='Block']" iconPath="/awsworkbench.design/icons/block.gif">
+          <ownedTools xsi:type="tool:ContainerCreationDescription" name="Block" containerMappings="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='Stack%20Definition']/@defaultLayer/@containerMappings[name='Block']">
             <variable name="container"/>
             <viewVariable name="containerView"/>
             <initialOperation>
@@ -2544,8 +2546,8 @@
             </centerLabelStyleDescription>
           </style>
         </edgeMappings>
-        <containerMappings name="Subblock" label="Sub Block" semanticCandidatesExpression="feature:subblocks" domainClass="awsworkbench::Block">
-          <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="feature:label">
+        <containerMappings name="Subblock" label="Sub Block" semanticCandidatesExpression="feature:subblocks" doubleClickDescription="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='AWS%20App%20Definition']/@defaultLayer/@toolSections.0/@ownedTools[name='BlockDblClick']" domainClass="awsworkbench::Block">
+          <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" labelExpression="feature:label" iconPath="/awsworkbench.design/icons/size16/block.gif">
             <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
             <labelFormat>bold</labelFormat>
             <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>

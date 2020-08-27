@@ -33,6 +33,8 @@ public class Analyser {
 	public void addDependency(String dependency, String dependent) {
 		if (graphElems.containsKey(dependent))
 			graphElems.get(dependent).add(dependency);
+		else
+			System.out.println("Could not add " + dependency + " " + dependent);
 	}
 
 	public void checkCycles() {
@@ -80,12 +82,20 @@ public class Analyser {
 
 	private void topologicalSortUtil(ComponentObject c, LinkedList<ComponentObject> queue) {
 
+	//	System.out.println("In comes " + c.getVarName() + " " + c.isVisited() );
+		if(c.isVisited())
+			return;
+		
 		c.setVisited(true);
+	//	System.out.println(c.getDependentVars());
 		for (String dependent : c.getDependentVars()) {
-
 			ComponentObject c1 = graphObjects.get(dependent);
+			
+		//	System.out.println(c.getVarName() + " dependent on " + dependent + " " + c1.isVisited());
+
+			
 			if (c1 == null) {
-				// System.out.println("null:" + dependent);
+				 System.out.println("null:" + dependent);
 				continue;
 			}
 			if (!c1.isVisited()) {

@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.javatuples.Pair;
 
+import com.amazon.aws.workbench.model.awsworkbench.ServiceResources;
 import com.amazon.awsworkbench.EObjectParser;
 import com.amazon.awsworkbench.data.ComponentAttribute.MapAttribute;
 
@@ -29,6 +30,7 @@ public class ComponentObject {
 	private String packageName;
 	private String projectName;
 	private String mainClassName;
+	private boolean exportResource;
 
 	private String parentConstruct = null;
 	private String additionalCode;
@@ -51,6 +53,7 @@ public class ComponentObject {
 	public final String ASMAP = "AsMap";
 	public final String ASREFERENCE = "AsReference";
 	public final String ASLIST = "AsList";
+	public final String EXPORTRESOURCE = "exportResource";
 
 	public static final String SPACE = " ";
 
@@ -122,11 +125,14 @@ public class ComponentObject {
 			} else if (eStructuralFeature.getName().equals(PACKAGENAME) && eCoreObject.eGet(eStructuralFeature) != null
 					&& !eCoreObject.eGet(eStructuralFeature).toString().trim().isEmpty()) {
 				packageName = eCoreObject.eGet(eStructuralFeature).toString();
-			}else if (eStructuralFeature.getName().equals(MAINCLASSNAME) && eCoreObject.eGet(eStructuralFeature) != null
+			} else if (eStructuralFeature.getName().equals(MAINCLASSNAME)
+					&& eCoreObject.eGet(eStructuralFeature) != null
 					&& !eCoreObject.eGet(eStructuralFeature).toString().trim().isEmpty()) {
 				mainClassName = eCoreObject.eGet(eStructuralFeature).toString();
-			}  
-			else {
+			} else if (eStructuralFeature.getName().equals(EXPORTRESOURCE)
+					&& eCoreObject.eGet(eStructuralFeature) != null) {
+				exportResource = (Boolean) eCoreObject.eGet(eStructuralFeature);
+			} else {
 
 				if (!(eStructuralFeature instanceof EAttribute))
 					continue;
@@ -151,9 +157,7 @@ public class ComponentObject {
 
 					ComponentAttribute componentAttribute = new ComponentAttribute(eStructuralFeature, value);
 
-					for (List<String> lists : dependencyMap.values()) {
-						dependentVariables.addAll(lists);
-					}
+					
 
 					nonCoreAttributes.add(componentAttribute);
 
@@ -161,7 +165,54 @@ public class ComponentObject {
 
 			}
 		}
+		if (parentEcoreObject instanceof ServiceResources) {
 
+			EList<ServiceResources> dependsOn = ((ServiceResources) parentEcoreObject).getDependsON();
+
+			for (ServiceResources sResource : dependsOn) {
+
+				String localGeneratedClassName = new String();
+				String localVarName = new String();
+
+				EList<EStructuralFeature> localAllEStructuralFeatures = sResource.eClass().getEAllStructuralFeatures();
+				for (EStructuralFeature eStructuralFeature : localAllEStructuralFeatures) {
+
+					if (eStructuralFeature.getName().equals(GENERATED_CLASS_NAME)) {
+
+						localGeneratedClassName = sResource.eGet(eStructuralFeature).toString();		
+					}
+
+					if (eStructuralFeature.getName().equals(VARNAME)) {
+
+						localVarName = sResource.eGet(eStructuralFeature).toString();
+
+					}
+				}
+				
+				if(!localGeneratedClassName.trim().isEmpty() && !localVarName.trim().isEmpty()) {
+					addDirectDependency(localGeneratedClassName.trim(), localVarName.trim());
+				}
+				
+				
+
+			}
+		}
+		
+		for (List<String> lists : dependencyMap.values()) {
+			dependentVariables.addAll(lists);
+		}
+
+	}
+	
+	private void addDirectDependency(String className, String varName) {
+		
+		if (dependencyMap.containsKey(className)) {
+			dependencyMap.get(className).add(varName);
+		} else {
+			dependencyMap.put(className, new ArrayList<String>());
+			dependencyMap.get(className).add(varName);
+		}
+		
 	}
 
 	private void addReferenceDependency(String featureName, String featureValue) {
@@ -395,7 +446,8 @@ public class ComponentObject {
 		} else {
 
 			// Hack for Environment class as it does not have a create method
-			code += getVarName() + EQUALS + OPENBRACKET + " new " + getGeneratedClassName() + ".Builder()" + CLOSEBRACKET + NEWLINE;
+			code += getVarName() + EQUALS + OPENBRACKET + " new " + getGeneratedClassName() + ".Builder()"
+					+ CLOSEBRACKET + NEWLINE;
 		}
 
 		for (ComponentAttribute attribute : nonCoreAttributes) {
@@ -505,6 +557,10 @@ public class ComponentObject {
 
 	public void setVisited(boolean visited) {
 		this.visited = visited;
+	}
+
+	public boolean isExportResource() {
+		return exportResource;
 	}
 
 }

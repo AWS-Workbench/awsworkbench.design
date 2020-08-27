@@ -54,6 +54,7 @@ import org.eclipse.text.edits.TextEdit;
 import org.eclipse.ui.statushandlers.StatusManager;
 
 import com.amazon.aws.workbench.model.awsworkbench.AppBuilder_core;
+import com.amazon.aws.workbench.model.awsworkbench.Block;
 import com.amazon.awsworkbench.data.ComponentObject;
 import com.amazon.awsworkbench.dependency.Analyser;
 import com.amazon.awsworkbench.util.ProjectUtils;
@@ -87,8 +88,8 @@ public class EObjectParser {
 	private AppBuilder_core rootObject;
 
 	public void generateCode(AppBuilder_core self) throws Exception {
-		
-		if(self.getMainClassName() == null || self.getMainClassName().trim().length() == 0 )
+
+		if (self.getMainClassName() == null || self.getMainClassName().trim().length() == 0)
 			showError("Main Class Name not defined!!");
 
 		if (className != null)
@@ -229,13 +230,13 @@ public class EObjectParser {
 
 			pack = javaProject.getPackageFragmentRoot(srcMainJava).createPackageFragment(rootObject.getPackageName(),
 					false, null);
-			
+
 			ICompilationUnit cuHelper = pack.createCompilationUnit(className + "Helper.java", formatterHelperCode,
 					false, null);
-			
+
 			IFile cdkJsonFile = project.getFile("cdk.json");
 			cdkJsonFile.create(new ByteArrayInputStream(ProjectUtils.cdkJson.getBytes()), false, monitor);
-			
+
 		}
 		src = project.getFolder("src");
 		srcMain = src.getFolder("main");
@@ -244,17 +245,14 @@ public class EObjectParser {
 		pack = javaProject.getPackageFragmentRoot(srcMainJava).getPackageFragment(rootObject.getPackageName());
 
 		ICompilationUnit cu = pack.createCompilationUnit(className + ".java", formattedSourceCode, true, null);
-		
 
 		String pomContents = ProjectUtils.generatePOM(rootObject.getPackageName(), rootObject.getProjectName(),
 				rootObject.getPackageName() + "." + className,
 				constructRepos.toArray(new String[constructRepos.size()]),
 				cdkRepos.toArray(new String[cdkRepos.size()]), "1.55.0");
-		
-	
-		
 
 		IFile pomFile = project.getFile("pom.xml");
+		pomFile.delete(true, monitor);
 		pomFile.create(new ByteArrayInputStream(pomContents.getBytes()), true, monitor);
 
 	}
@@ -303,8 +301,9 @@ public class EObjectParser {
 		StringBuilder helperCode = new StringBuilder();
 
 		helperCode.append(imports + "\n");
-		
-		helperCode.append("// Changes made to this class will not be overwritten when " + className + " is regenerated :-) \n");
+
+		helperCode.append(
+				"// Changes made to this class will not be overwritten when " + className + " is regenerated :-) \n");
 
 		helperCode.append("public class " + className + "Helper" + "{\n ");
 
@@ -357,6 +356,8 @@ public class EObjectParser {
 
 		for (ComponentObject dependentObject : graphAdditions.values()) {
 			Map<String, List<String>> dependencies = dependentObject.getDependencies();
+			
+		//	System.out.println (dependentObject.getVarName() + " " + dependencies);
 
 			for (String key : dependencies.keySet()) {
 				List<String> varList = dependencies.get(key);
@@ -440,26 +441,41 @@ public class EObjectParser {
 	public void parse(EObject currentEcoreObject, List<String> parents, boolean isApp, String parentVarname)
 			throws Exception {
 
-		checkMandatoryFields(currentEcoreObject);
+		if (currentEcoreObject instanceof Block) {
 
-		ComponentObject componentObject = new ComponentObject(currentEcoreObject, parents, parentVarname);
-		if (isApp) {
-			appObject = componentObject;
+			Block blockObject = (Block) currentEcoreObject;
 
+			if (blockObject.isCanDeploy()) {
+
+				EList<EObject> children = currentEcoreObject.eContents();
+				for (EObject e : children)
+					parse(e, parents, false, parentVarname);
+
+			}
+
+		} else {
+
+			checkMandatoryFields(currentEcoreObject);
+
+			ComponentObject componentObject = new ComponentObject(currentEcoreObject, parents, parentVarname);
+			if (isApp) {
+				appObject = componentObject;
+
+			}
+			componentObjectMap.put(componentObject.getVarName(), componentObject);
+			if (classNameToVariablesMap.containsKey(componentObject.getGeneratedClassName()))
+				classNameToVariablesMap.get(componentObject.getGeneratedClassName()).add(componentObject.getVarName());
+			else {
+				classNameToVariablesMap.put(componentObject.getGeneratedClassName(), new ArrayList<String>());
+				classNameToVariablesMap.get(componentObject.getGeneratedClassName()).add(componentObject.getVarName());
+			}
+
+			parents.add(componentObject.getVarName());
+			EList<EObject> children = currentEcoreObject.eContents();
+			for (EObject e : children)
+				parse(e, parents, false, componentObject.getVarName());
+			parents.remove(componentObject.getVarName());
 		}
-		componentObjectMap.put(componentObject.getVarName(), componentObject);
-		if (classNameToVariablesMap.containsKey(componentObject.getGeneratedClassName()))
-			classNameToVariablesMap.get(componentObject.getGeneratedClassName()).add(componentObject.getVarName());
-		else {
-			classNameToVariablesMap.put(componentObject.getGeneratedClassName(), new ArrayList<String>());
-			classNameToVariablesMap.get(componentObject.getGeneratedClassName()).add(componentObject.getVarName());
-		}
-
-		parents.add(componentObject.getVarName());
-		EList<EObject> children = currentEcoreObject.eContents();
-		for (EObject e : children)
-			parse(e, parents, false, componentObject.getVarName());
-		parents.remove(componentObject.getVarName());
 
 	}
 

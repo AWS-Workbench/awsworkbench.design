@@ -1,9 +1,9 @@
 package com.amazon.awsworkbench;
 
-import java.beans.Statement;
+
 import java.io.ByteArrayInputStream;
-import java.net.URL;
-import java.net.URLClassLoader;
+
+
 import java.util.ArrayList;
 
 import java.util.HashMap;
@@ -22,16 +22,13 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Platform;
+
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
+
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.util.EContentsEList;
-import org.eclipse.jdt.core.IAccessRule;
-import org.eclipse.jdt.core.IClasspathAttribute;
+
 import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
@@ -39,9 +36,7 @@ import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.ToolFactory;
 import org.eclipse.jdt.core.formatter.CodeFormatter;
-import org.eclipse.jdt.core.formatter.IndentManipulation;
-import org.eclipse.jdt.internal.core.ClasspathAttribute;
-import org.eclipse.jdt.internal.core.ClasspathEntry;
+
 import org.eclipse.jdt.launching.JavaRuntime;
 import org.eclipse.jdt.launching.environments.IExecutionEnvironment;
 import org.eclipse.jdt.launching.environments.IExecutionEnvironmentsManager;
@@ -356,8 +351,8 @@ public class EObjectParser {
 
 		for (ComponentObject dependentObject : graphAdditions.values()) {
 			Map<String, List<String>> dependencies = dependentObject.getDependencies();
-			
-		//	System.out.println (dependentObject.getVarName() + " " + dependencies);
+
+			// System.out.println (dependentObject.getVarName() + " " + dependencies);
 
 			for (String key : dependencies.keySet()) {
 				List<String> varList = dependencies.get(key);

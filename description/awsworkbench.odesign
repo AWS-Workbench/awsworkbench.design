@@ -4525,7 +4525,7 @@
           </style>
         </containerMappings>
         <toolSections name="Stack Pallette">
-          <ownedTools xsi:type="tool:EdgeCreationDescription" name="depends_create" edgeMappings="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='Stack%20Definition']/@defaultLayer/@edgeMappings[name='dependsOnRelation']">
+          <ownedTools xsi:type="tool:EdgeCreationDescription" name="Connect Dependencies" edgeMappings="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='Stack%20Definition']/@defaultLayer/@edgeMappings[name='dependsOnRelation']">
             <sourceVariable name="source"/>
             <targetVariable name="target"/>
             <sourceViewVariable name="sourceView"/>

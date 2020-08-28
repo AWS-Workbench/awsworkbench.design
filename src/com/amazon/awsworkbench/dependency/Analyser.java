@@ -9,6 +9,7 @@ import java.util.SortedSet;
 import java.util.Stack;
 import java.util.TreeSet;
 
+import com.amazon.awsworkbench.EObjectParser;
 import com.amazon.awsworkbench.data.ComponentObject;
 
 public class Analyser {
@@ -37,7 +38,7 @@ public class Analyser {
 			System.out.println("Could not add " + dependency + " " + dependent);
 	}
 
-	public void checkCycles() {
+	public void checkCycles()  throws Exception{
 
 		for (String s : graphElems.keySet()) {
 			ArrayList<String> cycleTrace = new ArrayList<String>();
@@ -48,13 +49,23 @@ public class Analyser {
 
 	}
 
-	private boolean detectCycle(String s, ArrayList<String> cycleTrace) {
+	private boolean detectCycle(String s, ArrayList<String> cycleTrace)  throws Exception {
 		// TODO Auto-generated method stub
 		// System.out.println(s + " " + graphElems.get(s));
 		cycleTrace.add(s);
 		for (String s1 : graphElems.get(s)) {
-			if (cycleTrace.contains(s1))
-				return true;
+			if (cycleTrace.contains(s1)) {
+				StringBuilder sb = new StringBuilder();
+				for(String cycleELem : cycleTrace) {
+					sb.append(cycleELem + " -> ");
+					
+				}
+				sb.append(s1);
+				
+				
+				EObjectParser.showError("Cyclic dependency detected : "+ sb.toString());
+				
+			}
 			else
 				return detectCycle(s1, cycleTrace);
 		}

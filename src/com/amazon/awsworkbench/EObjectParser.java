@@ -374,7 +374,7 @@ public class EObjectParser {
 						}
 
 					} else {
-						System.out.println("Variable not defined: " + vars + " for class : " + key);
+						showError("Variable not defined: " + vars + " for class : " + key);
 						dependentObject.removeDependency(key, vars);
 					}
 				}

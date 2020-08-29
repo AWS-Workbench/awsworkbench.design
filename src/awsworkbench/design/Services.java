@@ -46,12 +46,9 @@ public class Services {
 
 		for (EStructuralFeature eStructuralFeature : allEStructuralFeatures) {
 
-			if (eStructuralFeature.getName().equals(VARNAME)) {
-
-				System.out.println("Label called for " + self);
+			if (eStructuralFeature.getName().equals(VARNAME)) {	
 
 				return self.eGet(eStructuralFeature).toString() + "\n(" + generatedClassName + ")\n";
-
 			}
 		}
 
@@ -93,7 +90,7 @@ public class Services {
 
 				}
 			}
-			values.add(className + " " + varName);
+			values.add(className.substring(className.lastIndexOf('.')+1, className.length()) + " " + varName);
 		}
 		return values;
 
@@ -136,7 +133,7 @@ public class Services {
 	@SuppressWarnings("unchecked")
 	public EObject removeValue(EObject self, EStructuralFeature feature, Object value) {
 
-		System.out.println(value.getClass().getName() + " " + feature.getName());
+		
 		Collection<String> selectedValues = (Collection<String>) value;
 
 		if (feature.getName().equalsIgnoreCase("dependsON")) {
@@ -149,17 +146,22 @@ public class Services {
 
 				ServiceResources s = (ServiceResources) self;
 				EList<ServiceResources> dependsOnList = s.getDependsON();
-				List<ServiceResources> removeList = new ArrayList<ServiceResources>();
+				List<ServiceResources> newList = new ArrayList<ServiceResources>();
+
 				for (ServiceResources dependsElem : dependsOnList) {
 
 					String dependsVarName = getVarName(dependsElem);
 
-					if (varNames.contains(dependsVarName))
-						removeList.add(dependsElem);
+					if (!varNames.contains(dependsVarName)) {
+
+						newList.add(dependsElem);
+					}
 				}
-				dependsOnList.removeAll(removeList);
-				s.eSet(feature, dependsOnList);
-				return s;
+
+				s.getDependsON().clear();
+				s.getDependsON().addAll(newList);
+
+				return self;
 
 			}
 
@@ -190,7 +192,7 @@ public class Services {
 
 	public EObject addValue(EObject self, EStructuralFeature feature, String newValue) {
 
-		System.out.println(newValue);
+		
 		if (feature.getName().endsWith("AsMap") && (newValue.indexOf(':') == -1 || newValue.indexOf(",") != -1)) {
 
 			return self;
@@ -213,7 +215,8 @@ public class Services {
 		try {
 			if (self.getProjectName().trim().isEmpty() || self.getPackageName().trim().isEmpty()
 					|| self.getMainClassName().trim().isEmpty()) {
-				EObjectParser.showError("One of more of projectName, packageName or mainClassName attributes are empty!!");
+				EObjectParser
+						.showError("One of more of projectName, packageName or mainClassName attributes are empty!!");
 			}
 			parser.generateCode(self);
 		} catch (Exception e) {
@@ -225,16 +228,13 @@ public class Services {
 	}
 
 	public Collection<ServiceResources> getDependsOn(ServiceResources s) {
-
-		System.out.println("Called getDependsOn");
-		System.out.println(s.getDependsON());
+	
 		return s.getDependsON();
 	}
 
 	public void addDependsOn(ServiceResources source, ServiceResources target) {
 
-		source.getDependsON().add(target);
-		System.out.println(source.toString() + " " + target.toString());
+		source.getDependsON().add(target);	
 
 	}
 

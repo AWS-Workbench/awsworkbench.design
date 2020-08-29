@@ -6,11 +6,9 @@ import java.util.Collection;
 
 import java.util.List;
 
-
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-
 
 import com.amazon.aws.workbench.model.awsworkbench.AppBuilder_core;
 import com.amazon.aws.workbench.model.awsworkbench.ServiceResources;
@@ -29,38 +27,36 @@ public class Services {
 
 	public final String VARNAME = "varName";
 	public final String GENERATED_CLASS_NAME = "generatedClassName";
-	
-	public String getLabel (EObject self) {
-		
+
+	public String getLabel(EObject self) {
+
 		String generatedClassName = new String();
-		
+
 		EList<EStructuralFeature> allEStructuralFeatures = self.eClass().getEAllStructuralFeatures();
 		for (EStructuralFeature eStructuralFeature : allEStructuralFeatures) {
 
 			if (eStructuralFeature.getName().equals(GENERATED_CLASS_NAME)) {
-				
-				generatedClassName = self.eGet(eStructuralFeature).toString();
-				generatedClassName =  generatedClassName.substring(generatedClassName.lastIndexOf('.') + 1,generatedClassName.length());
-				
 
-			} 
+				generatedClassName = self.eGet(eStructuralFeature).toString();
+				generatedClassName = generatedClassName.substring(generatedClassName.lastIndexOf('.') + 1,
+						generatedClassName.length());
+
+			}
 		}
-		
+
 		for (EStructuralFeature eStructuralFeature : allEStructuralFeatures) {
 
 			if (eStructuralFeature.getName().equals(VARNAME)) {
-				
-				System.out.println("Label called for " + self);
-				
-				return    self.eGet(eStructuralFeature).toString() + "\n(" + generatedClassName + ")\n";
-				
 
-			} 
+				System.out.println("Label called for " + self);
+
+				return self.eGet(eStructuralFeature).toString() + "\n(" + generatedClassName + ")\n";
+
+			}
 		}
-		
+
 		return "no name";
-		
-		
+
 	}
 
 	public Collection<String> getPropertyValueStringAsCollection(EObject self, EStructuralFeature feature) {
@@ -142,33 +138,29 @@ public class Services {
 
 		System.out.println(value.getClass().getName() + " " + feature.getName());
 		Collection<String> selectedValues = (Collection<String>) value;
-		
-		
-		
 
 		if (feature.getName().equalsIgnoreCase("dependsON")) {
-			
-			if(self instanceof ServiceResources) {
+
+			if (self instanceof ServiceResources) {
 				List<String> varNames = new ArrayList<String>();
-				for(String s : selectedValues) {
+				for (String s : selectedValues) {
 					varNames.add(s.split(" ")[1]);
 				}
-				
-				ServiceResources s = (ServiceResources)self;
+
+				ServiceResources s = (ServiceResources) self;
 				EList<ServiceResources> dependsOnList = s.getDependsON();
 				List<ServiceResources> removeList = new ArrayList<ServiceResources>();
-				for(ServiceResources dependsElem: dependsOnList) {
-					
-					String dependsVarName =  getVarName(dependsElem);
-					
-					if(varNames.contains(dependsVarName))
-						removeList.add(dependsElem);	
+				for (ServiceResources dependsElem : dependsOnList) {
+
+					String dependsVarName = getVarName(dependsElem);
+
+					if (varNames.contains(dependsVarName))
+						removeList.add(dependsElem);
 				}
 				dependsOnList.removeAll(removeList);
 				s.eSet(feature, dependsOnList);
 				return s;
-				
-			
+
 			}
 
 		} else {
@@ -190,10 +182,10 @@ public class Services {
 			if (eStructuralFeature.getName().equals(VARNAME)) {
 				return dependsElem.eGet(eStructuralFeature).toString().trim().replace(' ', '_');
 
-			} 
+			}
 		}
 		return null;
-		
+
 	}
 
 	public EObject addValue(EObject self, EStructuralFeature feature, String newValue) {
@@ -219,13 +211,16 @@ public class Services {
 		EObjectParser parser = new EObjectParser();
 
 		try {
+			if (self.getProjectName().trim().isEmpty() || self.getPackageName().trim().isEmpty()
+					|| self.getMainClassName().trim().isEmpty()) {
+				EObjectParser.showError("One of more of projectName, packageName or mainClassName attributes are empty!!");
+			}
 			parser.generateCode(self);
 		} catch (Exception e) {
-			
+
 			e.printStackTrace();
 		}
 
-		
 		return null;
 	}
 
@@ -237,11 +232,10 @@ public class Services {
 	}
 
 	public void addDependsOn(ServiceResources source, ServiceResources target) {
-		
+
 		source.getDependsON().add(target);
 		System.out.println(source.toString() + " " + target.toString());
-		
+
 	}
 
-	
 }

@@ -31,6 +31,7 @@ public class ComponentObject {
 	private String projectName;
 	private String mainClassName;
 	private boolean exportResource;
+	private String importExistingResource;
 
 	private String parentConstruct = null;
 	private String additionalCode;
@@ -54,6 +55,7 @@ public class ComponentObject {
 	public final String ASREFERENCE = "AsReference";
 	public final String ASLIST = "AsList";
 	public final String EXPORTRESOURCE = "exportResource";
+	public final String IMPORTEXISTINGRESOURCE = "importExistingResource";
 
 	public static final String SPACE = " ";
 
@@ -129,6 +131,10 @@ public class ComponentObject {
 					&& eCoreObject.eGet(eStructuralFeature) != null
 					&& !eCoreObject.eGet(eStructuralFeature).toString().trim().isEmpty()) {
 				mainClassName = eCoreObject.eGet(eStructuralFeature).toString();
+			} else if (eStructuralFeature.getName().equals(IMPORTEXISTINGRESOURCE)
+					&& eCoreObject.eGet(eStructuralFeature) != null
+					&& !eCoreObject.eGet(eStructuralFeature).toString().trim().isEmpty()) {
+				importExistingResource = eCoreObject.eGet(eStructuralFeature).toString();
 			} else if (eStructuralFeature.getName().equals(EXPORTRESOURCE)
 					&& eCoreObject.eGet(eStructuralFeature) != null) {
 				exportResource = (Boolean) eCoreObject.eGet(eStructuralFeature);
@@ -157,8 +163,6 @@ public class ComponentObject {
 
 					ComponentAttribute componentAttribute = new ComponentAttribute(eStructuralFeature, value);
 
-					
-
 					nonCoreAttributes.add(componentAttribute);
 
 				}
@@ -179,7 +183,7 @@ public class ComponentObject {
 
 					if (eStructuralFeature.getName().equals(GENERATED_CLASS_NAME)) {
 
-						localGeneratedClassName = sResource.eGet(eStructuralFeature).toString();		
+						localGeneratedClassName = sResource.eGet(eStructuralFeature).toString();
 					}
 
 					if (eStructuralFeature.getName().equals(VARNAME)) {
@@ -188,31 +192,29 @@ public class ComponentObject {
 
 					}
 				}
-				
-				if(!localGeneratedClassName.trim().isEmpty() && !localVarName.trim().isEmpty()) {
+
+				if (!localGeneratedClassName.trim().isEmpty() && !localVarName.trim().isEmpty()) {
 					addDirectDependency(localGeneratedClassName.trim(), localVarName.trim());
 				}
-				
-				
 
 			}
 		}
-		
+
 		for (List<String> lists : dependencyMap.values()) {
 			dependentVariables.addAll(lists);
 		}
 
 	}
-	
+
 	private void addDirectDependency(String className, String varName) {
-		
+
 		if (dependencyMap.containsKey(className)) {
 			dependencyMap.get(className).add(varName);
 		} else {
 			dependencyMap.put(className, new ArrayList<String>());
 			dependencyMap.get(className).add(varName);
 		}
-		
+
 	}
 
 	private void addReferenceDependency(String featureName, String featureValue) {
@@ -429,6 +431,12 @@ public class ComponentObject {
 
 		String code = new String();
 
+		if (importExistingResource != null && !importExistingResource.trim().isEmpty()) {
+
+			return getVarName() + EQUALS + SPACE + importExistingResource + SEMICOLON + NEWLINE;
+
+		}
+
 		if (!getGeneratedClassName().endsWith(".Environment")) {
 
 			if (parentConstruct != null && !getBuilderClassName().endsWith("DefaultStackSynthesizer.Builder")) {
@@ -561,6 +569,10 @@ public class ComponentObject {
 
 	public boolean isExportResource() {
 		return exportResource;
+	}
+
+	public String getImportExistingResource() {
+		return importExistingResource;
 	}
 
 }

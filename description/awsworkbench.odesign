@@ -2501,7 +2501,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::StackBuilder_core" referenceName="stackbuilder_core">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -2531,7 +2532,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::DefaultStackSynthesizerBuilder_core" referenceName="defaultstacksynthesizerbuilder_core">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -7702,7 +7704,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::AddCapacityOptionsBuilder_ecs" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -7713,7 +7716,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::AliasConfigurationBuilder_cloudfront" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -7724,7 +7728,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::AmazonLinuxImageBuilder_ec2" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -7735,7 +7740,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::ApiGatewayToDynamoDBBuilder_apigatewaydynamodb" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -7746,7 +7752,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::ApiGatewayToLambdaBuilder_apigatewaylambda" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -7757,7 +7764,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::ApiGatewayToSqsBuilder_apigatewaysqs" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -7768,7 +7776,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::AppBuilder_core" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -7779,7 +7788,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::AppMeshProxyConfigurationBuilder_ecs" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -7790,7 +7800,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::AppMeshProxyConfigurationPropsBuilder_ecs" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -7801,7 +7812,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::ApplicationListenerPropsBuilder_patterns" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -7812,7 +7824,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::ApplicationLoadBalancedEc2ServiceBuilder_patterns" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -7823,7 +7836,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::ApplicationLoadBalancedFargateServiceBuilder_patterns" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -7834,7 +7848,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::ApplicationLoadBalancedTaskImageOptionsBuilder_patterns" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -7845,7 +7860,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::ApplicationLoadBalancedTaskImagePropsBuilder_patterns" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -7856,7 +7872,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::ApplicationLoadBalancerBuilder_elasticloadbalancingv2" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -7867,7 +7884,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::ApplicationLoadBalancerPropsBuilder_patterns" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -7878,7 +7896,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::ApplicationMultipleTargetGroupsEc2ServiceBuilder_patterns" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -7889,7 +7908,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::ApplicationMultipleTargetGroupsFargateServiceBuilder_patterns" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -7900,7 +7920,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::ApplicationTargetPropsBuilder_patterns" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -7911,7 +7932,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::AssetImageBuilder_ecs" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -7922,7 +7944,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::AttributeBuilder_dynamodb" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -7933,7 +7956,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::AuthFlowBuilder_cognito" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -7944,7 +7968,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::AutoScalingGroupBuilder_autoscaling" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -7955,7 +7980,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::AutoVerifiedAttrsBuilder_cognito" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -7966,7 +7992,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::AwsLogDriverBuilder_ecs" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -7977,7 +8004,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::AwsLogDriverPropsBuilder_ecs" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -7988,7 +8016,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::BehaviorBuilder_cloudfront" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -7999,7 +8028,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::BlockDeviceBuilder_autoscaling" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8010,7 +8040,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::BlockPublicAccessBuilder_s3" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8021,7 +8052,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::BucketBuilder_s3" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8032,7 +8064,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::BucketMetricsBuilder_s3" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8043,7 +8076,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::BucketPropsBuilder_s3" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8054,7 +8088,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::BuildDeadLetterQueuePropsBuilder_core" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8065,7 +8100,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::BuildDynamoDBTablePropsBuilder_core" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8076,7 +8112,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::BuildEncryptionKeyPropsBuilder_core" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8087,7 +8124,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::BuildKinesisAnalyticsAppPropsBuilder_core" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8098,7 +8136,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::BuildKinesisStreamPropsBuilder_core" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8109,7 +8148,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::BuildLambdaFunctionPropsBuilder_core" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8120,7 +8160,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::BuildQueuePropsBuilder_core" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8131,7 +8172,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::BuildS3BucketPropsBuilder_core" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8142,7 +8184,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::BuildTopicPropsBuilder_core" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8153,7 +8196,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::CertificateBuilder_certificatemanager" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8164,7 +8208,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::CloudFrontToApiGatewayBuilder_cloudfrontapigateway" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8175,7 +8220,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::CloudFrontToApiGatewayToLambdaBuilder_cloudfrontapigatewaylambda" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8186,7 +8232,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::CloudFrontToS3Builder_cloudfronts3" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8197,7 +8244,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::CloudFrontWebDistributionPropsBuilder_cloudfront" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8208,7 +8256,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::CloudMapNamespaceOptionsBuilder_ecs" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8219,7 +8268,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::CloudMapOptionsBuilder_ecs" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8230,7 +8280,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::ClusterBuilder_ecs" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8241,7 +8292,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::CognitoOptionsBuilder_core" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8252,7 +8304,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::CognitoToApiGatewayToLambdaBuilder_cognitoapigatewaylambda" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8263,7 +8316,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::CorsOptionsBuilder_apigateway" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8274,7 +8328,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::CorsRuleBuilder_s3" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8285,7 +8340,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::CronOptionsBuilder_applicationautoscaling" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8296,7 +8352,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::CronOptionsBuilder_events" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8307,7 +8364,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::CustomOriginConfigBuilder_cloudfront" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8318,7 +8376,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::DatabaseInstanceBuilder_rds" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8329,7 +8388,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::DeadLetterQueueBuilder_sqs" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8340,7 +8400,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::DefaultStackSynthesizerBuilder_core" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8351,7 +8412,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::DnsValidatedCertificateBuilder_certificatemanager" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8362,7 +8424,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::DockerImageAssetBuilder_assets" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8373,7 +8436,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::DockerVolumeConfigurationBuilder_ecs" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8384,7 +8448,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::DomainNameOptionsBuilder_apigateway" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8395,7 +8460,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::DynamoDBStreamToLambdaBuilder_dynamodbstreamlambda" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8406,7 +8472,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::DynamoDBStreamToLambdaToElasticSearchAndKibanaBuilder_dynamodbstreamlambdaelasticsearchkibana" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8417,7 +8484,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::Ec2HealthCheckOptionsBuilder_autoscaling" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8428,7 +8496,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::Ec2TaskDefinitionBuilder_ecs" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8439,7 +8508,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::EmailSettingsBuilder_cognito" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8450,7 +8520,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::EndpointConfigurationBuilder_apigateway" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8461,7 +8532,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::EnvironmentBuilder_core" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8472,7 +8544,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::EventBusBuilder_events" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8483,7 +8556,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::EventPatternBuilder_events" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8494,7 +8568,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::EventsRuleToLambdaBuilder_eventsrulelambda" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8505,7 +8580,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::EventsRuleToStepFunctionBuilder_eventsrulestepfunction" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8516,7 +8592,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::FargateTaskDefinitionBuilder_ecs" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8527,7 +8604,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::FlowLogOptionsBuilder_ec2" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8538,7 +8616,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::FunctionBuilder_lambda" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8549,7 +8628,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::FunctionPropsBuilder_lambda" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8560,7 +8640,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::GatewayVpcEndpointBuilder_ec2" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8571,7 +8652,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::GroupBuilder_iam" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8582,7 +8664,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::HealthCheckBuilder_ecs" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8593,7 +8676,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::HostBuilder_ecs" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8604,7 +8688,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::HostedZoneBuilder_route53" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8615,7 +8700,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::HttpNamespaceBuilder_servicediscovery" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8626,7 +8712,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::IntegrationBuilder_apigateway" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8637,7 +8724,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::IntegrationOptionsBuilder_apigateway" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8648,7 +8736,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::IntegrationResponseBuilder_apigateway" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8659,7 +8748,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::IotToKinesisFirehoseToS3Builder_iotkinesisfirehoses3" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8670,7 +8760,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::IotToLambdaBuilder_iotlambda" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8681,7 +8772,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::IotToLambdaToDynamoDBBuilder_iotlambdadynamodb" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8692,7 +8784,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::JsonSchemaBuilder_apigateway" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8703,7 +8796,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::KeyBuilder_kms" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8714,7 +8808,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::KinesisFirehoseToAnalyticsAndS3Builder_kinesisfirehoses3kinesisanalytics" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8725,7 +8820,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::KinesisFirehoseToS3Builder_kinesisfirehoses3" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8736,7 +8832,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::KinesisStreamsToLambdaBuilder_kinesisstreamslambda" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8747,7 +8844,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::LambdaFunctionAssociationBuilder_cloudfront" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8758,7 +8856,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::LambdaRestApiBuilder_apigateway" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8769,7 +8868,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::LambdaRestApiPropsBuilder_apigateway" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8780,7 +8880,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::LambdaToDynamoDBBuilder_lambdadynamodb" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8791,7 +8892,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::LambdaToElasticSearchAndKibanaBuilder_lambdaelasticsearchkibana" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8802,7 +8904,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::LambdaToS3Builder_lambdas3" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8813,7 +8916,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::LambdaToSnsBuilder_lambdasns" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8824,7 +8928,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::LambdaToSqsBuilder_lambdasqs" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8835,7 +8940,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::LambdaToStepFunctionBuilder_lambdastepfunction" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8846,7 +8952,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::LayerVersionBuilder_lambda" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8857,7 +8964,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::LifecycleRuleBuilder_s3" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8868,7 +8976,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::LogGroupBuilder_logs" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8879,7 +8988,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::LoggingConfigurationBuilder_cloudfront" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8890,7 +9000,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::ManagedPolicyBuilder_iam" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8901,7 +9012,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::MariaDbInstanceEnginePropsBuilder_rds" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8912,7 +9024,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::MethodDeploymentOptionsBuilder_apigateway" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8923,7 +9036,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::MethodOptionsBuilder_apigateway" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8934,7 +9048,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::MethodResponseBuilder_apigateway" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8945,7 +9060,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::MfaSecondFactorBuilder_cognito" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8956,7 +9072,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::ModelBuilder_apigateway" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8967,7 +9084,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::MySqlInstanceEnginePropsBuilder_rds" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8978,7 +9096,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::NetworkLoadBalancedEc2ServiceBuilder_patterns" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -8989,7 +9108,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::NetworkLoadBalancedFargateServiceBuilder_patterns" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9000,7 +9120,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::NetworkLoadBalancedTaskImageOptionsBuilder_patterns" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9011,7 +9132,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::NetworkLoadBalancedTaskImagePropsBuilder_patterns" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9022,7 +9144,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::NetworkLoadBalancerBuilder_elasticloadbalancingv2" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9033,7 +9156,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::NetworkMultipleTargetGroupsEc2ServiceBuilder_patterns" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9044,7 +9168,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::NetworkMultipleTargetGroupsFargateServiceBuilder_patterns" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9055,7 +9180,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::NetworkTargetPropsBuilder_patterns" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9066,7 +9192,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::NoncurrentVersionTransitionBuilder_s3" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9077,7 +9204,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::OAuthFlowsBuilder_cognito" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9088,7 +9216,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::OAuthSettingsBuilder_cognito" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9099,7 +9228,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::OptionConfigurationBuilder_rds" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9110,7 +9240,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::OptionGroupBuilder_rds" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9121,7 +9252,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::OracleEeInstanceEnginePropsBuilder_rds" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9132,7 +9264,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::OracleSe1InstanceEnginePropsBuilder_rds" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9143,7 +9276,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::OracleSe2InstanceEnginePropsBuilder_rds" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9154,7 +9288,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::OracleSeInstanceEnginePropsBuilder_rds" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9165,7 +9300,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::OriginAccessIdentityBuilder_cloudfront" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9176,7 +9312,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::ParameterGroupBuilder_rds" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9187,7 +9324,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::PasswordPolicyBuilder_cognito" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9198,7 +9336,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::PolicyDocumentBuilder_iam" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9209,7 +9348,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::PolicyStatementBuilder_iam" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9220,7 +9360,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::PortBuilder_ec2" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9231,7 +9372,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::PostgresInstanceEnginePropsBuilder_rds" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9242,7 +9384,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::PrivateDnsNamespaceBuilder_servicediscovery" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9253,7 +9396,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::ProcessorFeaturesBuilder_rds" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9264,7 +9408,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::PublicDnsNamespaceBuilder_servicediscovery" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9275,7 +9420,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::QueueBuilder_sqs" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9286,7 +9432,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::QueueProcessingEc2ServiceBuilder_patterns" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9297,7 +9444,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::QueueProcessingFargateServiceBuilder_patterns" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9308,7 +9456,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::QueuePropsBuilder_sqs" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9319,7 +9468,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::RedirectTargetBuilder_s3" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9330,7 +9480,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::RequestAuthorizerBuilder_apigateway" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9341,7 +9492,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::RequestValidatorBuilder_apigateway" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9352,7 +9504,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::RequestValidatorOptionsBuilder_apigateway" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9363,7 +9516,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::RequiredAttributesBuilder_cognito" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9374,7 +9528,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::RestApiPropsBuilder_apigateway" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9385,7 +9540,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::RoleBuilder_iam" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9396,7 +9552,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::RollingUpdateConfigurationBuilder_autoscaling" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9407,7 +9564,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::RoutingRuleBuilder_s3" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9418,7 +9576,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::RoutingRuleConditionBuilder_s3" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9429,7 +9588,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::RulePropsBuilder_events" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9440,7 +9600,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::S3OriginConfigBuilder_cloudfront" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9451,7 +9612,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::S3ToLambdaBuilder_s3lambda" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9462,7 +9624,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::S3ToStepFunctionBuilder_s3stepfunction" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9473,7 +9636,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::ScalingIntervalBuilder_applicationautoscaling" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9484,7 +9648,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::ScheduledEc2TaskBuilder_patterns" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9495,7 +9660,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::ScheduledEc2TaskDefinitionOptionsBuilder_patterns" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9506,7 +9672,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::ScheduledEc2TaskImageOptionsBuilder_patterns" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9517,7 +9684,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::ScheduledFargateTaskBuilder_patterns" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9528,7 +9696,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::ScheduledFargateTaskDefinitionOptionsBuilder_patterns" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9539,7 +9708,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::ScheduledFargateTaskImageOptionsBuilder_patterns" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9550,7 +9720,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::SecretBuilder_secretsmanager" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9561,7 +9732,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::SecretStringGeneratorBuilder_secretsmanager" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9572,7 +9744,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::SecurityGroupBuilder_ec2" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9583,7 +9756,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::SignInAliasesBuilder_cognito" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9594,7 +9768,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::SnsToLambdaBuilder_snslambda" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9605,7 +9780,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::SourceConfigurationBuilder_cloudfront" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9616,7 +9792,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::SqlServerEeInstanceEnginePropsBuilder_rds" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9627,7 +9804,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::SqlServerExInstanceEnginePropsBuilder_rds" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9638,7 +9816,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::SqlServerSeInstanceEnginePropsBuilder_rds" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9649,7 +9828,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::SqlServerWebInstanceEnginePropsBuilder_rds" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9660,7 +9840,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::SqsToLambdaBuilder_sqslambda" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9671,7 +9852,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::StackBuilder_core" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9682,7 +9864,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::StageOptionsBuilder_apigateway" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9693,7 +9876,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::StateMachinePropsBuilder_stepfunctions" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9704,7 +9888,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::SubnetBuilder_ec2" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9715,7 +9900,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::SubnetSelectionBuilder_ec2" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9726,7 +9912,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::TableBuilder_dynamodb" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9737,7 +9924,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::TablePropsBuilder_dynamodb" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9748,7 +9936,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::TokenAuthorizerBuilder_apigateway" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9759,7 +9948,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::TopicBuilder_sns" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9770,7 +9960,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::TopicPropsBuilder_sns" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9781,7 +9972,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::TransitionBuilder_s3" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9792,7 +9984,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::UserBuilder_iam" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9803,7 +9996,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::UserInvitationConfigBuilder_cognito" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9814,7 +10008,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::UserPoolBuilder_cognito" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9825,7 +10020,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::UserPoolClientPropsBuilder_cognito" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9836,7 +10032,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::UserPoolPropsBuilder_cognito" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9847,7 +10044,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::UserPoolTriggersBuilder_cognito" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9858,7 +10056,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::UserVerificationConfigBuilder_cognito" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9869,7 +10068,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::VersionBuilder_lambda" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9880,7 +10080,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::VersionOptionsBuilder_lambda" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9891,7 +10092,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::VolumeBuilder_ecs" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9902,7 +10104,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::VpcBuilder_ec2" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -9913,7 +10116,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::VpcLinkBuilder_apigateway" referenceName="blockresources">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>

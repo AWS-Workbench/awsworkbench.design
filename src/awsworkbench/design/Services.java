@@ -7,8 +7,10 @@ import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+
 
 import com.amazon.aws.workbench.model.awsworkbench.AppBuilder_core;
 import com.amazon.aws.workbench.model.awsworkbench.ServiceResources;
@@ -28,6 +30,71 @@ public class Services {
 	public final String VARNAME = "varName";
 	public final String GENERATED_CLASS_NAME = "generatedClassName";
 
+	public int count = 0;
+
+	public String generateVarName(EObject self) throws Exception {
+
+		String name = new String();
+
+		int noOfResources = getCountOfResources(self);
+		
+		String className = getClassName(self);
+
+		
+		return (className+count);
+		
+		
+	}
+
+	private String getClassName(EObject self) {
+		String generatedClassName = new String();
+
+		EList<EStructuralFeature> allEStructuralFeatures = self.eClass().getEAllStructuralFeatures();
+		for (EStructuralFeature eStructuralFeature : allEStructuralFeatures) {
+
+			if (eStructuralFeature.getName().equals(GENERATED_CLASS_NAME)) {
+
+				generatedClassName = self.eGet(eStructuralFeature).toString();
+				generatedClassName = generatedClassName.substring(generatedClassName.lastIndexOf('.') + 1,
+						generatedClassName.length());
+
+			}
+		}
+		return generatedClassName;
+	}
+
+	private int getCountOfResources(EObject self) throws Exception {
+
+		if (count == 0) {
+			AppBuilder_core root = null;
+			EObject temp = self;
+
+			while (temp != null) {
+				if (temp instanceof AppBuilder_core) {
+					root = (AppBuilder_core) temp;
+					break;
+				}
+				temp = temp.eContainer();
+
+			}
+			if (root == null)
+				EObjectParser.showError("Can't find root elem");
+			count = 1;
+
+			TreeIterator<EObject> iter = root.eAllContents();
+			while (iter.hasNext()) {
+				count++;
+				iter.next();
+			}
+		}
+		else
+			++count;
+		System.out.println(" Count is:" + count);
+
+		return count;
+
+	}
+
 	public String getLabel(EObject self) {
 
 		String generatedClassName = new String();
@@ -46,7 +113,7 @@ public class Services {
 
 		for (EStructuralFeature eStructuralFeature : allEStructuralFeatures) {
 
-			if (eStructuralFeature.getName().equals(VARNAME)) {	
+			if (eStructuralFeature.getName().equals(VARNAME)) {
 
 				return self.eGet(eStructuralFeature).toString() + "\n(" + generatedClassName + ")\n";
 			}
@@ -90,7 +157,7 @@ public class Services {
 
 				}
 			}
-			values.add(className.substring(className.lastIndexOf('.')+1, className.length()) + " " + varName);
+			values.add(className.substring(className.lastIndexOf('.') + 1, className.length()) + " " + varName);
 		}
 		return values;
 
@@ -133,7 +200,6 @@ public class Services {
 	@SuppressWarnings("unchecked")
 	public EObject removeValue(EObject self, EStructuralFeature feature, Object value) {
 
-		
 		Collection<String> selectedValues = (Collection<String>) value;
 
 		if (feature.getName().equalsIgnoreCase("dependsON")) {
@@ -192,7 +258,6 @@ public class Services {
 
 	public EObject addValue(EObject self, EStructuralFeature feature, String newValue) {
 
-		
 		if (feature.getName().endsWith("AsMap") && (newValue.indexOf(':') == -1 || newValue.indexOf(",") != -1)) {
 
 			return self;
@@ -228,13 +293,13 @@ public class Services {
 	}
 
 	public Collection<ServiceResources> getDependsOn(ServiceResources s) {
-	
+
 		return s.getDependsON();
 	}
 
 	public void addDependsOn(ServiceResources source, ServiceResources target) {
 
-		source.getDependsON().add(target);	
+		source.getDependsON().add(target);
 
 	}
 

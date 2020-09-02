@@ -13,6 +13,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 
 import com.amazon.aws.workbench.model.awsworkbench.AppBuilder_core;
+import com.amazon.aws.workbench.model.awsworkbench.Block;
 import com.amazon.aws.workbench.model.awsworkbench.ServiceResources;
 import com.amazon.awsworkbench.EObjectParser;
 
@@ -37,6 +38,9 @@ public class Services {
 		String name = new String();
 
 		int noOfResources = getCountOfResources(self);
+		
+		if(self instanceof Block)
+			return "Block " + count;
 		
 		String className = getClassName(self);
 

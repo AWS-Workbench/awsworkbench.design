@@ -2521,7 +2521,8 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::EnvironmentBuilder_core" referenceName="environmentbuilder_core">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="Environment Name"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="varName" valueExpression="aql:self.generateVarName().toLowerFirst()"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="identifier" valueExpression="aql:self.varName.toUpper()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -2544,7 +2545,7 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::Block" referenceName="stackblocks">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="label" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="label" valueExpression="aql:self.generateVarName()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -2555,7 +2556,7 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="awsworkbench::Block" referenceName="subblocks">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="label" valueExpression="Unnamed"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="label" valueExpression="aql:self.generateVarName()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>

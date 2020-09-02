@@ -10,7 +10,7 @@ import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.javatuples.Pair;
-import org.w3c.dom.CDATASection;
+
 
 import com.amazon.awsworkbench.EObjectParser;
 

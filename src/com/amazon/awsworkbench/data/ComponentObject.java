@@ -472,7 +472,12 @@ public class ComponentObject {
 				} else if (attribute.getType() == ComponentAttributeTypes.REFERENCE) {
 					code += DOT + attribute.getName() + OPENBRACKET + value + CLOSEBRACKET + NEWLINE;
 				} else if (attribute.getType() == ComponentAttributeTypes.STRING) {
-					code += DOT + attribute.getName() + OPENBRACKET + QUOT + value + QUOT + CLOSEBRACKET + NEWLINE;
+					if (containsFunctionCharacters(value)) {
+						code += DOT + attribute.getName() + OPENBRACKET + value + CLOSEBRACKET + NEWLINE;
+
+					} else {
+						code += DOT + attribute.getName() + OPENBRACKET + QUOT + value + QUOT + CLOSEBRACKET + NEWLINE;
+					}
 				}
 
 			} else if (attribute.getType() == ComponentAttributeTypes.LIST) {
@@ -500,6 +505,12 @@ public class ComponentObject {
 		return code;
 	}
 
+	private boolean containsFunctionCharacters(String value) {
+		if (value.indexOf('.') != -1 && value.indexOf('(') != -1 && value.indexOf(')') != -1)
+			return true;
+		return false;
+	}
+
 	private Pair<String, String> buildMap(ComponentAttribute attribute) {
 		String mapName = getVarName() + UNDERSCORE + attribute.getName();
 
@@ -513,14 +524,18 @@ public class ComponentObject {
 		String value = new String();
 		for (String s : mapAttribute.getValues().keySet()) {
 			if (mapAttribute.getKeyClass().equals(STRING_CLASS))
-				key = QUOT + s + QUOT;
+				if (containsFunctionCharacters(s))
+					key = s;
+				else
+					key = QUOT + s + QUOT;
 			else
 				key = s;
 
 			value = mapAttribute.getValues().get(s);
 
 			if (mapAttribute.getValueClass().equals(STRING_CLASS))
-				value = QUOT + value + QUOT;
+				if (!containsFunctionCharacters(value))
+					value = QUOT + value + QUOT;
 			declaration += mapName + DOT + "put" + OPENBRACKET + key + COMMA + value + CLOSEBRACKET + ";\n";
 		}
 		declaration += NEWLINE + NEWLINE;
@@ -539,7 +554,10 @@ public class ComponentObject {
 
 			start = false;
 			if (pair.getValue0().contains(STRING_CLASS)) {
-				listCode += QUOT + s1 + QUOT;
+				if (containsFunctionCharacters(s1))
+					listCode += s1;
+				else
+					listCode += QUOT + s1 + QUOT;
 			} else {
 				listCode += s1;
 

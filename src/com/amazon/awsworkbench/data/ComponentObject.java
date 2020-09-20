@@ -466,8 +466,9 @@ public class ComponentObject {
 					|| attribute.getType() == ComponentAttributeTypes.MAP)) {
 				String value = getSingleValue(attribute.getAttributeValues());
 				if (attribute.getType() == ComponentAttributeTypes.BOOLEAN
-						|| attribute.getType() == ComponentAttributeTypes.INTEGER) {
-					code += DOT + attribute.getName() + OPENBRACKET + value + CLOSEBRACKET + NEWLINE;
+						|| attribute.getType() == ComponentAttributeTypes.INTEGER && !value.equals("0")) {
+					
+						code += DOT + attribute.getName() + OPENBRACKET + value + CLOSEBRACKET + NEWLINE;
 
 				} else if (attribute.getType() == ComponentAttributeTypes.REFERENCE) {
 					code += DOT + attribute.getName() + OPENBRACKET + value + CLOSEBRACKET + NEWLINE;

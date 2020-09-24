@@ -90,10 +90,10 @@ public class EObjectParser {
 		if (className != null)
 			this.className = self.getMainClassName();
 
-		if (self != null)
-			rootObject = self;
-		else
+		if (self == null)
 			return;
+		
+		rootObject = self;
 
 		componentObjectMap = new HashMap<String, ComponentObject>();
 		uniqueMandatoryFieldValues = new HashMap<String, SortedSet<String>>();

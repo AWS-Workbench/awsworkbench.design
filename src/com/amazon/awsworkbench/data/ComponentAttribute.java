@@ -19,6 +19,10 @@ public class ComponentAttribute {
 	private ComponentAttributeTypes componentType;
 
 	private String componentName;
+	
+	private String enumClassName;
+	
+	private String enumValue;
 
 	private MapAttribute mapAttribute = new MapAttribute();
 
@@ -76,6 +80,12 @@ public class ComponentAttribute {
 	private void extractAttributeClassAndValue(EStructuralFeature feature, String featureValue) throws Exception {
 
 		String featureName = feature.getName();
+		if(componentType == ComponentAttributeTypes.ENUM) {
+			enumClassName = featureName.substring(featureName.indexOf('_') + 1, featureName.lastIndexOf('_'))
+					.replace('_', '.');
+			enumValue = featureValue.trim();
+			System.out.println("Enum value for "+ componentName + " " + enumClassName + " is :"+ featureValue);
+		}
 
 		if (componentType == ComponentAttributeTypes.MAP) {
 
@@ -158,6 +168,10 @@ public class ComponentAttribute {
 
 	public boolean canGenerate(Map<String, ComponentObject> componentMap) {
 
+		if(componentType == ComponentAttributeTypes.ENUM)
+		{
+			return true;
+		}
 		List<String> toBeRemoved = new ArrayList<String>();
 
 		if (componentType == ComponentAttributeTypes.REFERENCE || componentType == ComponentAttributeTypes.LIST) {
@@ -233,6 +247,14 @@ public class ComponentAttribute {
 				readyToGenerate = true;
 		}
 
+	}
+
+	public String getEnumClassName() {
+		return enumClassName;
+	}
+
+	public String getEnumValue() {
+		return enumValue;
 	}
 
 	class MapAttribute {

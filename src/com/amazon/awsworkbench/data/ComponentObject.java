@@ -462,13 +462,17 @@ public class ComponentObject {
 
 			if (!attribute.canGenerate(componentMap))
 				continue;
-			if (!(attribute.getType() == ComponentAttributeTypes.LIST
+			if (attribute.getType() == ComponentAttributeTypes.ENUM) {
+
+				code += DOT + attribute.getName() + OPENBRACKET + attribute.getEnumClassName() + DOT
+						+ attribute.getEnumValue() + CLOSEBRACKET + NEWLINE;
+			} else if (!(attribute.getType() == ComponentAttributeTypes.LIST
 					|| attribute.getType() == ComponentAttributeTypes.MAP)) {
 				String value = getSingleValue(attribute.getAttributeValues());
 				if (attribute.getType() == ComponentAttributeTypes.BOOLEAN
 						|| attribute.getType() == ComponentAttributeTypes.INTEGER && !value.equals("0")) {
-					
-						code += DOT + attribute.getName() + OPENBRACKET + value + CLOSEBRACKET + NEWLINE;
+
+					code += DOT + attribute.getName() + OPENBRACKET + value + CLOSEBRACKET + NEWLINE;
 
 				} else if (attribute.getType() == ComponentAttributeTypes.REFERENCE) {
 					code += DOT + attribute.getName() + OPENBRACKET + value + CLOSEBRACKET + NEWLINE;

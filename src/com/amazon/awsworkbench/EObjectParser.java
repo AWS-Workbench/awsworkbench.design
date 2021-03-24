@@ -244,7 +244,7 @@ public class EObjectParser {
 		String pomContents = ProjectUtils.generatePOM(rootObject.getPackageName(), rootObject.getProjectName(),
 				rootObject.getPackageName() + "." + className,
 				constructRepos.toArray(new String[constructRepos.size()]),
-				cdkRepos.toArray(new String[cdkRepos.size()]), "1.93.0");
+				cdkRepos.toArray(new String[cdkRepos.size()]), "1.55.0");
 
 		IFile pomFile = project.getFile("pom.xml");
 		pomFile.delete(true, monitor);
